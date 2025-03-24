@@ -1,32 +1,32 @@
 Spis treści
 
-[API between Kaucja.pl and RVM 1](#_Toc192864046)
+[API between Kaucja.pl and RVM](#_Toc192864046)
 
-[API list 1](#_Toc192864047)
+[API list](#_Toc192864047)
 
-[1\. Data exchange from Deposit Product Catalogue (Katalog Produktów Kaucyjnych) 1](#_Toc192864048)
+[1\. Data exchange from Deposit Product Catalogue (Katalog Produktów Kaucyjnych)](#_Toc192864048)
 
-[1.1. New Product added 1](#_Toc192864049)
+[1.1. New Product added](#_Toc192864049)
 
-[1.2. Deposit Product Catalogue sync 1](#_Toc192864050)
+[1.2. Deposit Product Catalogue sync](#_Toc192864050)
 
-[2\. RVM status healthcheck 1](#_Toc192864051)
+[2\. RVM status healthcheck](#_Toc192864051)
 
-[3\. RVM removal 1](#_Toc192864052)
+[3\. RVM removal](#_Toc192864052)
 
-[4\. New RVM registration 1](#_Toc192864053)
+[4\. New RVM registration](#_Toc192864053)
 
-[5\. Transaction data exchange 1](#_Toc192864054)
+[5\. Transaction data exchange](#_Toc192864054)
 
-[5.1. Transaction data transfer to DRS 1](#_Toc192864055)
+[5.1. Transaction data transfer to DRS](#_Toc192864055)
 
-[5.2. Lost data sync 1](#_Toc192864056)
+[5.2. Lost data sync](#_Toc192864056)
 
-[6\. Bag replacement 1](#_Toc192864057)
+[6\. Bag replacement](#_Toc192864057)
 
-[6.1. RVM with scanner 1](#_Toc192864058)
+[6.1. RVM with scanner](#_Toc192864058)
 
-[6.2. RVM without scanner 1](#_Toc192864059)
+[6.2. RVM without scanner](#_Toc192864059)
 
 # Document description
 
