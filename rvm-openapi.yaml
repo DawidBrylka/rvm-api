@@ -1,20 +1,22 @@
 openapi: 3.0.3
+x-stoplight:
+  id: ec6717f423206
 tags:
   - name: machine
     description: Api part strictly related to RVM machines
     externalDocs:
       description: Use case available under Miro Board
-      url: https://miro.com/app/board/uXjVIR9vsa8=/?moveToWidget=3458764622259665808&cot=14
+      url: 'https://miro.com/app/board/uXjVIR9vsa8=/?moveToWidget=3458764622259665808&cot=14'
   - name: transaction
     description: API part related with Transaction interaction between Kaucja and RVM providers
     externalDocs:
       description: Use Cases Available under miro Board
-      url: https://miro.com/app/board/uXjVIR9vsa8=/?moveToWidget=3458764622260443856&cot=14
+      url: 'https://miro.com/app/board/uXjVIR9vsa8=/?moveToWidget=3458764622260443856&cot=14'
   - name: product
     description: API part related with Product interaction between Kaucja and RVM providers
     externalDocs:
       description: Use Cases Available under miro Board
-      url: https://miro.com/app/board/uXjVIR9vsa8=/?moveToWidget=3458764622260443856&cot=14
+      url: 'https://miro.com/app/board/uXjVIR9vsa8=/?moveToWidget=3458764622260443856&cot=14'
 info:
   title: RVM Swagger - OpenAPI 3.0
   contact:
@@ -44,6 +46,8 @@ paths:
           description: Invalid input
         '422':
           description: Validation exception
+      x-stoplight:
+        id: 35nqny8k7q39d
     get:
       tags:
         - machine
@@ -71,6 +75,8 @@ paths:
           description: Invalid input
         '422':
           description: Validation exception
+      x-stoplight:
+        id: vlhfuryxrsykg
   '/machine/{id}/unblock':
     put:
       tags:
@@ -91,6 +97,8 @@ paths:
           description: Invalid input
         '422':
           description: Validation exception
+      x-stoplight:
+        id: qodfbkmaqt7j5
   '/machine/{id}':
     delete:
       tags:
@@ -111,6 +119,8 @@ paths:
           description: Invalid input
         '422':
           description: Validation exception
+      x-stoplight:
+        id: yqbj8ha1c5o2p
     get:
       tags:
         - machine
@@ -137,6 +147,8 @@ paths:
           description: Invalid input
         '422':
           description: Validation exception
+      x-stoplight:
+        id: 7cizixnah104k
   /transaction:
     get:
       tags:
@@ -199,6 +211,8 @@ paths:
           description: Invalid input
         '422':
           description: Validation exception
+      x-stoplight:
+        id: 9jlaedwrqzo5n
   '/transaction/{id}':
     get:
       tags:
@@ -225,6 +239,8 @@ paths:
           description: Invalid input
         '422':
           description: Validation exception
+      x-stoplight:
+        id: jyyegnihghexq
   '/transaction/{id}/confirmation':
     put:
       tags:
@@ -245,6 +261,8 @@ paths:
           description: Invalid input
         '422':
           description: Validation exception
+      x-stoplight:
+        id: sw1i2ci6d2hgr
   /product:
     post:
       tags:
@@ -263,6 +281,8 @@ paths:
           description: Invalid input
         '422':
           description: Validation exception
+      x-stoplight:
+        id: rxi2pcz3px8sq
   /product/bulk:
     post:
       tags:
@@ -283,6 +303,8 @@ paths:
           description: Invalid input
         '422':
           description: Validation exception
+      x-stoplight:
+        id: e3nk1pim9ekam
   /login:
     post:
       tags:
@@ -319,8 +341,8 @@ paths:
                 type: string
         '400':
           description: Invalid username/password supplied
-
-
+      x-stoplight:
+        id: wus8cgma1gami
 components:
   parameters:
     Pagelength:
@@ -381,6 +403,8 @@ components:
           type: string
           format: uri
           example: 'https://editor.swagger.io/image.jpg'
+      x-stoplight:
+        id: cnb0gh3fuj6rv
     Label:
       type: object
       properties:
@@ -392,6 +416,8 @@ components:
           type: string
           format: binary
           example: 'https://editor.swagger.io/LabelImage.jpg'
+      x-stoplight:
+        id: 45si4ipq999wv
     SleeveMaterialCode:
       type: integer
       enum:
@@ -407,6 +433,8 @@ components:
         * 2 - Polyester
         * 3 - Polypropylene
         * 4 - PVC
+      x-stoplight:
+        id: 3bw4h6u7da5sj
     ProductStatusEnum:
       type: integer
       enum:
@@ -418,6 +446,8 @@ components:
         * 1 - Passive reject. Item is in the market. RVM is waiting for an approval to start taking this product.
         * 2 - Accept.
         * 3 - Active Reject. Item should be rejected by RVM
+      x-stoplight:
+        id: rv9ef4e6uaxd5
     ColorEnum:
       type: integer
       enum:
@@ -433,6 +463,8 @@ components:
         * 3 - Green
         * 4 - Blue
         * 5 - Other
+      x-stoplight:
+        id: nofcakubupfnp
     Weight:
       type: object
       properties:
@@ -451,6 +483,8 @@ components:
         max:
           type: number
           description: maximal acceptable weight in grams
+      x-stoplight:
+        id: e7m22kkt2tc0z
     Packaging:
       type: object
       properties:
@@ -462,6 +496,8 @@ components:
           $ref: '#/components/schemas/ColorEnum'
         cap_color_id:
           $ref: '#/components/schemas/ColorEnum'
+      x-stoplight:
+        id: vlfzdiv3tufua
     Diameters:
       type: object
       properties:
@@ -481,6 +517,8 @@ components:
         diagonal:
           type: number
           description: diagonal of product in mm
+      x-stoplight:
+        id: 4vxaqaoy95556
     PostMachine:
       type: object
       properties:
@@ -498,6 +536,8 @@ components:
           x-stoplight:
             id: 8pp4kxobuhvlh
       x-internal: false
+      x-stoplight:
+        id: fvntp98cbkrsr
     ClientSecret:
       type: object
       properties:
@@ -509,6 +549,8 @@ components:
           type: string
         grant_type:
           type: string
+      x-stoplight:
+        id: ixzfjv3jjg41e
     Transaction:
       type: object
       properties:
@@ -543,6 +585,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Container'
+      x-stoplight:
+        id: ztp35l082kfcr
     Container:
       type: object
       description: |
@@ -578,6 +622,8 @@ components:
           example: false
         rejection_cause_code:
           $ref: '#/components/schemas/RejectionCauseEnum'
+      x-stoplight:
+        id: lyfi24ssnqimu
     RejectionCauseEnum:
       type: integer
       enum:
@@ -597,6 +643,8 @@ components:
         * 4 - Barcode missing
         * 5 - Invalid EAN
         * 6 - Container not accepted
+      x-stoplight:
+        id: 1d5a6etwvnhw3
     Machine:
       type: object
       properties:
@@ -625,6 +673,8 @@ components:
         last_transaction:
           type: string
           format: date-time
+      x-stoplight:
+        id: 8g021fi6n2gxd
     Health:
       type: object
       properties:
@@ -636,6 +686,8 @@ components:
         last_cleaning_date:
           type: string
           format: date-time
+      x-stoplight:
+        id: sj89q9h8uo3dh
     WasteTypeEnum:
       type: integer
       enum:
@@ -671,6 +723,8 @@ components:
         * 9 - HDPE
 
         * 10 - Plastic
+      x-stoplight:
+        id: zgbxwnxgusin1
     BinPost:
       type: object
       properties:
@@ -681,6 +735,8 @@ components:
           example: 30
         max_containers:
           type: integer
+      x-stoplight:
+        id: nthgfqrhpl4tl
     Bin:
       type: object
       properties:
@@ -702,6 +758,8 @@ components:
           example: 10.12
         containers:
           type: integer
+      x-stoplight:
+        id: r7i834ho3kwqk
     Location:
       type: object
       properties:
@@ -720,6 +778,8 @@ components:
           type: string
           format: address
           example: Dąbrowska 20
+      x-stoplight:
+        id: k1p0x39errlzd
     Order:
       type: object
       properties:
@@ -750,6 +810,8 @@ components:
           type: boolean
       xml:
         name: order
+      x-stoplight:
+        id: gm6s3q40404of
   securitySchemes:
     petstore_auth:
       type: oauth2
