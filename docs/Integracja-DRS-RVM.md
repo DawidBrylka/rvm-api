@@ -91,9 +91,10 @@ This document is describing API expected by Kaucja.pl for contact between RVM an
 [POST /transaction](drs-openapi.yaml/paths/~1product/post)
 
 ### Lost data sync
-**RVM**
 
 ![LostDataSync.png](../assets/images/LostDataSync.png)
+
+**RVM**
 
 [**GET - /transaction**](rvm-openapi.yaml/paths/~1transaction/get)
 
