@@ -32,6 +32,10 @@ Spis treści
 
 This document is describing API expected by Kaucja.pl for contact between RVM and Kaucja.pl core DRS system.
 
+Desired communcation format by Kacuja Pl looks like:
+
+![InteractionModel.jpg](../assets/images/InteractionModel.jpg)
+
 # API list
 
 ## Data exchange with Deposit Product Catalogue (Katalog Produktów Kaucyjnych)
