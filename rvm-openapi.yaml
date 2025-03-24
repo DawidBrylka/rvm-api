@@ -33,6 +33,14 @@ paths:
       responses:
         '200':
           description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
         '400':
           description: Invalid input
         '422':
@@ -513,6 +521,10 @@ components:
     PostMachine:
       type: object
       properties:
+        serial_number:
+          type: string
+          x-stoplight:
+            id: 8pp4kxobuhvlh
         name:
           type: string
           example: RVM AT SOMEWHERE
@@ -522,10 +534,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BinPost'
-        serial_number:
-          type: string
-          x-stoplight:
-            id: 8pp4kxobuhvlh
       x-internal: false
       x-stoplight:
         id: fvntp98cbkrsr
