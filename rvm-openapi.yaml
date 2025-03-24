@@ -4,21 +4,12 @@ x-stoplight:
 tags:
   - name: machine
     description: Api part strictly related to RVM machines
-    externalDocs:
-      description: Use case available under Miro Board
-      url: 'https://miro.com/app/board/uXjVIR9vsa8=/?moveToWidget=3458764622259665808&cot=14'
   - name: transaction
     description: API part related with Transaction interaction between Kaucja and RVM providers
-    externalDocs:
-      description: Use Cases Available under miro Board
-      url: 'https://miro.com/app/board/uXjVIR9vsa8=/?moveToWidget=3458764622260443856&cot=14'
   - name: product
     description: API part related with Product interaction between Kaucja and RVM providers
-    externalDocs:
-      description: Use Cases Available under miro Board
-      url: 'https://miro.com/app/board/uXjVIR9vsa8=/?moveToWidget=3458764622260443856&cot=14'
 info:
-  title: RVM Swagger - OpenAPI 3.0
+  title: RVM API Representation
   contact:
     email: dawid.brylka@kaucja.pl
   license:
@@ -252,7 +243,7 @@ paths:
           required: true
           schema:
             type: string
-      summary: Confirm that transaction is processed on DRS side
+      summary: Get Transaction
       description: Get Transaction
       responses:
         '200':
