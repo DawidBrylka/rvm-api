@@ -38,21 +38,27 @@ This document is describing API expected by Kaucja.pl for contact between RVM an
 
 ### New Product added
 
-DRS
+![NewProductAdded.png](../assets/images/NewProductAdded.png)
+
+**DRS**
 
 • [POST - /product](drs-openapi.yaml/paths/~1product/get)
 
-RVM
+**RVM**
 
 • [POST - /product](rvm-openapi.yaml/paths/~1product/post)
 
 ### Deposit Product Catalogue sync
+
+![DepositCatalogueSync.png](../assets/images/DepositCatalogueSync.png)
 
 **DRS**
 
 • [GET - /product](drs-openapi.yaml/paths/~1product/get)
 
 ## RVM status healthcheck
+
+![RVMHealthcheck.png](../assets/images/RVMHealthcheck.png)
 
 **RVM**
 
@@ -62,11 +68,15 @@ RVM
 
 **RVM**
 
+![RVMRemoval.png](../assets/images/RVMRemoval.png)
+
 [DELETE - /machine/{id}/delete](rvm-openapi.yaml/paths/~1machine~1{id}/delete)
 
 ## New RVM registration
 
 **RVM**
+
+![RVMRegistration.png](../assets/images/RVMRegistration.png)
 
 [POST - /machine](rvm-openapi.yaml/paths/~1machine/post)
 
@@ -76,15 +86,14 @@ RVM
 
 **DRS**
 
-[POST /transaction](DRS.html#api-Transaction-transactionPost)
+![TransactionDataExchange.png](../assets/images/TransactionDataExchange.png)
+
+[POST /transaction](drs-openapi.yaml/paths/~1product/post)
 
 ### Lost data sync
-
-**DRS**
-
-[**POST - /transaction**](DRS.html#api-Transaction-transactionBulkPost)
-
 **RVM**
+
+![LostDataSync.png](../assets/images/LostDataSync.png)
 
 [**GET - /transaction**](rvm-openapi.yaml/paths/~1transaction/get)
 
@@ -98,20 +107,32 @@ The input to the process can be both information from the RVM that the bag is fu
 
 For an RVM that has an external scanner, the process of scanning the seal and transmitting information about it to the DRS Operator is done using it.
 
+![RVMWithScanner.png](../assets/images/RVMWithScanner.png)
+
+
+**DRS**
+
+[POST - bag-is-full](drs-openapi.yaml/paths/~1bag-is-full/post)
+
+[POST - bag-replacement](drs-openapi.yaml/paths/~1bag-replacement/post)
+
 ### RVM without scanner
 
 For RVMs that do not have an external scanner, the process of scanning the seal is done via a mobile application provided by the DRS Operator, or an equivalent device.
 
 It is important to understand that in order to keep track of all bags only after receiving confirmation of sealing from mobile app RVM should be unblocked.
 
-DRS
+![RVMNoScanner.png](../assets/images/RVMNoScanner.png)
 
-[POST - bag-is-full](DRS.html#api-Rvm-bagIsFullPost)
 
-[POST - bag-replacement](DRS.html#api-Rvm-bagReplacementPost)
+**DRS**
 
-[POST - bag-seal (between PZ - DRS)](DRS.html#api-Rvm-bagSealPost)
+[POST - bag-is-full](drs-openapi.yaml/paths/~1bag-is-full/post)
 
-RVM
+[POST - bag-replacement](drs-openapi.yaml/paths/~1bag-replacement/post)
+
+[POST - bag-seal (between PZ - DRS)](drs-openapi.yaml/paths/~1bag-seal/post)
+
+**RVM**
 
 [PUT - /machine/{id}/unblock](rvm-openapi.yaml/paths/~1machine~1{id}~1unblock/put)

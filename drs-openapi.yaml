@@ -1,0 +1,638 @@
+openapi: 3.0.3
+x-stoplight:
+  id: x0k3zcu2ovr68
+info:
+  title: DRS API Representation
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
+servers:
+  - url: 'https://drs.kaucja.pl/api/v3'
+paths:
+  /product:
+    post:
+      tags:
+        - product
+      summary: Add or update product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductPost'
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+    get:
+      tags:
+        - products
+      summary: Get product data
+      parameters:
+        - name: sendImages
+          in: query
+          description: Shall we send images to RVM
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: updatedAfter
+          in: query
+          description: Display items updated After
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: createdAfter
+          in: query
+          description: Display items created After
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - $ref: '#/components/parameters/Startindex'
+        - $ref: '#/components/parameters/Pagelength'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pageNo:
+                    type: integer
+                  pageSize:
+                    type: integer
+                  totalItemCount:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+      x-stoplight:
+        id: i8big2em2kghv
+  '/product/{ean}':
+    get:
+      tags:
+        - products
+      summary: Get product data
+      parameters:
+        - name: sendImages
+          in: query
+          description: Shall we send images to RVM
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: ean
+          in: path
+          description: Ean that should be synced
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+      x-stoplight:
+        id: 5o6n5p23xf20f
+  /transaction:
+    post:
+      tags:
+        - transaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+      summary: Post single Transaction
+      description: Post single Transaction
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+      x-stoplight:
+        id: sbyw8qv8u7gj8
+  /transaction/bulk:
+    post:
+      tags:
+        - transaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Transaction'
+      summary: Post multiple Transaction
+      description: Post multiple Transaction
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+      x-stoplight:
+        id: zpsfrh56cuuti
+  /bag-replacement:
+    post:
+      tags:
+        - rvm
+      summary: Trigger an replacement action for RVM
+      description: Trigger an replacement action for RVM
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BagReplacement'
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+      x-stoplight:
+        id: 3r55dg8tllqbx
+  /bag-seal:
+    post:
+      tags:
+        - rvm
+      summary: Call performed when bag seal is performed
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BagSeal'
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+      x-stoplight:
+        id: lqz2mv777xppe
+  /bag-is-full:
+    post:
+      tags:
+        - rvm
+      summary: Call performed when bag is full
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BagFull'
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+      x-stoplight:
+        id: d1asmq08b0uj1
+
+components:
+  parameters:
+    Pagelength:
+      name: pagelength
+      in: query
+      description: Number of records to return
+      schema:
+        type: number
+    Startindex:
+      name: startindex
+      in: query
+      description: Start index for paging
+      schema:
+        type: number
+  schemas:
+    WasteTypeEnum:
+      type: integer
+      enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 10
+      description: |
+        Descriptor for Waste Type <br>
+        Where:
+        * 1 - PET
+
+        * 2 - Glass
+
+        * 3 - Steel
+
+        * 4 - Aluminium
+
+        * 5 - Steel with Aluminium
+
+        * 6 - Steel with widget
+
+        * 7 - Aluminium with widget
+
+        * 8 - Other
+
+        * 9 - HDPE
+
+        * 10 - Plastic
+      x-stoplight:
+        id: 3unh3056vk4oi
+    SleeveMaterialCode:
+      type: integer
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+      description: |
+        Possible materials for bottle labels with corresponding integer IDs:
+        * 0 - Paper
+        * 1 - Vinyl
+        * 2 - Polyester
+        * 3 - Polypropylene
+        * 4 - PVC
+      x-stoplight:
+        id: 29qz1jfi9abe6
+    RejectionCauseEnum:
+      type: integer
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+      description: |
+        Descriptor for Rejection Cause <br> Where:
+        * 0 - All Good
+        * 1 - Fraudalent behavior detected
+        * 2 - Container crushed
+        * 3 - Barcode damaged
+        * 4 - Barcode missing
+        * 5 - Invalid EAN
+        * 6 - Container not accepted
+      x-stoplight:
+        id: 6b6u81j5m0oc2
+    ColorEnum:
+      type: integer
+      enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+      description: |
+        Descriptor for ColorID <br> Where:
+        * 1 - Clear
+        * 2 - Brown
+        * 3 - Green
+        * 4 - Blue
+        * 5 - Other
+      x-stoplight:
+        id: zgvd9d6cx1n0h
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        rvm_id:
+          type: string
+          format: uuid
+        transaction_blocked:
+          type: boolean
+          example: false
+        volume:
+          type: integer
+          example: 20
+        total_weight:
+          type: number
+          example: 12.11
+        transaction_start_time:
+          type: string
+          format: date-time
+        transaction_end_time:
+          type: string
+          format: date-time
+        total_accepted:
+          type: integer
+          example: 20
+        total_rejected:
+          type: integer
+          example: 1
+        containers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Container'
+      x-stoplight:
+        id: c4o4yd2cb1cjo
+    BagSeal:
+      type: object
+      properties:
+        seal_number:
+          type: string
+        bag_id:
+          type: string
+          format: uuid
+        seal_time:
+          type: string
+          format: date-time
+      x-stoplight:
+        id: cyqmwjxrizrej
+    BagFull:
+      type: object
+      properties:
+        rvm_id:
+          type: string
+          format: uuid
+        bin_id:
+          type: string
+          format: uuid
+        overflow_date:
+          type: string
+          format: date-time
+      x-stoplight:
+        id: ddq57l9gf506c
+    ProductPost:
+      type: object
+      required:
+        - ean
+        - name
+        - published_name
+        - market
+        - drs_operator_id
+        - product_status_id
+        - packaging
+        - diameters
+        - label
+        - weight
+      properties:
+        ean:
+          type: string
+          format: gid
+        name:
+          type: string
+        published_name:
+          type: string
+        market:
+          type: object
+          properties:
+            entry_date:
+              type: string
+              format: date-time
+            exit_date:
+              type: string
+              format: date-time
+        drs_operator_id:
+          type: integer
+          description: ID of DRS operator
+        product_status_id:
+          type: integer
+        packaging:
+          $ref: '#/components/schemas/Packaging'
+        diameters:
+          $ref: '#/components/schemas/Diameters'
+        label:
+          $ref: '#/components/schemas/Label'
+        weight:
+          $ref: '#/components/schemas/Weight'
+        image:
+          type: string
+          format: binary
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        ean:
+          type: string
+          format: gid
+        name:
+          type: string
+        published_name:
+          type: string
+        creation_date:
+          type: string
+          format: date-time
+        updated_date:
+          type: string
+          format: date-time
+        market:
+          type: object
+          properties:
+            entry_date:
+              type: string
+              format: date-time
+            exit_date:
+              type: string
+              format: date-time
+        drs_operator_id:
+          type: integer
+          description: ID of DRS operator
+        product_status_id:
+          type: integer
+        packaging:
+          $ref: '#/components/schemas/Packaging'
+        diameters:
+          $ref: '#/components/schemas/Diameters'
+        label:
+          $ref: '#/components/schemas/Label'
+        weight:
+          $ref: '#/components/schemas/Weight'
+        image:
+          type: string
+          format: binary
+      x-stoplight:
+        id: r6oyzy0txsfku
+    Label:
+      type: object
+      properties:
+        material_code:
+          $ref: '#/components/schemas/SleeveMaterialCode'
+        sleeve_label:
+          type: boolean
+        image:
+          type: string
+          format: binary
+      x-stoplight:
+        id: wevouuv5rzcyg
+    Weight:
+      type: object
+      properties:
+        without_cap:
+          type: number
+          description: Weight of bottle without cap in grams
+        with_cap:
+          type: number
+          description: Weight of bottle with cap in grams
+        cap:
+          type: number
+          description: weight of cap in grams
+        min:
+          type: number
+          description: minimal acceptable bottle weight in grams
+        max:
+          type: number
+          description: maximal acceptable weight in grams
+      x-stoplight:
+        id: 2kp6z3666pbsf
+    Packaging:
+      type: object
+      properties:
+        reusable:
+          type: boolean
+        material_code:
+          $ref: '#/components/schemas/WasteTypeEnum'
+        color_id:
+          $ref: '#/components/schemas/ColorEnum'
+        cap_color_id:
+          $ref: '#/components/schemas/ColorEnum'
+      x-stoplight:
+        id: 37a1j4g8nh00w
+    Diameters:
+      type: object
+      properties:
+        volume:
+          type: integer
+          description: Declared volume in ml
+          example: 400
+        height:
+          type: number
+          description: height of product in mm
+        diagonal:
+          type: number
+          description: diagonal of product in mm
+      x-stoplight:
+        id: x67kmnv7cx4h6
+    Container:
+      type: object
+      description: |
+        Returns list of only all taken containers <br> Where multiple records can contain the same ean, but with different rejection codes e.g. <br> { <br>
+          "ean": "123422",<br>
+          "count": 12, <br>
+          "weight": 1.11, <br>
+          "material_code": 1 <br>
+          "is_rejected": false, <br>
+          "rejection_cause_code": 0 <br>
+        }, <br> { <br>
+          "ean": "123422",<br>
+          "count": 1, <br>
+          "weight": 0.11, <br>
+          "material_code": 1 <br>
+          "is_rejected": true, <br>
+          "rejection_cause_code": 2 <br>
+        }, <br>
+      properties:
+        ean:
+          type: string
+          example: '20123123'
+        count:
+          type: integer
+          example: 20
+        weight:
+          type: number
+          example: 0.001
+        material_code:
+          $ref: '#/components/schemas/WasteTypeEnum'
+        is_rejected:
+          type: boolean
+          example: false
+        rejection_cause_code:
+          $ref: '#/components/schemas/RejectionCauseEnum'
+      x-stoplight:
+        id: 17jlqeuuj3i6o
+    ContainerFull:
+      type: object
+      description: |
+        Returns list of only accepted containers <br> Where one record contains only one occurence of EAN e.g. <br> { <br>
+          "ean": "123422",<br>
+          "count": 100, <br>
+          "weight": 21.11 <br>
+        }
+      properties:
+        ean:
+          type: string
+          example: '20123123'
+        count:
+          type: integer
+          example: 20
+        weight:
+          type: number
+          example: 0.001
+      x-stoplight:
+        id: tgu557sdjewef
+    BagReplacement:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: ID of a bag in UUID format
+        rvm_id:
+          type: string
+          format: uuid
+        seal_number:
+          type: string
+          example: <SEAL NUMBER>
+          description: |
+            Optional. If RVM is able to seal bag on it's own it should send us seal number on this particular call.
+        replacement_date:
+          type: string
+          format: date-time
+        bag_weight:
+          type: number
+        container_amount:
+          type: integer
+        related_transactions_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        containers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerFull'
+      x-stoplight:
+        id: ty6l3ytww8zew
