@@ -40,35 +40,35 @@ This document is describing API expected by Kaucja.pl for contact between RVM an
 
 DRS
 
-• [POST - /product](rvm-openapi.yaml/paths/~1machine/post)
+• [POST - /product](drs-openapi.yaml/paths/~1product/get)
 
 RVM
 
-• [POST - /product](https://kaucja.stoplight.io/docs/rvm-api/a4c7ecf770c6d-add-or-update-product)
+• [POST - /product](rvm-openapi.yaml/paths/~1product/post)
 
 ### Deposit Product Catalogue sync
 
 **DRS**
 
-• [GET - /product](DRS.html#api-Products-productGet)
+• [GET - /product](drs-openapi.yaml/paths/~1product/get)
 
 ## RVM status healthcheck
 
 **RVM**
 
-• [GET - /machine](https://kaucja.stoplight.io/docs/rvm-api/7a1d5570a1001-get-all-machine-data)
+• [GET - /machine](rvm-openapi.yaml/paths/~1machine/get)
 
 ## RVM removal
 
 **RVM**
 
-[DELETE - /machine/{id}/delete](https://kaucja.stoplight.io/docs/rvm-api/3b55145e14cda-delete-rvm)
+[DELETE - /machine/{id}/delete](rvm-openapi.yaml/paths/~1machine~1{id}/delete)
 
 ## New RVM registration
 
 **RVM**
 
-[POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/807f60ee83b19-add-new-rvm)
+[POST - /machine](rvm-openapi.yaml/paths/~1machine/post)
 
 ## Transaction data exchange
 
@@ -86,9 +86,9 @@ RVM
 
 **RVM**
 
-[**GET - /transaction**](https://kaucja.stoplight.io/docs/rvm-api/9ff0ca4784379-get-transaction)
+[**GET - /transaction**](rvm-openapi.yaml/paths/~1transaction/get)
 
-[**PUT - /transaction/{}/confirmation**](https://kaucja.stoplight.io/docs/rvm-api/4f2a8c5f717a3-get-transaction)
+[**PUT - /transaction/{}/confirmation**](rvm-openapi.yaml/paths/~1transaction~1{id}~1confirmation/put)
 
 ## Bag replacement
 
@@ -114,4 +114,4 @@ DRS
 
 RVM
 
-[PUT - /machine/{id}/unblock](RVM.html#api-Machine-machineIdUnblockPut)
+[PUT - /machine/{id}/unblock](rvm-openapi.yaml/paths/~1machine~1{id}~1unblock/put)

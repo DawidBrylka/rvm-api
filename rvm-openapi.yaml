@@ -252,7 +252,7 @@ paths:
           required: true
           schema:
             type: string
-      summary: Get Transaction
+      summary: Confirm that transaction is processed on DRS side
       description: Get Transaction
       responses:
         '200':
