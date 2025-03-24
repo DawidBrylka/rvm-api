@@ -1,20 +1,30 @@
 openapi: 3.0.3
+tags:
+  - name: machine
+    description: Api part strictly related to RVM machines
+    externalDocs:
+      description: Use case available under Miro Board
+      url: https://miro.com/app/board/uXjVIR9vsa8=/?moveToWidget=3458764622259665808&cot=14
+  - name: transaction
+    description: API part related with Transaction interaction between Kaucja and RVM providers
+    externalDocs:
+      description: Use Cases Available under miro Board
+      url: https://miro.com/app/board/uXjVIR9vsa8=/?moveToWidget=3458764622260443856&cot=14
+  - name: product
+    description: API part related with Product interaction between Kaucja and RVM providers
+    externalDocs:
+      description: Use Cases Available under miro Board
+      url: https://miro.com/app/board/uXjVIR9vsa8=/?moveToWidget=3458764622260443856&cot=14
 info:
   title: RVM Swagger - OpenAPI 3.0
-  tags:
-    - machine
-  termsOfService: 'http://swagger.io/terms/'
   contact:
-    email: apiteam@swagger.io
+    email: dawid.brylka@kaucja.pl
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
   version: 1.0.11
 externalDocs:
-  description: Find out more about Swagger
-  url: 'http://swagger.io'
-servers:
-  - url: 'https://drs.kaucja.pl/api/v3'
+  description: Find out about expected use cases under
 paths:
   /machine:
     post:
@@ -163,8 +173,8 @@ paths:
           required: false
           schema:
             type: integer
-        - $ref: '#/parameters/Startindex'
-        - $ref: '#/parameters/Pagelength'
+        - $ref: '#/components/parameters/Startindex'
+        - $ref: '#/components/parameters/Pagelength'
       summary: Get All Transactions
       description: Get All Transactions
       responses:
@@ -231,87 +241,6 @@ paths:
       responses:
         '200':
           description: Successful operation
-        '400':
-          description: Invalid input
-        '422':
-          description: Validation exception
-  '/voucher/{id}':
-    get:
-      tags:
-        - voucher
-      parameters:
-        - name: id
-          in: path
-          description: ID/SN of a Voucher
-          required: true
-          schema:
-            type: string
-      summary: Get Transaction
-      description: Get Transaction
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Voucher'
-        '400':
-          description: Invalid input
-        '422':
-          description: Validation exception
-  /voucher:
-    get:
-      tags:
-        - voucher
-      parameters:
-        - name: rvmId
-          in: query
-          description: Vouchers invoiced from particular RVM
-          required: false
-          schema:
-            type: string
-        - name: from
-          in: query
-          description: Vouchers invoiced from particular Date
-          required: false
-          schema:
-            type: string
-            format: date-time
-        - name: to
-          in: query
-          description: Vouchers invoiced to particular Date
-          required: false
-          schema:
-            type: string
-            format: date-time
-        - name: transactionCount
-          in: query
-          description: Max number of transactions
-          required: false
-          schema:
-            type: integer
-        - $ref: '#/parameters/Startindex'
-        - $ref: '#/parameters/Pagelength'
-      summary: Get All Vouchers
-      description: Get All Vouchers
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  pageNo:
-                    type: integer
-                  pageSize:
-                    type: integer
-                  totalItemCount:
-                    type: integer
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Voucher'
         '400':
           description: Invalid input
         '422':
@@ -390,28 +319,22 @@ paths:
                 type: string
         '400':
           description: Invalid username/password supplied
-parameters:
-  Pagelength:
-    name: pagelength
-    in: query
-    description: Number of records to return
-    type: number
-  Startindex:
-    name: startindex
-    in: query
-    description: Start index for paging
-    type: number
-definitions:
-  PaginationResponse:
-    type: object
-    properties:
-      totalrecords:
-        type: number
-      displayrecords:
-        type: number
-    xml:
-      name: PaginationResponsedata
+
+
 components:
+  parameters:
+    Pagelength:
+      name: pagelength
+      in: query
+      description: Number of records to return
+      schema:
+        type: number
+    Startindex:
+      name: startindex
+      in: query
+      description: Start index for paging
+      schema:
+        type: number
   schemas:
     Product:
       type: object
@@ -616,27 +539,10 @@ components:
         total_rejected:
           type: integer
           example: 1
-        # voucherId:
-        #   type: string
-        #   format: uuid
         containers:
           type: array
           items:
             $ref: '#/components/schemas/Container'
-    Voucher:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        currency:
-          type: string
-          example: PLN
-        amount:
-          type: number
-          example: 11.11
-        used:
-          type: boolean
     Container:
       type: object
       description: |
