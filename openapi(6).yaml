@@ -1,0 +1,869 @@
+openapi: 3.0.3
+info:
+  title: RVM Swagger - OpenAPI 3.0
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://drs.kaucja.pl/api/v3
+paths:
+  /machine:
+    post:
+      tags:
+        - machine
+      summary: "Add new RVM"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostMachine'
+              
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+    get:
+      tags:
+        - machine
+      summary: "Get All Machine data"
+      description: "Get Machine data"
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pageNo:
+                    type: integer
+                  pageSize:
+                    type: integer
+                  totalItemCount:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Machine'   
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /machine/{id}/unblock:
+    put:
+      tags:
+        - machine
+      summary: "Unblock RVM to working state"
+      description: "Unblock RVM to working state"
+      parameters:
+        - name: id
+          in: path
+          description: 'ID/SN of a Machine'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /machine/{id}:
+    delete:
+      tags:
+        - machine
+      summary: "Delete RVM"
+      description: "Delete RVM"
+      parameters:
+        - name: id
+          in: path
+          description: 'ID/SN of a Machine'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception  
+    get:
+      tags:
+        - machine
+      summary: "Get Machine data"
+      description: "Get Machine data"
+      parameters:
+        - name: id
+          in: path
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Machine'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Machine'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+          
+  /transaction:
+    get:
+      tags:
+        - transaction
+      parameters:
+        - name: rvmId
+          in: query
+          description: 'Transactions from particular RVM'
+          required: false
+          schema:
+            type: string
+        - name: delivered
+          in: query
+          description: 'Transactions from particular RVM'
+          schema:
+            type: boolean
+        - name: from
+          in: query
+          description: 'Transactions from particular Date'
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: to
+          in: query
+          description: 'Transactions to particular Date'
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: transactionCount
+          in: query
+          description: 'Max number of transactions'
+          required: false
+          schema:
+            type: integer
+        - $ref: "#/parameters/Startindex"
+        - $ref: "#/parameters/Pagelength"
+      summary: Get All Transactions
+      description: Get All Transactions
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pageNo:
+                    type: integer
+                  pageSize:
+                    type: integer
+                  totalItemCount:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Transaction'          
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /transaction/{id}:
+    get:
+      tags:
+        - transaction
+      parameters:
+        - name: id
+          in: path
+          description: 'ID of a Transaction'
+          required: true
+          schema:
+            type: string
+      summary: Get Transaction
+      description: Get Transaction
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'          
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /transaction/{id}/confirmation:
+    put:
+      tags:
+        - transaction
+      parameters:
+        - name: id
+          in: path
+          description: 'ID of a Transaction'
+          required: true
+          schema:
+            type: string
+      summary: Get Transaction
+      description: Get Transaction
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /voucher/{id}:
+    get:
+      tags:
+        - voucher
+      parameters:
+        - name: id
+          in: path
+          description: 'ID/SN of a Voucher'
+          required: true
+          schema:
+            type: string
+      summary: Get Transaction
+      description: Get Transaction
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Voucher'          
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /voucher:
+    get:
+      tags:
+        - voucher
+      parameters:
+        - name: rvmId
+          in: query
+          description: 'Vouchers invoiced from particular RVM'
+          required: false
+          schema:
+            type: string
+        - name: from
+          in: query
+          description: 'Vouchers invoiced from particular Date'
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: to
+          in: query
+          description: 'Vouchers invoiced to particular Date'
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: transactionCount
+          in: query
+          description: 'Max number of transactions'
+          required: false
+          schema:
+            type: integer
+        - $ref: "#/parameters/Startindex"
+        - $ref: "#/parameters/Pagelength"
+      summary: Get All Vouchers
+      description: Get All Vouchers
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pageNo:
+                    type: integer
+                  pageSize:
+                    type: integer
+                  totalItemCount:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Voucher'          
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /product:
+    post:
+      tags:
+        - product
+      summary: Add or update product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product' 
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /product/bulk:
+    post:
+      tags:
+        - product
+      summary: Add or update product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Product' 
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+        
+  /login:
+    post:
+      tags:
+        - user
+      summary: Logs user into the system
+      description: ''
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientSecret'  
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            X-Rate-Limit:
+              description: calls per hour allowed by the user
+              schema:
+                type: integer
+                format: int32
+            X-Expires-After:
+              description: date in UTC when token expires
+              schema:
+                type: string
+                format: date-time
+          content:
+            application/xml:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Invalid username/password supplied
+ 
+parameters:
+    Pagelength:
+      name: pagelength
+      in: query
+      description: Number of records to return
+      type: number
+    Startindex:
+      name: startindex
+      in: query
+      description: Start index for paging
+      type: number
+definitions:
+  PaginationResponse:
+    type: object
+    properties:
+      totalrecords:
+        type: number
+      displayrecords:
+         type: number
+    xml:
+       name: PaginationResponsedata
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        ean:
+          type: string
+          format: gid
+        name:
+          type: string
+        published_name:
+          type: string
+        creation_date:
+          type: string
+          format: date-time
+        updated_date:
+          type: string
+          format: date-time
+        market:
+          type: object
+          properties:
+            entry_date:
+              type: string
+              format: date-time
+            exit_date:
+              type: string
+              format: date-time
+        drs_operator_id:
+          type: integer
+          description: ID of DRS operator
+        product_status_id:
+          $ref: '#/components/schemas/ProductStatusEnum'
+        packaging:
+          $ref: '#/components/schemas/Packaging'
+        diameters:
+          $ref: '#/components/schemas/Diameters'
+        label:
+          $ref: '#/components/schemas/Label'
+        weight:
+          $ref: '#/components/schemas/Weight'
+        image:
+          type: string
+          format: uri
+          example: https://editor.swagger.io/image.jpg
+    
+    Label:
+      type: object
+      properties:
+        material_code:
+          $ref: '#/components/schemas/SleeveMaterialCode'
+        sleeve_label:
+          type: boolean
+        image:
+          type: string
+          format: binary
+          example: https://editor.swagger.io/LabelImage.jpg
+    
+    SleeveMaterialCode:
+      type: integer
+      enum:
+        - 0  # Paper
+        - 1  # Vinyl
+        - 2  # Polyester
+        - 3  # Polypropylene
+        - 4  # PVC
+      description: |
+        Possible materials for bottle labels with corresponding integer IDs:
+        * 0 - Paper
+        * 1 - Vinyl
+        * 2 - Polyester
+        * 3 - Polypropylene
+        * 4 - PVC
+    
+    ProductStatusEnum:
+      type: integer
+      enum: [1, 2, 3]
+      description: >
+        Descriptor for Product Status <br>
+        Where:
+        
+        * 1 - Passive reject. Item is in the market. RVM is waiting for an approval to start taking this product.
+        
+        * 2 - Accept.
+        
+        * 3 - Active Reject. Item should be rejected by RVM
+    
+    ColorEnum:
+      type: integer
+      enum: [1, 2, 3, 4, 5]
+      description: >
+        Descriptor for ColorID <br>
+        Where:
+        
+        * 1 - Clear
+        
+        * 2 - Brown
+        
+        * 3 - Green
+        
+        * 4 - Blue
+        
+        * 5 - Other
+    
+    Weight:
+      type: object
+      properties:
+        without_cap:
+          type: number
+          description: Weight of bottle without cap in grams
+        with_cap:
+          type: number
+          description: Weight of bottle with cap in grams
+        cap:
+          type: number
+          description: weight of cap in grams
+        min:
+          type: number
+          description: minimal acceptable bottle weight in grams
+        max:
+          type: number
+          description: maximal acceptable weight in grams
+    Packaging:
+      type: object
+      properties:
+        reusable:
+          type: boolean
+        material_code:
+          $ref: '#/components/schemas/WasteTypeEnum'
+        color_id:
+          $ref: '#/components/schemas/ColorEnum'
+        cap_color_id:
+          $ref: '#/components/schemas/ColorEnum'
+        
+    Diameters:
+      type: object
+      properties:
+        volume:
+          type: integer
+          description: Declared volume in ml
+          example: 400
+        width:
+          type: number
+          description: width of product in mm
+        height:
+          type: number
+          description: height of product in mm
+        depth:
+          type: number
+          description: depth of product in mm
+        diagonal:
+          type: number
+          description: diagonal of product in mm
+    PostMachine:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "RVM AT SOMEWHERE"
+        location:
+          $ref: '#/components/schemas/Location' 
+        bins:
+          type: array
+          items:
+            $ref: '#/components/schemas/BinPost'
+
+    ClientSecret:
+      type: object
+      properties:
+        client_id:
+          type: string
+        client_secret:
+          type: string
+        scope:
+          type: string
+        grant_type:
+          type: string
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        rvm_id:
+          type: string
+          format: uuid
+        transaction_blocked:
+          type: boolean
+          example: false
+        volume:
+          type: integer
+          example: 20
+        total_weight:
+          type: number
+          example: 12.11
+        transaction_start_time:
+          type: string
+          format: date-time
+        transaction_end_time:
+          type: string
+          format: date-time
+        total_accepted:
+          type: integer
+          example: 20
+        total_rejected:
+          type: integer
+          example: 1
+        # voucherId:
+        #   type: string
+        #   format: uuid
+        containers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Container'
+    
+    Voucher:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        currency: 
+          type: string
+          example: PLN
+        amount:
+          type: number
+          example: 11.11
+        used:
+          type: boolean
+          
+        
+    Container:
+      type: object
+      description: >
+        Returns list of only all taken containers <br>
+        Where multiple records can contain the same ean, but with different rejection codes e.g.
+        <br>
+        { <br>
+          "ean": "123422",<br>
+          "count": 12, <br>
+          "weight": 1.11, <br>
+          "material_code": 1 <br>
+          "is_rejected": false, <br>
+          "rejection_cause_code": 0 <br>
+        }, <br>
+        { <br>
+          "ean": "123422",<br>
+          "count": 1, <br>
+          "weight": 0.11, <br>
+          "material_code": 1 <br>
+          "is_rejected": true, <br>
+          "rejection_cause_code": 2 <br>
+        }, <br>
+      properties:
+        ean:
+          type: string
+          example: "20123123"
+        count:
+          type: integer
+          example: 20
+        weight:
+          type: number
+          example: 0.001
+        material_code:
+          $ref: '#/components/schemas/WasteTypeEnum'
+        is_rejected:
+          type: boolean
+          example: false
+        rejection_cause_code:
+          $ref: '#/components/schemas/RejectionCauseEnum'
+    
+    RejectionCauseEnum:
+      type: integer
+      enum: [0, 1, 2, 3, 4, 5, 6]
+      description: >
+        Descriptor for Rejection Cause <br>
+        Where:
+        
+        * 0 - All Good
+        
+        * 1 - Fraudalent behavior detected
+        
+        * 2 - Container crushed
+        
+        * 3 - Barcode damaged
+        
+        * 4 - Barcode missing
+        
+        * 5 - Invalid EAN
+        
+        * 6 - Container not accepted
+    
+    Machine:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: "RVM AT SOMEWHERE"
+        location:
+          $ref: '#/components/schemas/Location'
+        health:
+          $ref: '#/components/schemas/Health'
+        bins:
+          type: array
+          items:
+            $ref: '#/components/schemas/Bin'
+        ean_sync_date:
+          type: string
+          format: date-time
+        last_transaction:
+          type: string
+          format: date-time
+    Health:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          example: 0
+        clean:
+          type: boolean
+        last_cleaning_date:
+          type: string
+          format: date-time
+          
+    WasteTypeEnum:
+      type: integer
+      enum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      description: |
+        Descriptor for Waste Type <br>
+        Where:
+        * 1 - PET
+        
+        * 2 - Glass
+        
+        * 3 - Steel
+        
+        * 4 - Aluminium
+        
+        * 5 - Steel with Aluminium
+        
+        * 6 - Steel with widget
+        
+        * 7 - Aluminium with widget
+        
+        * 8 - Other
+        
+        * 9 - HDPE
+        
+        * 10 - Plastic
+    
+    BinPost:
+      type: object
+      properties:
+        waste_type:
+          $ref: '#/components/schemas/WasteTypeEnum'
+        max_weight:
+          type: number
+          example: 30
+        max_containers:
+          type: integer
+    
+    Bin:
+      type: object
+      properties:
+        is_full:
+          type: boolean
+        waste_type:
+          $ref: '#/components/schemas/WasteTypeEnum'
+        last_emptied:
+          type: string
+          example: "2021-02-12T11:21:33Z"
+        last_full:
+          type: string
+          example: "2021-02-11T11:21:33Z"
+        max_weight:
+          type: number
+          example: 30
+        current_weight:
+          type: number
+          example: 10.12
+        containers:
+          type: integer
+        
+    Location:
+      type: object
+      properties:
+        city:
+          type: string
+          example: Szczecin
+        zipcode:
+          type: string
+          format: zipcode
+          example: 11-111
+        country:
+          type: string
+          format: country
+          example: Polska
+        address:
+          type: string
+          format: address
+          example: Dąbrowska 20
+          
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        petId:
+          type: integer
+          format: int64
+          example: 198772
+        quantity:
+          type: integer
+          format: int32
+          example: 7
+        shipDate:
+          type: string
+          format: date-time
+        status:
+          type: string
+          description: Order Status
+          example: approved
+          enum:
+            - placed
+            - approved
+            - delivered
+        complete:
+          type: boolean
+      xml:
+        name: order
+
+  
+  securitySchemes:
+    petstore_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
+          scopes:
+            write:pets: modify pets in your account
+            read:pets: read your pets
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
