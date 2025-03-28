@@ -337,28 +337,28 @@ components:
         id:
           type: string
           format: uuid
-        rvm_id:
+        rvmId:
           type: string
           format: uuid
-        transaction_blocked:
+        transactionBlocked:
           type: boolean
           example: false
         volume:
           type: integer
           example: 20
-        total_weight:
+        totalWeight:
           type: number
           example: 12.11
-        transaction_start_time:
+        transactionStartTime:
           type: string
           format: date-time
-        transaction_end_time:
+        transactionEndTime:
           type: string
           format: date-time
-        total_accepted:
+        totalAccepted:
           type: integer
           example: 20
-        total_rejected:
+        totalRejected:
           type: integer
           example: 1
         containers:
@@ -370,12 +370,12 @@ components:
     BagSeal:
       type: object
       properties:
-        seal_number:
+        sealNumber:
           type: string
-        bag_id:
+        bagId:
           type: string
           format: uuid
-        seal_time:
+        sealTime:
           type: string
           format: date-time
       x-stoplight:
@@ -383,13 +383,13 @@ components:
     BagFull:
       type: object
       properties:
-        rvm_id:
+        rvmId:
           type: string
           format: uuid
-        bin_id:
+        binId:
           type: string
           format: uuid
-        overflow_date:
+        overflowDate:
           type: string
           format: date-time
       x-stoplight:
@@ -413,18 +413,18 @@ components:
           format: gid
         name:
           type: string
-        published_name:
+        publishedName:
           type: string
         market:
           type: object
           properties:
-            entry_date:
+            entryDate:
               type: string
               format: date-time
-            exit_date:
+            exitDate:
               type: string
               format: date-time
-        drs_operator_id:
+        drsOperatorId:
           type: integer
           description: ID of DRS operator
         product_status_id:
@@ -451,27 +451,27 @@ components:
           format: gid
         name:
           type: string
-        published_name:
+        publishedName:
           type: string
-        creation_date:
+        creationDate:
           type: string
           format: date-time
-        updated_date:
+        updatedDate:
           type: string
           format: date-time
         market:
           type: object
           properties:
-            entry_date:
+            entryDate:
               type: string
               format: date-time
-            exit_date:
+            exitDate:
               type: string
               format: date-time
-        drs_operator_id:
+        drsOperatorId:
           type: integer
           description: ID of DRS operator
-        product_status_id:
+        productStatusId:
           type: integer
         packaging:
           $ref: '#/components/schemas/Packaging'
@@ -489,9 +489,9 @@ components:
     Label:
       type: object
       properties:
-        material_code:
+        materialCode:
           $ref: '#/components/schemas/SleeveMaterialCode'
-        sleeve_label:
+        sleeveLabel:
           type: boolean
         image:
           type: string
@@ -501,10 +501,10 @@ components:
     Weight:
       type: object
       properties:
-        without_cap:
+        withoutCap:
           type: number
           description: Weight of bottle without cap in grams
-        with_cap:
+        withCap:
           type: number
           description: Weight of bottle with cap in grams
         cap:
@@ -523,11 +523,11 @@ components:
       properties:
         reusable:
           type: boolean
-        material_code:
+        materialCode:
           $ref: '#/components/schemas/WasteTypeEnum'
-        color_id:
+        colorId:
           $ref: '#/components/schemas/ColorEnum'
-        cap_color_id:
+        capColorId:
           $ref: '#/components/schemas/ColorEnum'
       x-stoplight:
         id: 37a1j4g8nh00w
@@ -553,16 +553,16 @@ components:
           "ean": "123422",<br>
           "count": 12, <br>
           "weight": 1.11, <br>
-          "material_code": 1 <br>
-          "is_rejected": false, <br>
-          "rejection_cause_code": 0 <br>
+          "materialCode": 1 <br>
+          "isRejected": false, <br>
+          "rejectionCauseCode": 0 <br>
         }, <br> { <br>
           "ean": "123422",<br>
           "count": 1, <br>
           "weight": 0.11, <br>
-          "material_code": 1 <br>
-          "is_rejected": true, <br>
-          "rejection_cause_code": 2 <br>
+          "materialCode": 1 <br>
+          "isRejected": true, <br>
+          "rejectionCauseCode": 2 <br>
         }, <br>
       properties:
         ean:
@@ -574,12 +574,12 @@ components:
         weight:
           type: number
           example: 0.001
-        material_code:
+        materialCode:
           $ref: '#/components/schemas/WasteTypeEnum'
-        is_rejected:
+        isRejected:
           type: boolean
           example: false
-        rejection_cause_code:
+        rejectionCauseCode:
           $ref: '#/components/schemas/RejectionCauseEnum'
       x-stoplight:
         id: 17jlqeuuj3i6o
@@ -610,22 +610,22 @@ components:
           type: string
           format: uuid
           description: ID of a bag in UUID format
-        rvm_id:
+        rvmId:
           type: string
           format: uuid
-        seal_number:
+        sealNumber:
           type: string
           example: <SEAL NUMBER>
           description: |
             Optional. If RVM is able to seal bag on it's own it should send us seal number on this particular call.
-        replacement_date:
+        replacementDate:
           type: string
           format: date-time
-        bag_weight:
+        bagWeight:
           type: number
-        container_amount:
+        containerAmount:
           type: integer
-        related_transactions_ids:
+        relatedTransactionsIds:
           type: array
           items:
             type: string
