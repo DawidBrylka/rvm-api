@@ -1,33 +1,3 @@
-Spis treści
-
-[API between Kaucja.pl and RVM](#_Toc192864046)
-
-[API list](#_Toc192864047)
-
-[1\. Data exchange from Deposit Product Catalogue (Katalog Produktów Kaucyjnych)](#_Toc192864048)
-
-[1.1. New Product added](#_Toc192864049)
-
-[1.2. Deposit Product Catalogue sync](#_Toc192864050)
-
-[2\. RVM status healthcheck](#_Toc192864051)
-
-[3\. RVM removal](#_Toc192864052)
-
-[4\. New RVM registration](#_Toc192864053)
-
-[5\. Transaction data exchange](#_Toc192864054)
-
-[5.1. Transaction data transfer to DRS](#_Toc192864055)
-
-[5.2. Lost data sync](#_Toc192864056)
-
-[6\. Bag replacement](#_Toc192864057)
-
-[6.1. RVM with scanner](#_Toc192864058)
-
-[6.2. RVM without scanner](#_Toc192864059)
-
 # Document description
 
 This document is describing API expected by Kaucja.pl for contact between RVM and Kaucja.pl core DRS system.
@@ -35,6 +5,13 @@ This document is describing API expected by Kaucja.pl for contact between RVM an
 Desired communcation format by Kacuja Pl looks like:
 
 ![InteractionModel.jpg](../assets/images/InteractionModel.jpg)
+
+## Integration
+
+This document is showing two separate files, where one of them is showing what endpoints should be exposed on each side.
+
+The one called [DRS](drs-openapi.yaml) is reffering to part that will be exposed from kaucja.pl side.
+Second one [RVM](rvm-openapi.yaml) is part that RVM providers should expose in order to DRS be able to communicate with DRS.
 
 # API list
 
