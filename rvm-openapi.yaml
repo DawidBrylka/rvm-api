@@ -4,26 +4,35 @@ x-stoplight:
 tags:
   - name: machine
     description: Api part strictly related to RVM machines
-  - name: transaction
-    description: API part related with Transaction interaction between Kaucja and RVM providers
   - name: product
     description: API part related with Product interaction between Kaucja and RVM providers
+  - name: transaction
+    description: API part related with Transaction interaction between Kaucja and RVM providers
+  - name: user
+    description: Part of an api related with user authentication
 info:
   title: RVM API Representation
+  description: |
+    API description for RVM (Reverse Vending Machine).
+    RVM providers should expose presented endpoints in order to be able to communicate with DRS
+    that Kaucja.pl is exposing 
   contact:
+    name: Dawid Brylka
+    url: kaucja.pl
     email: dawid.brylka@kaucja.pl
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
   version: 1.0.11
-externalDocs:
-  description: Find out about expected use cases under
+
 paths:
   /machine:
     post:
       tags:
         - machine
       summary: Add new RVM
+      description: |
+        Endpoint called by DRS provider in order to register new RVM in provider system.
       requestBody:
         required: true
         content:
@@ -267,6 +276,8 @@ paths:
       tags:
         - product
       summary: Add or update product
+      description: |
+        Endpoint called by DRS in order to add/update product that has been changed in DRS side.  
       requestBody:
         required: true
         content:
@@ -287,6 +298,9 @@ paths:
       tags:
         - product
       summary: Add or update product
+      description: |
+        Endpoint called by DRS in order to add/update product that has been changed in DRS side.  
+        Difference is that this endpoint should take x objects instead on single one
       requestBody:
         required: true
         content:
@@ -309,7 +323,7 @@ paths:
       tags:
         - user
       summary: Logs user into the system
-      description: ''
+      description: 'Authenticate DRS User in RVM Cloud.'
       operationId: loginUser
       requestBody:
         required: true
@@ -520,6 +534,10 @@ components:
         id: 4vxaqaoy95556
     PostMachine:
       type: object
+      required:
+        - serialNumber
+        - location
+        - bins
       properties:
         serialNumber:
           type: string
@@ -764,6 +782,11 @@ components:
         id: r7i834ho3kwqk
     Location:
       type: object
+      required:
+        - city
+        - zipcode
+        - country
+        - address
       properties:
         city:
           type: string
@@ -780,40 +803,14 @@ components:
           type: string
           format: address
           example: Dąbrowska 20
+        longitude:
+          type: number
+          example: 51.11
+        latitude:
+          type: number
+          example: 52.22
       x-stoplight:
         id: k1p0x39errlzd
-    Order:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 10
-        petId:
-          type: integer
-          format: int64
-          example: 198772
-        quantity:
-          type: integer
-          format: int32
-          example: 7
-        shipDate:
-          type: string
-          format: date-time
-        status:
-          type: string
-          description: Order Status
-          example: approved
-          enum:
-            - placed
-            - approved
-            - delivered
-        complete:
-          type: boolean
-      xml:
-        name: order
-      x-stoplight:
-        id: gm6s3q40404of
   securitySchemes:
     petstoreAuth:
       type: oauth2
