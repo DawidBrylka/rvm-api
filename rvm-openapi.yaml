@@ -728,10 +728,9 @@ components:
       type: object
       properties:
         wasteType:
-          $ref: '#/components/schemas/WasteTypeEnum'
-        maxWeight:
-          type: number
-          example: 30
+          type: array
+          items:
+            $ref: '#/components/schemas/WasteTypeEnum'
         maxContainers:
           type: integer
       x-stoplight:
@@ -742,16 +741,20 @@ components:
         isFull:
           type: boolean
         wasteType:
-          $ref: '#/components/schemas/WasteTypeEnum'
+          type: array
+          items:
+            $ref: '#/components/schemas/WasteTypeEnum'
         lastEmptied:
           type: string
           example: '2021-02-12T11:21:33Z'
         lastFull:
           type: string
           example: '2021-02-11T11:21:33Z'
-        maxWeight:
+        fillLevel:
           type: number
-          example: 30
+          example: 0.8
+          description: |
+            Fullness level of the bag. where 0 means 0%, 1 means 100%
         currentWeight:
           type: number
           example: 10.12
