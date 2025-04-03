@@ -115,7 +115,7 @@ paths:
         '400':
           description: Invalid input
         '422':
-          description: Validation exception
+          description: Duplicate ID. Please provide unique ID for Transaction Entity
       x-stoplight:
         id: 5o6n5p23xf20f
   /transaction:
@@ -223,7 +223,42 @@ paths:
           description: Validation exception
       x-stoplight:
         id: d1asmq08b0uj1
-
+  '/machine/{id}/registered':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    head:
+      summary: Query For Machine in DRS system
+      tags:
+        - machine
+      responses:
+        '200':
+          description: Machine is known and registered in Kaucja DRS
+        '404':
+          description: Unknown Machine
+      operationId: get-machine-id-registered
+      x-stoplight:
+        id: l2akxxutrhklj
+  # '/product/{ean}/mapping':
+  #   parameters:
+  #     - schema:
+  #         type: string
+  #       name: ean
+  #       in: path
+  #       required: true
+  #   get:
+  #     summary: EAN Mapping
+  #     description: | 
+  #       Special endpoint to discover whether there are similar bottles with different EAN,
+  #       that DRS is aware 
+  #     tags: []
+  #     responses: {}
+  #     operationId: get-product-ean-mapping
+  #     x-stoplight:
+  #       id: d988ysn6j49w8
 components:
   parameters:
     Pagelength:
@@ -553,15 +588,11 @@ components:
           "ean": "123422",<br>
           "count": 12, <br>
           "weight": 1.11, <br>
-          "materialCode": 1 <br>
-          "isRejected": false, <br>
           "rejectionCauseCode": 0 <br>
         }, <br> { <br>
           "ean": "123422",<br>
           "count": 1, <br>
           "weight": 0.11, <br>
-          "materialCode": 1 <br>
-          "isRejected": true, <br>
           "rejectionCauseCode": 2 <br>
         }, <br>
       properties:
@@ -574,11 +605,6 @@ components:
         weight:
           type: number
           example: 0.001
-        materialCode:
-          $ref: '#/components/schemas/WasteTypeEnum'
-        isRejected:
-          type: boolean
-          example: false
         rejectionCauseCode:
           $ref: '#/components/schemas/RejectionCauseEnum'
       x-stoplight:
@@ -636,3 +662,4 @@ components:
             $ref: '#/components/schemas/ContainerFull'
       x-stoplight:
         id: ty6l3ytww8zew
+  responses: {}

@@ -24,7 +24,6 @@ info:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
   version: 1.0.11
-
 paths:
   /machine:
     post:
@@ -323,7 +322,7 @@ paths:
       tags:
         - user
       summary: Logs user into the system
-      description: 'Authenticate DRS User in RVM Cloud.'
+      description: Authenticate DRS User in RVM Cloud.
       operationId: loginUser
       requestBody:
         required: true
@@ -696,11 +695,14 @@ components:
       type: object
       properties:
         statusCode:
-          type: integer
-          example: 0
-        clean:
-          type: boolean
-        last_cleaning_date:
+          $ref: '#/components/schemas/RvmHealthStatusCodeEnum'
+        powerStatus:
+          $ref: '#/components/schemas/PowerStatusEnum'
+        lastContactDate:
+          type: string
+          format: date-time
+          description: When RVM Cloud has last contact with RVM
+        lastCleaningDate:
           type: string
           format: date-time
       x-stoplight:
@@ -811,6 +813,33 @@ components:
           example: 52.22
       x-stoplight:
         id: k1p0x39errlzd
+    RvmHealthStatusCodeEnum:
+      title: RvmHealthStatusCodeEnum
+      x-stoplight:
+        id: rc4y3ej0bksk2
+      type: integer
+      enum:
+        - 0
+        - 1
+        - 2
+      description: |
+        Descriptor for RVM Health Status <br>
+        Where
+        * 0 - RVM status is operational
+        * 1 - RVM is full
+        * 2 - RVM Out of Service
+        * 3 - Lost Contact
+    PowerStatusEnum:
+      title: PowerStatusEnum
+      x-stoplight:
+        id: tvswmeaefue84
+      type: integer
+      enum: [0, 1]
+      description: |
+        Descriptior for RVM Power Status <br>
+        Where: <br>
+        * 0 - Powered Off
+        * 1 - Powered On
   securitySchemes:
     petstoreAuth:
       type: oauth2
