@@ -18,9 +18,13 @@ servers:
 paths:
   /product:
     post:
+      operationId: productPost
       tags:
         - product
       summary: Add or update product
+      description: |
+        Endpoint responsible for adding, or updating new product by Introducers. <br>
+        Caling in will cause change in DRS and delayed change in RVM systems.
       requestBody:
         required: true
         content:
@@ -29,11 +33,10 @@ paths:
               $ref: '#/components/schemas/ProductPost'
       responses:
         '200':
-          description: Successful operation
+          $ref: '#/components/responses/200PostReturnId'
         '400':
-          description: Invalid input
-        '422':
-          description: Validation exception
+          $ref: '#/components/responses/400ValidationFailed'
+
     get:
       tags:
         - products
@@ -121,7 +124,6 @@ paths:
       x-stoplight:
         id: 5o6n5p23xf20f
   /transaction:
-
     post:
       tags:
         - transaction
@@ -245,23 +247,23 @@ paths:
       operationId: get-machine-id-registered
       x-stoplight:
         id: l2akxxutrhklj
-  # '/product/{ean}/mapping':
-  #   parameters:
-  #     - schema:
-  #         type: string
-  #       name: ean
-  #       in: path
-  #       required: true
-  #   get:
-  #     summary: EAN Mapping
-  #     description: | 
-  #       Special endpoint to discover whether there are similar bottles with different EAN,
-  #       that DRS is aware 
-  #     tags: []
-  #     responses: {}
-  #     operationId: get-product-ean-mapping
-  #     x-stoplight:
-  #       id: d988ysn6j49w8
+# '/product/{ean}/mapping':
+#   parameters:
+#     - schema:
+#         type: string
+#       name: ean
+#       in: path
+#       required: true
+#   get:
+#     summary: EAN Mapping
+#     description: | 
+#       Special endpoint to discover whether there are similar bottles with different EAN,
+#       that DRS is aware 
+#     tags: []
+#     responses: {}
+#     operationId: get-product-ean-mapping
+#     x-stoplight:
+#       id: d988ysn6j49w8
 components:
   parameters:
     Pagelength:
@@ -697,4 +699,42 @@ components:
             $ref: '#/components/schemas/ContainerFull'
       x-stoplight:
         id: ty6l3ytww8zew
-  responses: {}
+    ValidationFailed:
+      title: ValidationFailed
+      x-stoplight:
+        id: o801dyh9pyv6f
+      type: object
+      properties:
+        message:
+          type: string
+          example: Input Validation failed
+        errorCode:
+          type: integer
+          example: 21
+    ValidationFailedWithDetails:
+      type: object
+      title: ValidationFailedWithDetails
+      properties:
+        message:
+          type: string
+          example: Input Validation failed
+        errorCode:
+          type: integer
+          example: 21
+  responses:
+    200PostReturnId:
+      description: OK
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
+    400ValidationFailed:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/ValidationFailed'
+              - $ref: '#/components/schemas/ValidationFailedWithDetails'
