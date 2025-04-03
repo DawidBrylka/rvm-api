@@ -91,6 +91,8 @@ paths:
       tags:
         - products
       summary: Get product data
+      description: |
+        Get data of single product.
       parameters:
         - name: sendImages
           in: query
@@ -119,6 +121,7 @@ paths:
       x-stoplight:
         id: 5o6n5p23xf20f
   /transaction:
+
     post:
       tags:
         - transaction
@@ -440,7 +443,6 @@ components:
         - product_status_id
         - packaging
         - diameters
-        - label
         - weight
       properties:
         ean:
@@ -477,6 +479,17 @@ components:
           format: binary
     Product:
       type: object
+      required:
+        - id
+        - ean
+        - name
+        - creationDate
+        - updatedDate
+        - market
+        - packaging
+        - diameters
+        - label
+        - weight
       properties:
         id:
           type: string
@@ -503,9 +516,9 @@ components:
             exitDate:
               type: string
               format: date-time
-        drsOperatorId:
-          type: integer
-          description: ID of DRS operator
+        # drsOperatorId:
+        #   type: integer
+        #   description: ID of DRS operator
         productStatusId:
           type: integer
         packaging:
@@ -523,6 +536,8 @@ components:
         id: r6oyzy0txsfku
     Label:
       type: object
+      required:
+        - materialCode
       properties:
         materialCode:
           $ref: '#/components/schemas/SleeveMaterialCode'
@@ -534,6 +549,8 @@ components:
       x-stoplight:
         id: wevouuv5rzcyg
     Weight:
+      required:
+        - withCap
       type: object
       properties:
         withoutCap:
@@ -568,6 +585,10 @@ components:
         id: 37a1j4g8nh00w
     Diameters:
       type: object
+      required:
+        - volume
+        - height
+        - diagonal
       properties:
         volume:
           type: integer
@@ -582,6 +603,11 @@ components:
       x-stoplight:
         id: x67kmnv7cx4h6
     Container:
+      required:
+        - ean
+        - count
+        - weight
+        - rejectionCauseCode
       type: object
       description: |
         Returns list of only all taken containers <br> Where multiple records can contain the same ean, but with different rejection codes e.g. <br> { <br>
@@ -611,6 +637,10 @@ components:
         id: 17jlqeuuj3i6o
     ContainerFull:
       type: object
+      required:
+        - ean
+        - count
+        - weight
       description: |
         Returns list of only accepted containers <br> Where one record contains only one occurence of EAN e.g. <br> { <br>
           "ean": "123422",<br>
@@ -631,6 +661,11 @@ components:
         id: tgu557sdjewef
     BagReplacement:
       type: object
+      required:
+        - id
+        - rvmId
+        - replacementDate
+        - containers
       properties:
         id:
           type: string
