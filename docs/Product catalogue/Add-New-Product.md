@@ -2,8 +2,7 @@
 stoplight-id: r2zehj4qe028o
 tags: [Product, Catalog]
 ---
-
-# Adding new/updating product by introducer
+# Adding product by introducer
 ![NewProductAdded.png](../../assets/images/NewProductAdded.png)
 
 ## Description
@@ -23,14 +22,22 @@ This process ensures that new products are registered in the **DRS** and can be 
 > **Sync Requirement:** Regardless of this process, all **RVM Providers** are required to perform a **full product data synchronization every 24 hours** to ensure their product database remains up to date.  
 
 ## API Endpoints  
-### DRS
+
+<!--
+type: tab
+title: DRS
+-->
 Call made by Introducer towards DRS
 [DRS API - POST /product](https://kaucja.stoplight.io/docs/rvm-api/drs-openapi.yaml/paths/~1product/post)  
 
-<!-- theme: dark -->
 ```yaml json_schema
   $ref: '../../drs-openapi.yaml#/components/schemas/ProductPost'
 ```
 
-### RVM
+<!--
+type: tab
+title: RVM
+-->
 - [RVM API - POST /product](https://kaucja.stoplight.io/docs/rvm-api/rvm-openapi.yaml/paths/~1product/post)  
+
+<!-- type: tab-end -->
