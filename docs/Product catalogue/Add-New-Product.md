@@ -1,53 +1,60 @@
 ---
 stoplight-id: r2zehj4qe028o
 tags: [Product, Catalog]
+internal: true
 ---
+
 # Adding product by introducer
+
 ![NewProductAdded.png](../../assets/images/NewProductAdded.png)
 
 ## Description
-# Product Addition Process  
 
-The process of adding a new product to the manufacturer's product catalog follows these steps:  
+# Product Addition Process
 
-1. The process begins with the submission of a new product by the **Introducer**.  
-2. The **Introducer** submits a `POST /product` request to the **Deposit Return System (DRS)**.  
-3. The **DRS** immediately responds with an `OK` confirmation to the **Introducer**, indicating that the product has been recorded in its database.  
-4. Optionally, the **DRS** may forward a `POST /product` request to the **Reverse Vending Machine (RVM) Cloud**, enabling product recognition in RVMs. 
+The process of adding a new product to the manufacturer's product catalog follows these steps:
 
-This process ensures that new products are registered in the **DRS** and can be made recognizable by **Reverse Vending Machines (RVMs)** if the optional step is executed.  
+1. The process begins with the submission of a new product by the **Introducer**.
+2. The **Introducer** submits a `POST /product` request to the **Deposit Return System (DRS)**.
+3. The **DRS** immediately responds with an `OK` confirmation to the **Introducer**, indicating that the product has been recorded in its database.
+4. Optionally, the **DRS** may forward a `POST /product` request to the **Reverse Vending Machine (RVM) Cloud**, enabling product recognition in RVMs.
 
-> **Note:** Upon failure described in step number 4, no retries will be made towards **RVM Cloud**. No error will be propagated to **Introducer** side either.  
+This process ensures that new products are registered in the **DRS** and can be made recognizable by **Reverse Vending Machines (RVMs)** if the optional step is executed.
 
-> **Sync Requirement:** Regardless of this process, all **RVM Providers** are required to perform a **full product data synchronization every 24 hours** to ensure their product database remains up to date.  
+> **Note:** Upon failure described in step number 4, no retries will be made towards **RVM Cloud**. No error will be propagated to **Introducer** side either.
 
-## API Endpoints  
+> **Sync Requirement:** Regardless of this process, all **RVM Providers** are required to perform a **full product data synchronization every 24 hours** to ensure their product database remains up to date.
+
+## API Endpoints
+
 List of endpoints that should be exposed from **Deposit Return System (DRS)** and **RVM Cloud** in order to complete described process.
+
 <!--
 type: tab
 title: DRS
 -->
+
 Representation of API Endpoinds exposed by **Deposit Return System (DRS)** in order to complete this prcess.
 
 ### POST /product
 
-For full overwiev of this endpoint please visit: [POST /product](https://kaucja.stoplight.io/docs/rvm-api/drs-openapi.yaml/paths/~1product/post)  
+For full overwiev of this endpoint please visit: [POST /product](https://kaucja.stoplight.io/docs/rvm-api/drs-openapi.yaml/paths/\~1product/post)
 
 <details>
 
 <summary>Request Body</summary>
 
-```yaml json_schema
+```yaml jsonSchema
   $ref: '../../drs-openapi.yaml#/components/schemas/ProductPost'
 ```
-</details>
 
+</details>
 
 <details>
 
 <summary>Response</summary>
 
-```yaml json_schema
+```yaml jsonSchema
   {
   "type": "object",
   "properties": {
@@ -57,12 +64,14 @@ For full overwiev of this endpoint please visit: [POST /product](https://kaucja.
   }
 }
 ```
+
 </details>
 
 <!--
 type: tab
 title: RVM
 -->
-- [RVM API - POST /product](https://kaucja.stoplight.io/docs/rvm-api/rvm-openapi.yaml/paths/~1product/post)  
+
+- [RVM API - POST /product](https://kaucja.stoplight.io/docs/rvm-api/rvm-openapi.yaml/paths/\~1product/post)
 
 <!-- type: tab-end -->
