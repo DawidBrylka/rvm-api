@@ -4,11 +4,7 @@ tags: [Product, Catalog]
 internal: true
 ---
 
-# Adding product by introducer
-
 ![NewProductAdded.png](../../assets/images/NewProductAdded.png)
-
-## Description
 
 # Product Addition Process
 
@@ -72,6 +68,20 @@ type: tab
 title: RVM
 -->
 
-- [RVM API - POST /product](https://kaucja.stoplight.io/docs/rvm-api/rvm-openapi.yaml/paths/\~1product/post)
+Representation of API Endpoinds exposed by **RVM Cloud** in order to complete this prcess.
+
+### POST /product
+
+For full overwiev of this endpoint please visit: [POST /product](https://kaucja.stoplight.io/docs/rvm-api/rvm-openapi.yaml/paths/\~1product/post)
+
+<details>
+<summary>Request Body</summary>
+
+```yaml jsonSchema
+  $ref: '../../rvm-openapi.yaml#/components/schemas/Product'
+```
+
+
+</details>
 
 <!-- type: tab-end -->
