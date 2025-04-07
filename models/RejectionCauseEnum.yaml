@@ -1,0 +1,21 @@
+title: RejectionCauseEnum
+x-stoplight:
+  id: r03u8nn0s2eje
+type: integer
+enum:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+description: |
+  Descriptor for Rejection Cause <br> Where:
+  * 0 - All Good
+  * 1 - Fraudalent behavior detected
+  * 2 - Container crushed
+  * 3 - Barcode damaged
+  * 4 - Barcode missing
+  * 5 - Invalid EAN
+  * 6 - Container not accepted

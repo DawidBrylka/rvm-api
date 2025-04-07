@@ -213,7 +213,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Transaction'
+                      $ref: 'models/Transaction.yaml'
         '400':
           description: Invalid input
         '422':
@@ -241,7 +241,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Transaction'
+                  $ref: 'models/Transaction.yaml'
         '400':
           description: Invalid input
         '422':
@@ -574,100 +574,6 @@ components:
           type: string
       x-stoplight:
         id: ixzfjv3jjg41e
-    Transaction:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        rvmId:
-          type: string
-          format: uuid
-        transactionBlocked:
-          type: boolean
-          example: false
-        volume:
-          type: integer
-          example: 20
-        totalWeight:
-          type: number
-          example: 12.11
-        transactionStartTime:
-          type: string
-          format: date-time
-        transactionEndTime:
-          type: string
-          format: date-time
-        totalAccepted:
-          type: integer
-          example: 20
-        totalRejected:
-          type: integer
-          example: 1
-        containers:
-          type: array
-          items:
-            $ref: '#/components/schemas/Container'
-      x-stoplight:
-        id: ztp35l082kfcr
-    Container:
-      type: object
-      description: |
-        Returns list of only all taken containers <br> Where multiple records can contain the same ean, but with different rejection codes e.g. <br> { <br>
-          "ean": "123422",<br>
-          "count": 12, <br>
-          "weight": 1.11, <br>
-          "material_code": 1 <br>
-          "is_rejected": false, <br>
-          "rejection_cause_code": 0 <br>
-        }, <br> { <br>
-          "ean": "123422",<br>
-          "count": 1, <br>
-          "weight": 0.11, <br>
-          "material_code": 1 <br>
-          "is_rejected": true, <br>
-          "rejection_cause_code": 2 <br>
-        }, <br>
-      properties:
-        ean:
-          type: string
-          example: '20123123'
-        count:
-          type: integer
-          example: 20
-        weight:
-          type: number
-          example: 0.001
-        materialCode:
-          $ref: '#/components/schemas/WasteTypeEnum'
-        isRejected:
-          type: boolean
-          example: false
-        rejectionCauseCode:
-          $ref: '#/components/schemas/RejectionCauseEnum'
-      x-stoplight:
-        id: lyfi24ssnqimu
-    RejectionCauseEnum:
-      type: integer
-      enum:
-        - 0
-        - 1
-        - 2
-        - 3
-        - 4
-        - 5
-        - 6
-      description: |
-        Descriptor for Rejection Cause <br> Where:
-        * 0 - All Good
-        * 1 - Fraudalent behavior detected
-        * 2 - Container crushed
-        * 3 - Barcode damaged
-        * 4 - Barcode missing
-        * 5 - Invalid EAN
-        * 6 - Container not accepted
-      x-stoplight:
-        id: 1d5a6etwvnhw3
     Machine:
       type: object
       properties:

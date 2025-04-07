@@ -132,7 +132,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Transaction'
+              $ref: 'models/Transaction.yaml'
       summary: Post single Transaction
       description: Post single Transaction
       responses:
@@ -155,7 +155,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/Transaction'
+                $ref: 'models/Transaction.yaml'
       summary: Post multiple Transaction
       description: Post multiple Transaction
       responses:
@@ -340,27 +340,6 @@ components:
         * 4 - PVC
       x-stoplight:
         id: 29qz1jfi9abe6
-    RejectionCauseEnum:
-      type: integer
-      enum:
-        - 0
-        - 1
-        - 2
-        - 3
-        - 4
-        - 5
-        - 6
-      description: |
-        Descriptor for Rejection Cause <br> Where:
-        * 0 - All Good
-        * 1 - Fraudalent behavior detected
-        * 2 - Container crushed
-        * 3 - Barcode damaged
-        * 4 - Barcode missing
-        * 5 - Invalid EAN
-        * 6 - Container not accepted
-      x-stoplight:
-        id: 6b6u81j5m0oc2
     ColorEnum:
       type: integer
       enum:
@@ -388,42 +367,6 @@ components:
         Descriptor for Product Status <br> Where:
         * 1 - RVM should reject those items
         * 2 - Item should be accepted by RVM.
-    Transaction:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        rvmId:
-          type: string
-          format: uuid
-        transactionBlocked:
-          type: boolean
-          example: false
-        volume:
-          type: integer
-          example: 20
-        totalWeight:
-          type: number
-          example: 12.11
-        transactionStartTime:
-          type: string
-          format: date-time
-        transactionEndTime:
-          type: string
-          format: date-time
-        totalAccepted:
-          type: integer
-          example: 20
-        totalRejected:
-          type: integer
-          example: 1
-        containers:
-          type: array
-          items:
-            $ref: '#/components/schemas/Container'
-      x-stoplight:
-        id: c4o4yd2cb1cjo
     BagSeal:
       type: object
       properties:
@@ -621,39 +564,6 @@ components:
           description: diagonal of product in mm
       x-stoplight:
         id: x67kmnv7cx4h6
-    Container:
-      required:
-        - ean
-        - count
-        - weight
-        - rejectionCauseCode
-      type: object
-      description: |
-        Returns list of only all taken containers <br> Where multiple records can contain the same ean, but with different rejection codes e.g. <br> { <br>
-          "ean": "123422",<br>
-          "count": 12, <br>
-          "weight": 1.11, <br>
-          "rejectionCauseCode": 0 <br>
-        }, <br> { <br>
-          "ean": "123422",<br>
-          "count": 1, <br>
-          "weight": 0.11, <br>
-          "rejectionCauseCode": 2 <br>
-        }, <br>
-      properties:
-        ean:
-          type: string
-          example: '20123123'
-        count:
-          type: integer
-          example: 20
-        weight:
-          type: number
-          example: 0.001
-        rejectionCauseCode:
-          $ref: '#/components/schemas/RejectionCauseEnum'
-      x-stoplight:
-        id: 17jlqeuuj3i6o
     ContainerFull:
       type: object
       required:

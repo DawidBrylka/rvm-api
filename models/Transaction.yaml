@@ -1,0 +1,36 @@
+title: Transaction
+x-stoplight:
+  id: tflmwiqdun34m
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+  rvmId:
+    type: string
+    format: uuid
+  transactionBlocked:
+    type: boolean
+    example: false
+  volume:
+    type: integer
+    example: 20
+  totalWeight:
+    type: number
+    example: 12.11
+  transactionStartTime:
+    type: string
+    format: date-time
+  transactionEndTime:
+    type: string
+    format: date-time
+  totalAccepted:
+    type: integer
+    example: 20
+  totalRejected:
+    type: integer
+    example: 1
+  containers:
+    type: array
+    items:
+      $ref: 'Container.yaml'

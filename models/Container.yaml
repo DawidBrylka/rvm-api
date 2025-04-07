@@ -1,0 +1,33 @@
+title: Container
+x-stoplight:
+  id: y23npriue3711
+type: object
+required:
+  - ean
+  - count
+  - weight
+  - rejectionCauseCode
+description: |
+    Returns list of only all taken containers <br> Where multiple records can contain the same ean, but with different rejection codes e.g. <br> { <br>
+      "ean": "123422",<br>
+      "count": 12, <br>
+      "weight": 1.11, <br>
+      "rejectionCauseCode": 0 <br>
+    }, <br> { <br>
+      "ean": "123422",<br>
+      "count": 1, <br>
+      "weight": 0.11, <br>
+      "rejectionCauseCode": 2 <br>
+    }, <br>
+properties:
+  ean:
+    type: string
+    example: '20123123'
+  count:
+    type: integer
+    example: 20
+  weight:
+    type: number
+    example: 0.001
+  rejectionCauseCode:
+    $ref: 'RejectionCauseEnum.yaml'
