@@ -1,5 +1,6 @@
 ---
-stoplight-id: 7brlzfn9vl98d
+stoplight-id: d7lchfjn1d9sk
+tags: ['Product', 'Catalog']
 ---
 
 ### New Product added
