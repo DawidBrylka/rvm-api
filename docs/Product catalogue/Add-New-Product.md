@@ -2,7 +2,8 @@
 stoplight-id: r2zehj4qe028o
 tags: [Product, Catalog]
 ---
-# Adding/ new product by introducer
+
+# Adding new/updating product by introducer
 ![NewProductAdded.png](../../assets/images/NewProductAdded.png)
 
 ## Description
@@ -11,18 +12,25 @@ tags: [Product, Catalog]
 The process of adding a new product to the manufacturer's product catalog follows these steps:  
 
 1. The process begins with the submission of a new product by the **Introducer**.  
-2. The **Introducer** submits a `POST /product` request to the **Deposit Return System (DRS)**.
-3. The **DRS** forwards the `POST /product` request to the **Reverse Vending Machine (RVM) Cloud**, which enables product recognition in RVMs.  
-4. Upon successful processing, **RVM Cloud** returns an `OK` response to **DRS**.  
-5. The **DRS** then sends the `OK` confirmation back to the **Introducer**, completing the process.  
+2. The **Introducer** submits a `POST /product` request to the **Deposit Return System (DRS)**.  
+3. The **DRS** immediately responds with an `OK` confirmation to the **Introducer**, indicating that the product has been recorded in its database.  
+4. Optionally, the **DRS** may forward a `POST /product` request to the **Reverse Vending Machine (RVM) Cloud**, enabling product recognition in RVMs. 
 
-This process ensures that new products are registered in the **DRS** and made recognizable by **Reverse Vending Machines (RVMs)** in no time.
+This process ensures that new products are registered in the **DRS** and can be made recognizable by **Reverse Vending Machines (RVMs)** if the optional step is executed.  
 
-> **Node:** In case of any issues, those won't be forwarded back to the Introducer, also DRS will not retry this call in case of unavailability of **RVM Cloud**.
+> **Note:** Upon failure described in step number 4, no retries will be made towards **RVM Cloud**. No error will be propagated to **Introducer** side either.  
 
-> **Note:** This process is optional. Regardless of its execution, all **RVM Providers** are required to perform a **full product data synchronization every 24 hours** to ensure their product database remains up to date. 
+> **Sync Requirement:** Regardless of this process, all **RVM Providers** are required to perform a **full product data synchronization every 24 hours** to ensure their product database remains up to date.  
 
 ## API Endpoints  
+### DRS
+Call made by Introducer towards DRS
+[DRS API - POST /product](https://kaucja.stoplight.io/docs/rvm-api/drs-openapi.yaml/paths/~1product/post)  
 
-- [DRS API - GET /product](https://kaucja.stoplight.io/docs/rvm-api/drs-openapi.yaml/paths/~1product/get)  
+<!-- theme: dark -->
+```yaml json_schema
+  $ref: '../../drs-openapi.yaml#/components/schemas/ProductPost'
+```
+
+### RVM
 - [RVM API - POST /product](https://kaucja.stoplight.io/docs/rvm-api/rvm-openapi.yaml/paths/~1product/post)  
