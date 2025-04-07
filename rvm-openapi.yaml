@@ -847,15 +847,6 @@ components:
         Where: <br>
         * 0 - Powered Off
         * 1 - Powered On
-  securitySchemes:
-    petstoreAuth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: 'https://petstore3.swagger.io/oauth/authorize'
-          scopes:
-            'write:pets': modify pets in your account
-            'read:pets': read your pets
     apiKey:
       type: apiKey
       name: api_key
