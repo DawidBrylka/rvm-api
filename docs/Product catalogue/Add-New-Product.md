@@ -22,17 +22,40 @@ This process ensures that new products are registered in the **DRS** and can be 
 > **Sync Requirement:** Regardless of this process, all **RVM Providers** are required to perform a **full product data synchronization every 24 hours** to ensure their product database remains up to date.  
 
 ## API Endpoints  
-
+List of endpoints that should be exposed from **Deposit Return System (DRS)** and **RVM Cloud** in order to complete described process.
 <!--
 type: tab
 title: DRS
 -->
-Call made by Introducer towards DRS
-[DRS API - POST /product](https://kaucja.stoplight.io/docs/rvm-api/drs-openapi.yaml/paths/~1product/post)  
+Representation of API Endpoinds exposed by **Deposit Return System (DRS)** in order to complete this prcess.
+
+For full overwiev of this endpoint please visit: [DRS API - POST /product](https://kaucja.stoplight.io/docs/rvm-api/drs-openapi.yaml/paths/~1product/post)  
+
+<details>
+
+<summary>Request Body</summary>
 
 ```yaml json_schema
   $ref: '../../drs-openapi.yaml#/components/schemas/ProductPost'
 ```
+</details>
+
+
+<details>
+
+<summary>Response</summary>
+
+```yaml json_schema
+  {
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    }
+  }
+}
+```
+</details>
 
 <!--
 type: tab
