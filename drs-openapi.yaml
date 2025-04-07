@@ -36,7 +36,6 @@ paths:
           $ref: '#/components/responses/200PostReturnId'
         '400':
           $ref: '#/components/responses/400ValidationFailed'
-
     get:
       tags:
         - products
@@ -371,6 +370,16 @@ components:
         * 5 - Other
       x-stoplight:
         id: zgvd9d6cx1n0h
+    ProductStatusEnum:
+      title: ProductStatusEnum
+      type: integer
+      enum:
+        - 1
+        - 2
+      description: |
+        Descriptor for Product Status <br> Where:
+        * 1 - RVM should reject those items
+        * 2 - Item should be accepted by RVM.
     Transaction:
       type: object
       properties:
@@ -439,10 +448,10 @@ components:
       required:
         - ean
         - name
-        - published_name
+        - publishedName
         - market
-        - drs_operator_id
-        - product_status_id
+        - drsOperatorId
+        - productStatusId
         - packaging
         - diameters
         - weight
@@ -466,7 +475,7 @@ components:
         drsOperatorId:
           type: integer
           description: ID of DRS operator
-        product_status_id:
+        productStatusId:
           type: integer
         packaging:
           $ref: '#/components/schemas/Packaging'
@@ -522,7 +531,7 @@ components:
         #   type: integer
         #   description: ID of DRS operator
         productStatusId:
-          type: integer
+          $ref: '#/components/schemas/ProductStatusEnum'
         packaging:
           $ref: '#/components/schemas/Packaging'
         diameters:
