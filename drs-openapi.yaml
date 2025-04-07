@@ -263,7 +263,14 @@ paths:
 #     operationId: get-product-ean-mapping
 #     x-stoplight:
 #       id: d988ysn6j49w8
+security:
+  - bearerAuth: []
 components:
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   parameters:
     Pagelength:
       name: pagelength

@@ -1,0 +1,29 @@
+{
+  "name": "Dokumentacja RVM",
+  "description": "",
+  "spectralExtends": [],
+  "extends": [],
+  "formats": [
+    "oas2",
+    "oas3",
+    "oas3.0",
+    "oas3.1"
+  ],
+  "aliases": {
+    "": {
+      "id": "1f2aKONNccXO9_NNk67_-",
+      "targets": []
+    }
+  },
+  "rules": {
+    "": {
+      "id": "q2hKPwYe0ZdANdhGaT37p",
+      "given": [],
+      "severity": "error",
+      "then": {
+        "function": ""
+      }
+    }
+  },
+  "extendedDefault": false
+}
