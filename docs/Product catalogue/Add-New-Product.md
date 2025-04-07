@@ -29,7 +29,9 @@ title: DRS
 -->
 Representation of API Endpoinds exposed by **Deposit Return System (DRS)** in order to complete this prcess.
 
-For full overwiev of this endpoint please visit: [DRS API - POST /product](https://kaucja.stoplight.io/docs/rvm-api/drs-openapi.yaml/paths/~1product/post)  
+### POST /product
+
+For full overwiev of this endpoint please visit: [POST /product](https://kaucja.stoplight.io/docs/rvm-api/drs-openapi.yaml/paths/~1product/post)  
 
 <details>
 
