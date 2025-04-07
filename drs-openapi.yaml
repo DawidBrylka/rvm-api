@@ -3,9 +3,10 @@ x-stoplight:
   id: x0k3zcu2ovr68
 info:
   title: DRS API Representation
-  termsOfService: 'http://swagger.io/terms/'
   contact:
-    email: apiteam@swagger.io
+    name: Dawid Brylka
+    url: https://www.kaucja.pl
+    email: dawid.brylka@kaucja.pl
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
