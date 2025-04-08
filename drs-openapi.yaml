@@ -367,12 +367,15 @@ components:
       title: ProductStatusEnum
       type: integer
       enum:
+        - 0
         - 1
         - 2
       description: |
         Descriptor for Product Status <br> Where:
-        * 1 - RVM should reject those items
-        * 2 - Item should be accepted by RVM.
+        * 0 - Item in early phase. Should not be accepted neither by RVM or Manual Collection 
+        * 1 - Item should be accepted by RVM and Manual Collection.
+        * 2 - RVM and Manual Collection should reject those items
+        
     BagSeal:
       type: object
       properties:
@@ -410,7 +413,9 @@ components:
         - productStatusId
         - packaging
         - diameters
+        - deposit
         - weight
+        - feeAmount
       properties:
         ean:
           type: string
@@ -419,7 +424,6 @@ components:
           type: string
         publishedName:
           type: string
-        
         market:
           type: object
           properties:
@@ -429,8 +433,8 @@ components:
             exitDate:
               type: string
               format: date-time
-        refund:
-          $ref: '#/components/schemas/Refund'
+        deposit:
+          $ref: '#/components/schemas/Deposit'
         productStatusId:
           $ref: '#/components/schemas/ProductStatusEnum'
         packaging:
@@ -444,16 +448,26 @@ components:
         image:
           type: string
           format: binary
-    Refund:
+    Deposit:
       type: object
+      required:
+        - amount
+        - currency
       properties:
         amount:
           type: number
-          example: 0.50
-        currencyCode:
+          example: 0.5
+          description: Deposit amount without VAT tax
+        currency:
           type: string
-          example: PLN
-          description: Currency in which the refund should be made
+          default: PLN
+          description: Currency of deposit
+        vat:
+          type: integer
+          example: 23
+        amountGross:
+          type: number
+          description: Gross value of deposit. Calculated by Net Amount + VAT tax, where VAT tax can be 0 
     Product:
       type: object
       required:
