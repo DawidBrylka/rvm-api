@@ -18,7 +18,7 @@ info:
     that Kaucja.pl is exposing 
   contact:
     name: Dawid Brylka
-    url: https://www.kaucja.pl
+    url: 'https://www.kaucja.pl'
     email: dawid.brylka@kaucja.pl
   license:
     name: Apache 2.0
@@ -213,7 +213,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: 'models/Transaction.yaml'
+                      $ref: models/Transaction.yaml
         '400':
           description: Invalid input
         '422':
@@ -241,7 +241,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: 'models/Transaction.yaml'
+                  $ref: models/Transaction.yaml
         '400':
           description: Invalid input
         '422':
@@ -317,44 +317,6 @@ paths:
           description: Validation exception
       x-stoplight:
         id: e3nk1pim9ekam
-  /login:
-    post:
-      tags:
-        - user
-      summary: Logs user into the system
-      description: Authenticate DRS User in RVM Cloud.
-      operationId: loginUser
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ClientSecret'
-      responses:
-        '200':
-          description: successful operation
-          headers:
-            X-Rate-Limit:
-              description: calls per hour allowed by the user
-              schema:
-                type: integer
-                format: int32
-            X-Expires-After:
-              description: date in UTC when token expires
-              schema:
-                type: string
-                format: date-time
-          content:
-            application/xml:
-              schema:
-                type: string
-            application/json:
-              schema:
-                type: string
-        '400':
-          description: Invalid username/password supplied
-      x-stoplight:
-        id: wus8cgma1gami
 security:
   - bearerAuth: []
 components:
@@ -747,7 +709,9 @@ components:
       x-stoplight:
         id: tvswmeaefue84
       type: integer
-      enum: [0, 1]
+      enum:
+        - 0
+        - 1
       description: |
         Descriptior for RVM Power Status <br>
         Where: <br>

@@ -5,7 +5,7 @@ info:
   title: DRS API Representation
   contact:
     name: Dawid Brylka
-    url: https://www.kaucja.pl
+    url: 'https://www.kaucja.pl'
     email: dawid.brylka@kaucja.pl
   license:
     name: Apache 2.0
@@ -132,7 +132,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: 'models/Transaction.yaml'
+              $ref: models/Transaction.yaml
       summary: Post single Transaction
       description: Post single Transaction
       responses:
@@ -140,6 +140,8 @@ paths:
           description: Successful operation
         '400':
           description: Invalid input
+        '409':
+          $ref: '#/components/responses/409Conflict'
         '422':
           description: Validation exception
       x-stoplight:
@@ -155,7 +157,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: 'models/Transaction.yaml'
+                $ref: models/Transaction.yaml
       summary: Post multiple Transaction
       description: Post multiple Transaction
       responses:
@@ -163,6 +165,8 @@ paths:
           description: Successful operation
         '400':
           description: Invalid input
+        '409':
+          $ref: '#/components/responses/409Conflict'
         '422':
           description: Validation exception
       x-stoplight:
@@ -184,6 +188,8 @@ paths:
           description: Successful operation
         '400':
           description: Invalid input
+        '409':
+          $ref: '#/components/responses/409Conflict'
         '422':
           description: Validation exception
       x-stoplight:
@@ -626,28 +632,7 @@ components:
             $ref: '#/components/schemas/ContainerFull'
       x-stoplight:
         id: ty6l3ytww8zew
-    ValidationFailed:
-      title: ValidationFailed
-      x-stoplight:
-        id: o801dyh9pyv6f
-      type: object
-      properties:
-        message:
-          type: string
-          example: Input Validation failed
-        errorCode:
-          type: integer
-          example: 21
-    ValidationFailedWithDetails:
-      type: object
-      title: ValidationFailedWithDetails
-      properties:
-        message:
-          type: string
-          example: Input Validation failed
-        errorCode:
-          type: integer
-          example: 21
+
   responses:
     200PostReturnId:
       description: OK
@@ -662,6 +647,19 @@ components:
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: '#/components/schemas/ValidationFailed'
-              - $ref: '#/components/schemas/ValidationFailedWithDetails'
+            $ref: "models/ErrorMessage.yaml"
+
+    409Conflict:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: "models/ErrorMessage.yaml"
+          examples: null
+  examples:
+    ConflictMessage:
+      value:
+        msg: Conflicting ID of the request.
+        errorCode: 5
+        path: <path of the request>
+        
