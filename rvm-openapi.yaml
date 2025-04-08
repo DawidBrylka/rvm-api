@@ -626,35 +626,37 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/WasteTypeEnum'
-        maxContainers:
+        litrage:
           type: integer
+          example: 240
+          description: Capacity of bag in liters
       x-stoplight:
         id: nthgfqrhpl4tl
     Bin:
-      type: object
-      properties:
-        isFull:
-          type: boolean
-        wasteType:
-          type: array
-          items:
-            $ref: '#/components/schemas/WasteTypeEnum'
-        lastEmptied:
-          type: string
-          example: '2021-02-12T11:21:33Z'
-        lastFull:
-          type: string
-          example: '2021-02-11T11:21:33Z'
-        fillLevel:
-          type: number
-          example: 0.8
-          description: |
-            Fullness level of the bag. where 0 means 0%, 1 means 100%
-        currentWeight:
-          type: number
-          example: 10.12
-        containers:
-          type: integer
+      allOf:
+      - $ref: '#/components/schemas/BinPost'
+      - type: object
+        properties:
+          isFull:
+            type: boolean
+          lastEmptied:
+            type: string
+            example: '2021-02-12T11:21:33Z'
+          lastFull:
+            type: string
+            example: '2021-02-11T11:21:33Z'
+          fillLevel:
+            type: number
+            example: 0.3
+            description: |
+              Fullness level of the bag. where 0 means 0%, 1 means 100%
+          currentWeight:
+            type: number
+            example: 10.12
+          containers:
+            type: integer
+            example: 123
+            description: How many containers is in bag
       x-stoplight:
         id: r7i834ho3kwqk
     Location:

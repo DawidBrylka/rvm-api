@@ -407,7 +407,6 @@ components:
         - name
         - publishedName
         - market
-        - drsOperatorId
         - productStatusId
         - packaging
         - diameters
@@ -420,6 +419,7 @@ components:
           type: string
         publishedName:
           type: string
+        
         market:
           type: object
           properties:
@@ -429,64 +429,8 @@ components:
             exitDate:
               type: string
               format: date-time
-        drsOperatorId:
-          type: integer
-          description: ID of DRS operator
-        productStatusId:
-          type: integer
-        packaging:
-          $ref: '#/components/schemas/Packaging'
-        diameters:
-          $ref: '#/components/schemas/Diameters'
-        label:
-          $ref: '#/components/schemas/Label'
-        weight:
-          $ref: '#/components/schemas/Weight'
-        image:
-          type: string
-          format: binary
-    Product:
-      type: object
-      required:
-        - id
-        - ean
-        - name
-        - creationDate
-        - updatedDate
-        - market
-        - packaging
-        - diameters
-        - label
-        - weight
-      properties:
-        id:
-          type: string
-          format: uuid
-        ean:
-          type: string
-          format: gid
-        name:
-          type: string
-        publishedName:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        updatedDate:
-          type: string
-          format: date-time
-        market:
-          type: object
-          properties:
-            entryDate:
-              type: string
-              format: date-time
-            exitDate:
-              type: string
-              format: date-time
-        # drsOperatorId:
-        #   type: integer
-        #   description: ID of DRS operator
+        refund:
+          $ref: '#/components/schemas/Refund'
         productStatusId:
           $ref: '#/components/schemas/ProductStatusEnum'
         packaging:
@@ -500,8 +444,44 @@ components:
         image:
           type: string
           format: binary
-      x-stoplight:
-        id: r6oyzy0txsfku
+    Refund:
+      type: object
+      properties:
+        amount:
+          type: number
+          example: 0.50
+        currencyCode:
+          type: string
+          example: PLN
+          description: Currency in which the refund should be made
+    Product:
+      type: object
+      required:
+        - id
+        - ean
+        - name
+        - creationDate
+        - updatedDate
+        - market
+        - packaging
+        - diameters
+        - label
+        - weight
+      allOf:
+      - $ref: '#/components/schemas/ProductPost'
+      - type: object
+        properties:
+          id:
+            type: string
+            format: uuid
+          creationDate:
+            type: string
+            format: date-time
+          updatedDate:
+            type: string
+            format: date-time
+        x-stoplight:
+          id: r6oyzy0txsfku
     Label:
       type: object
       required:
@@ -564,10 +544,10 @@ components:
           example: 400
         height:
           type: number
-          description: height of product in mm
-        diagonal:
+          description: Height of product in mm
+        diameter:
           type: number
-          description: diagonal of product in mm
+          description: Diameter of product in mm
       x-stoplight:
         id: x67kmnv7cx4h6
     ContainerFull:
@@ -575,12 +555,10 @@ components:
       required:
         - ean
         - count
-        - weight
       description: |
         Returns list of only accepted containers <br> Where one record contains only one occurence of EAN e.g. <br> { <br>
           "ean": "123422",<br>
           "count": 100, <br>
-          "weight": 21.11 <br>
         }
       properties:
         ean:
@@ -589,9 +567,6 @@ components:
         count:
           type: integer
           example: 20
-        weight:
-          type: number
-          example: 0.001
       x-stoplight:
         id: tgu557sdjewef
     BagReplacement:

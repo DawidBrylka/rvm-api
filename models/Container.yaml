@@ -4,30 +4,31 @@ x-stoplight:
 type: object
 required:
   - ean
-  - count
+  - amount
   - weight
   - rejectionCauseCode
 description: |
     Returns list of only all taken containers <br> Where multiple records can contain the same ean, but with different rejection codes e.g. <br> { <br>
       "ean": "123422",<br>
-      "count": 12, <br>
-      "weight": 1.11, <br>
+      "amount": 12, <br>
+      "weight": 111, <br>
       "rejectionCauseCode": 0 <br>
     }, <br> { <br>
       "ean": "123422",<br>
-      "count": 1, <br>
-      "weight": 0.11, <br>
+      "amount": 1, <br>
+      "weight": 11, <br>
       "rejectionCauseCode": 2 <br>
     }, <br>
 properties:
   ean:
     type: string
     example: '20123123'
-  count:
+  amount:
     type: integer
     example: 20
   weight:
-    type: number
-    example: 0.001
+    type: integer
+    example: 10
+    description: Weight of container in grams
   rejectionCauseCode:
     $ref: 'RejectionCauseEnum.yaml'

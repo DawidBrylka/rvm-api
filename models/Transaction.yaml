@@ -9,15 +9,22 @@ properties:
   rvmId:
     type: string
     format: uuid
+  paidAmount:
+    type: number
+    example: 11.50
+    description: Amount paid to the customer
   transactionBlocked:
     type: boolean
     example: false
-  volume:
+    description: Descriptor wheter RVM blocked entire transaction due to frauds etc.
+  totalAmount:
     type: integer
     example: 20
+    description: 
   totalWeight:
-    type: number
-    example: 12.11
+    type: integer
+    example: 1211
+    description: Total weight of containers of taken containers. 
   transactionStartTime:
     type: string
     format: date-time
