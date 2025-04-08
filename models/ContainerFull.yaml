@@ -1,0 +1,17 @@
+title: ContainerFull
+type: object
+required:
+  - ean
+  - count
+description: |
+  Returns list of only accepted containers <br> Where one record contains only one occurence of EAN e.g. <br> { <br>
+    "ean": "123422",<br>
+    "count": 100, <br>
+  }
+properties:
+  ean:
+    type: string
+    example: '20123123'
+  count:
+    type: integer
+    example: 20

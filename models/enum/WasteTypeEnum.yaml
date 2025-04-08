@@ -1,0 +1,35 @@
+title: WasteTypeEnum
+type: integer
+enum:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+description: |
+  Descriptor for Waste Type <br>
+  Where:
+  * 1 - PET
+
+  * 2 - Glass
+
+  * 3 - Steel
+
+  * 4 - Aluminium
+
+  * 5 - Steel with Aluminium
+
+  * 6 - Steel with widget
+
+  * 7 - Aluminium with widget
+
+  * 8 - Other
+
+  * 9 - HDPE
+
+  * 10 - Plastic

@@ -1,0 +1,22 @@
+title: Weight
+x-stoplight:
+  id: dw8ok72twuwnv
+required:
+  - withCap
+type: object
+properties:
+  withoutCap:
+    type: number
+    description: Weight of bottle without cap in grams
+  withCap:
+    type: number
+    description: Weight of bottle with cap in grams
+  cap:
+    type: number
+    description: weight of cap in grams
+  min:
+    type: number
+    description: minimal acceptable bottle weight in grams
+  max:
+    type: number
+    description: maximal acceptable weight in grams

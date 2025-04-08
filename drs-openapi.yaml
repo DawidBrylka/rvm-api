@@ -31,7 +31,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ProductPost'
+              $ref: models/ProudctPost.yaml
       responses:
         '200':
           $ref: '#/components/responses/200PostReturnId'
@@ -82,7 +82,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Product'
+                      $ref: models/Product.yaml
         '400':
           description: Invalid input
         '422':
@@ -116,7 +116,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Product'
+                $ref: models/Product.yaml
         '400':
           description: Invalid input
         '422':
@@ -292,90 +292,6 @@ components:
       schema:
         type: number
   schemas:
-    WasteTypeEnum:
-      type: integer
-      enum:
-        - 1
-        - 2
-        - 3
-        - 4
-        - 5
-        - 6
-        - 7
-        - 8
-        - 9
-        - 10
-      description: |
-        Descriptor for Waste Type <br>
-        Where:
-        * 1 - PET
-
-        * 2 - Glass
-
-        * 3 - Steel
-
-        * 4 - Aluminium
-
-        * 5 - Steel with Aluminium
-
-        * 6 - Steel with widget
-
-        * 7 - Aluminium with widget
-
-        * 8 - Other
-
-        * 9 - HDPE
-
-        * 10 - Plastic
-      x-stoplight:
-        id: 3unh3056vk4oi
-    SleeveMaterialCode:
-      type: integer
-      enum:
-        - 0
-        - 1
-        - 2
-        - 3
-        - 4
-      description: |
-        Possible materials for bottle labels with corresponding integer IDs:
-        * 0 - Paper
-        * 1 - Vinyl
-        * 2 - Polyester
-        * 3 - Polypropylene
-        * 4 - PVC
-      x-stoplight:
-        id: 29qz1jfi9abe6
-    ColorEnum:
-      type: integer
-      enum:
-        - 1
-        - 2
-        - 3
-        - 4
-        - 5
-      description: |
-        Descriptor for ColorID <br> Where:
-        * 1 - Clear
-        * 2 - Brown
-        * 3 - Green
-        * 4 - Blue
-        * 5 - Other
-      x-stoplight:
-        id: zgvd9d6cx1n0h
-    ProductStatusEnum:
-      title: ProductStatusEnum
-      type: integer
-      enum:
-        - 0
-        - 1
-        - 2
-      description: |
-        Descriptor for Product Status <br> Where:
-        * 0 - Item in early phase. Should not be accepted neither by RVM or Manual Collection 
-        * 1 - Item should be accepted by RVM and Manual Collection.
-        * 2 - RVM and Manual Collection should reject those items
-        
     BagSeal:
       type: object
       properties:
@@ -403,179 +319,6 @@ components:
           format: date-time
       x-stoplight:
         id: ddq57l9gf506c
-    ProductPost:
-      type: object
-      required:
-        - ean
-        - name
-        - publishedName
-        - market
-        - productStatusId
-        - packaging
-        - diameters
-        - deposit
-        - weight
-        - feeAmount
-      properties:
-        ean:
-          type: string
-          format: gid
-        name:
-          type: string
-        publishedName:
-          type: string
-        market:
-          type: object
-          properties:
-            entryDate:
-              type: string
-              format: date-time
-            exitDate:
-              type: string
-              format: date-time
-        deposit:
-          $ref: '#/components/schemas/Deposit'
-        productStatusId:
-          $ref: '#/components/schemas/ProductStatusEnum'
-        packaging:
-          $ref: '#/components/schemas/Packaging'
-        diameters:
-          $ref: '#/components/schemas/Diameters'
-        label:
-          $ref: '#/components/schemas/Label'
-        weight:
-          $ref: '#/components/schemas/Weight'
-        image:
-          type: string
-          format: binary
-    Deposit:
-      type: object
-      required:
-        - amount
-      properties:
-        amount:
-          type: number
-          example: 0.5
-          description: Deposit amount without VAT tax
-        currency:
-          type: string
-          default: PLN
-          description: Currency of deposit
-    Product:
-      type: object
-      required:
-        - id
-        - ean
-        - name
-        - creationDate
-        - updatedDate
-        - market
-        - packaging
-        - diameters
-        - label
-        - weight
-      allOf:
-      - $ref: '#/components/schemas/ProductPost'
-      - type: object
-        properties:
-          id:
-            type: string
-            format: uuid
-          creationDate:
-            type: string
-            format: date-time
-          updatedDate:
-            type: string
-            format: date-time
-        x-stoplight:
-          id: r6oyzy0txsfku
-    Label:
-      type: object
-      required:
-        - materialCode
-      properties:
-        materialCode:
-          $ref: '#/components/schemas/SleeveMaterialCode'
-        sleeveLabel:
-          type: boolean
-        image:
-          type: string
-          format: binary
-      x-stoplight:
-        id: wevouuv5rzcyg
-    Weight:
-      required:
-        - withCap
-      type: object
-      properties:
-        withoutCap:
-          type: number
-          description: Weight of bottle without cap in grams
-        withCap:
-          type: number
-          description: Weight of bottle with cap in grams
-        cap:
-          type: number
-          description: weight of cap in grams
-        min:
-          type: number
-          description: minimal acceptable bottle weight in grams
-        max:
-          type: number
-          description: maximal acceptable weight in grams
-      x-stoplight:
-        id: 2kp6z3666pbsf
-    Packaging:
-      type: object
-      properties:
-        reusable:
-          type: boolean
-        materialCode:
-          $ref: '#/components/schemas/WasteTypeEnum'
-        colorId:
-          $ref: '#/components/schemas/ColorEnum'
-        capColorId:
-          $ref: '#/components/schemas/ColorEnum'
-      x-stoplight:
-        id: 37a1j4g8nh00w
-    Diameters:
-      type: object
-      required:
-        - volume
-        - height
-        - diagonal
-      properties:
-        volume:
-          type: integer
-          description: Declared volume in ml
-          example: 400
-        height:
-          type: number
-          description: Height of product in mm
-        diameter:
-          type: number
-          description: Diameter of product in mm
-      x-stoplight:
-        id: x67kmnv7cx4h6
-    ContainerFull:
-      type: object
-      required:
-        - ean
-        - count
-      description: |
-        Returns list of only accepted containers <br> Where one record contains only one occurence of EAN e.g. <br> { <br>
-          "ean": "123422",<br>
-          "count": 100, <br>
-        }
-      properties:
-        ean:
-          type: string
-          example: '20123123'
-        count:
-          type: integer
-          example: 20
-      x-stoplight:
-        id: tgu557sdjewef
     BagReplacement:
       type: object
       required:
@@ -611,10 +354,9 @@ components:
         containers:
           type: array
           items:
-            $ref: '#/components/schemas/ContainerFull'
+            $ref: models/ContainerFull.yaml
       x-stoplight:
         id: ty6l3ytww8zew
-
   responses:
     200PostReturnId:
       description: OK
@@ -629,14 +371,13 @@ components:
       content:
         application/json:
           schema:
-            $ref: "models/ErrorMessage.yaml"
-
+            $ref: models/ErrorMessage.yaml
     409Conflict:
       description: Example response
       content:
         application/json:
           schema:
-            $ref: "models/ErrorMessage.yaml"
+            $ref: models/ErrorMessage.yaml
           examples: null
   examples:
     ConflictMessage:
@@ -644,4 +385,3 @@ components:
         msg: Conflicting ID of the request.
         errorCode: 5
         path: <path of the request>
-        

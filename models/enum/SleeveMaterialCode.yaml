@@ -1,0 +1,17 @@
+title: SleeveMaterialCode
+x-stoplight:
+  id: 8jktmpwjbd19v
+type: integer
+enum:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+description: |
+  Possible materials for bottle labels with corresponding integer IDs:
+  * 0 - Paper
+  * 1 - Vinyl
+  * 2 - Polyester
+  * 3 - Polypropylene
+  * 4 - PVC

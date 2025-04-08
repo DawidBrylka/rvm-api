@@ -1,0 +1,30 @@
+title: Product
+x-stoplight:
+  id: d5dmvcw7m24ny
+type: object
+required:
+  - id
+  - ean
+  - name
+  - creationDate
+  - updatedDate
+  - market
+  - packaging
+  - diameters
+  - label
+  - weight
+allOf:
+- $ref: 'ProudctPost.yaml'
+- type: object
+  properties:
+    id:
+      type: string
+      format: uuid
+    creationDate:
+      type: string
+      format: date-time
+    updatedDate:
+      type: string
+      format: date-time
+  x-stoplight:
+    id: r6oyzy0txsfku

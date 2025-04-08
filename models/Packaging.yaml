@@ -1,0 +1,21 @@
+title: Packaging
+x-stoplight:
+  id: 128e5a4b4f44d
+type: object
+properties:
+  reusable:
+    type: boolean
+    x-stoplight:
+      id: 3kid8znv5yve0
+  materialCode:
+    $ref: enum/WasteTypeEnum.yaml
+    x-stoplight:
+      id: gfnu35ljo5lhe
+  colorId:
+    $ref: enum/ColorEnum.yaml
+    x-stoplight:
+      id: d57p9f0rb7ki1
+  capColorId:
+    $ref: enum/ColorEnum.yaml
+    x-stoplight:
+      id: zycrkjvhnx21x

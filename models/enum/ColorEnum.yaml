@@ -1,0 +1,17 @@
+title: ColorEnum
+x-stoplight:
+  id: qp7asu5sqcocb
+type: integer
+enum:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+description: |
+  Descriptor for ColorID <br> Where:
+  * 1 - Clear
+  * 2 - Brown
+  * 3 - Green
+  * 4 - Blue
+  * 5 - Other

@@ -1,0 +1,15 @@
+title: Label
+x-stoplight:
+  id: gk27jr0cqrgm3
+type: object
+required:
+  - materialCode
+properties:
+  materialCode:
+    $ref: 'enum/SleeveMaterialCode.yaml'
+  sleeveLabel:
+    type: boolean
+  image:
+    type: string
+    format: uri
+    example: 'https://editor.swagger.io/image.jpg'

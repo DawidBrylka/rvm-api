@@ -1,0 +1,19 @@
+title: Diameters
+x-stoplight:
+  id: 5lxr5c7sivfhq
+type: object
+required:
+  - volume
+  - height
+  - diagonal
+properties:
+  volume:
+    type: integer
+    description: Declared volume in ml
+    example: 400
+  height:
+    type: number
+    description: Height of product in mm
+  diameter:
+    type: number
+    description: Diameter of product in mm

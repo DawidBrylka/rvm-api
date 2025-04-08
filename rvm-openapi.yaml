@@ -282,7 +282,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Product'
+              $ref: models/Product.yaml
       responses:
         '200':
           description: Successful operation
@@ -307,7 +307,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/Product'
+                $ref: models/Product.yaml
       responses:
         '200':
           description: Successful operation
@@ -339,167 +339,6 @@ components:
       schema:
         type: number
   schemas:
-    Product:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        ean:
-          type: string
-          format: gid
-        name:
-          type: string
-        publishedName:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        updatedDate:
-          type: string
-          format: date-time
-        market:
-          type: object
-          properties:
-            entryDate:
-              type: string
-              format: date-time
-            exitDate:
-              type: string
-              format: date-time
-        drsOperatorId:
-          type: integer
-          description: ID of DRS operator
-        productStatusId:
-          $ref: '#/components/schemas/ProductStatusEnum'
-        packaging:
-          $ref: '#/components/schemas/Packaging'
-        diameters:
-          $ref: '#/components/schemas/Diameters'
-        label:
-          $ref: '#/components/schemas/Label'
-        weight:
-          $ref: '#/components/schemas/Weight'
-        image:
-          type: string
-          format: uri
-          example: 'https://editor.swagger.io/image.jpg'
-      x-stoplight:
-        id: cnb0gh3fuj6rv
-    Label:
-      type: object
-      properties:
-        materialCode:
-          $ref: '#/components/schemas/SleeveMaterialCode'
-        sleeveLabel:
-          type: boolean
-        image:
-          type: string
-          format: binary
-          example: 'https://editor.swagger.io/LabelImage.jpg'
-      x-stoplight:
-        id: 45si4ipq999wv
-    SleeveMaterialCode:
-      type: integer
-      enum:
-        - 0
-        - 1
-        - 2
-        - 3
-        - 4
-      description: |
-        Possible materials for bottle labels with corresponding integer IDs:
-        * 0 - Paper
-        * 1 - Vinyl
-        * 2 - Polyester
-        * 3 - Polypropylene
-        * 4 - PVC
-      x-stoplight:
-        id: 3bw4h6u7da5sj
-    ProductStatusEnum:
-      type: integer
-      enum:
-        - 1
-        - 2
-        - 3
-      description: |
-        Descriptor for Product Status <br> Where:
-        * 1 - Passive reject. Item is in the market. RVM is waiting for an approval to start taking this product.
-        * 2 - Accept.
-        * 3 - Active Reject. Item should be rejected by RVM
-      x-stoplight:
-        id: rv9ef4e6uaxd5
-    ColorEnum:
-      type: integer
-      enum:
-        - 1
-        - 2
-        - 3
-        - 4
-        - 5
-      description: |
-        Descriptor for ColorID <br> Where:
-        * 1 - Clear
-        * 2 - Brown
-        * 3 - Green
-        * 4 - Blue
-        * 5 - Other
-      x-stoplight:
-        id: nofcakubupfnp
-    Weight:
-      type: object
-      properties:
-        withoutCap:
-          type: number
-          description: Weight of bottle without cap in grams
-        withCap:
-          type: number
-          description: Weight of bottle with cap in grams
-        cap:
-          type: number
-          description: weight of cap in grams
-        min:
-          type: number
-          description: minimal acceptable bottle weight in grams
-        max:
-          type: number
-          description: maximal acceptable weight in grams
-      x-stoplight:
-        id: e7m22kkt2tc0z
-    Packaging:
-      type: object
-      properties:
-        reusable:
-          type: boolean
-        materialCode:
-          $ref: '#/components/schemas/WasteTypeEnum'
-        colorId:
-          $ref: '#/components/schemas/ColorEnum'
-        capColorId:
-          $ref: '#/components/schemas/ColorEnum'
-      x-stoplight:
-        id: vlfzdiv3tufua
-    Diameters:
-      type: object
-      properties:
-        volume:
-          type: integer
-          description: Declared volume in ml
-          example: 400
-        width:
-          type: number
-          description: width of product in mm
-        height:
-          type: number
-          description: height of product in mm
-        depth:
-          type: number
-          description: depth of product in mm
-        diagonal:
-          type: number
-          description: diagonal of product in mm
-      x-stoplight:
-        id: 4vxaqaoy95556
     PostMachine:
       type: object
       required:
@@ -523,19 +362,6 @@ components:
       x-internal: false
       x-stoplight:
         id: fvntp98cbkrsr
-    ClientSecret:
-      type: object
-      properties:
-        clientId:
-          type: string
-        clientSecret:
-          type: string
-        scope:
-          type: string
-        grantType:
-          type: string
-      x-stoplight:
-        id: ixzfjv3jjg41e
     Machine:
       type: object
       properties:
@@ -582,50 +408,13 @@ components:
           format: date-time
       x-stoplight:
         id: sj89q9h8uo3dh
-    WasteTypeEnum:
-      type: integer
-      enum:
-        - 1
-        - 2
-        - 3
-        - 4
-        - 5
-        - 6
-        - 7
-        - 8
-        - 9
-        - 10
-      description: |
-        Descriptor for Waste Type <br>
-        Where:
-        * 1 - PET
-
-        * 2 - Glass
-
-        * 3 - Steel
-
-        * 4 - Aluminium
-
-        * 5 - Steel with Aluminium
-
-        * 6 - Steel with widget
-
-        * 7 - Aluminium with widget
-
-        * 8 - Other
-
-        * 9 - HDPE
-
-        * 10 - Plastic
-      x-stoplight:
-        id: zgbxwnxgusin1
     BinPost:
       type: object
       properties:
         wasteType:
           type: array
           items:
-            $ref: '#/components/schemas/WasteTypeEnum'
+            $ref: models/enum/WasteTypeEnum.yaml
         litrage:
           type: integer
           example: 240
@@ -634,29 +423,29 @@ components:
         id: nthgfqrhpl4tl
     Bin:
       allOf:
-      - $ref: '#/components/schemas/BinPost'
-      - type: object
-        properties:
-          isFull:
-            type: boolean
-          lastEmptied:
-            type: string
-            example: '2021-02-12T11:21:33Z'
-          lastFull:
-            type: string
-            example: '2021-02-11T11:21:33Z'
-          fillLevel:
-            type: number
-            example: 0.3
-            description: |
-              Fullness level of the bag. where 0 means 0%, 1 means 100%
-          currentWeight:
-            type: number
-            example: 10.12
-          containers:
-            type: integer
-            example: 123
-            description: How many containers is in bag
+        - $ref: '#/components/schemas/BinPost'
+        - type: object
+          properties:
+            isFull:
+              type: boolean
+            lastEmptied:
+              type: string
+              example: '2021-02-12T11:21:33Z'
+            lastFull:
+              type: string
+              example: '2021-02-11T11:21:33Z'
+            fillLevel:
+              type: number
+              example: 0.3
+              description: |
+                Fullness level of the bag. where 0 means 0%, 1 means 100%
+            currentWeight:
+              type: number
+              example: 10.12
+            containers:
+              type: integer
+              example: 123
+              description: How many containers is in bag
       x-stoplight:
         id: r7i834ho3kwqk
     Location:

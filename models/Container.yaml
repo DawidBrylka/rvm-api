@@ -3,8 +3,6 @@ x-stoplight:
   id: y23npriue3711
 type: object
 required:
-  - ean
-  - amount
   - weight
   - rejectionCauseCode
 description: |
@@ -19,16 +17,12 @@ description: |
       "weight": 11, <br>
       "rejectionCauseCode": 2 <br>
     }, <br>
-properties:
-  ean:
-    type: string
-    example: '20123123'
-  amount:
-    type: integer
-    example: 20
-  weight:
-    type: integer
-    example: 10
-    description: Weight of container in grams
-  rejectionCauseCode:
-    $ref: 'RejectionCauseEnum.yaml'
+allOf:
+  - $ref: "ContainerFull.yaml"
+  - properties:
+      weight:
+        type: integer
+        example: 10
+        description: Weight of container in grams
+      rejectionCauseCode:
+        $ref: 'enum/RejectionCauseEnum.yaml'

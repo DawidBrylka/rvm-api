@@ -1,0 +1,15 @@
+title: Deposit
+x-stoplight:
+  id: o6bru2vmv6pxc
+type: object
+required:
+  - amount
+properties:
+  amount:
+    type: number
+    example: 0.5
+    description: Deposit amount without VAT tax
+  currency:
+    type: string
+    default: PLN
+    description: Currency of deposit
