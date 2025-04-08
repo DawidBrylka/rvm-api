@@ -452,7 +452,6 @@ components:
       type: object
       required:
         - amount
-        - currency
       properties:
         amount:
           type: number
