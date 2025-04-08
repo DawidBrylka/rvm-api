@@ -462,12 +462,6 @@ components:
           type: string
           default: PLN
           description: Currency of deposit
-        vat:
-          type: integer
-          example: 23
-        amountGross:
-          type: number
-          description: Gross value of deposit. Calculated by Net Amount + VAT tax, where VAT tax can be 0 
     Product:
       type: object
       required:
