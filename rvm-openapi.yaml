@@ -348,11 +348,13 @@ components:
       properties:
         serialNumber:
           type: string
+          format: uuid
+          description: Serial number of machine
           x-stoplight:
             id: 8pp4kxobuhvlh
         name:
           type: string
-          example: RVM AT SOMEWHERE
+          example: RVM Customer/provider given name.
         location:
           $ref: '#/components/schemas/Location'
         bins:
@@ -364,32 +366,24 @@ components:
         id: fvntp98cbkrsr
     Machine:
       type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        serialNumber:
-          type: string
-          x-stoplight:
-            id: 4jo2xkwtw0o8b
-          description: Serial number of machine
-        name:
-          type: string
-          example: RVM AT SOMEWHERE
-        location:
-          $ref: '#/components/schemas/Location'
-        health:
-          $ref: '#/components/schemas/Health'
-        bins:
-          type: array
-          items:
-            $ref: '#/components/schemas/Bin'
-        ean_sync_date:
-          type: string
-          format: date-time
-        lastTransaction:
-          type: string
-          format: date-time
+      allOf:
+      - $ref: "#/components/schemas/PostMachine"
+      - properties:
+          id:
+            type: string
+            format: uuid
+          health:
+            $ref: '#/components/schemas/Health'
+          bins:
+            type: array
+            items:
+              $ref: '#/components/schemas/Bin'
+          ean_sync_date:
+            type: string
+            format: date-time
+          lastTransaction:
+            type: string
+            format: date-time
       x-stoplight:
         id: 8g021fi6n2gxd
     Health:
