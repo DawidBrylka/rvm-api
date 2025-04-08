@@ -574,9 +574,6 @@ components:
         count:
           type: integer
           example: 20
-        weight:
-          type: integer
-          description: Weight of collected containers in grams
       x-stoplight:
         id: tgu557sdjewef
     BagReplacement:
