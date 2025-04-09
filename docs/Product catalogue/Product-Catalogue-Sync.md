@@ -2,6 +2,8 @@
 stoplight-id: 9yhko2vrj5xqa
 ---
 
+![DepositCatalogueSync.png](../../assets/images/DepositCatalogueSync.png)
+
 # Product Catalogue Sync Process
 
 ## Overview
