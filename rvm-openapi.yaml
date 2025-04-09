@@ -354,7 +354,7 @@ components:
             id: 8pp4kxobuhvlh
         name:
           type: string
-          example: RVM Customer/provider given name.
+          description: RVM Customer/provider given name.
         location:
           $ref: '#/components/schemas/Location'
         bins:

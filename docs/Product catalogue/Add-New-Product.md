@@ -34,14 +34,15 @@ Representation of API Endpoinds exposed by **Deposit Return System (DRS)** in or
 
 ### POST /product
 
-For full overwiev of this endpoint please visit: [POST /product](https://kaucja.stoplight.io/docs/rvm-api/drs-openapi.yaml/paths/\~1product/post)
+For full overwiev of this endpoint please visit: [POST - /product](../../drs-openapi.yaml/paths/~1product/get)
+
 
 <details>
 
 <summary>Request Body</summary>
 
 ```yaml jsonSchema
-  $ref: '../../drs-openapi.yaml#/components/schemas/ProductPost'
+  $ref: '../../models/ProductPost.yaml'
 ```
 
 </details>
@@ -72,13 +73,15 @@ Representation of API Endpoinds exposed by **RVM Cloud** in order to complete th
 
 ### POST /product
 
-For full overwiev of this endpoint please visit: [POST /product](https://kaucja.stoplight.io/docs/rvm-api/rvm-openapi.yaml/paths/\~1product/post)
+For full overwiev of this endpoint please visit: [POST - /product](../../rvm-openapi.yaml/paths/~1product/post)
+
+
 
 <details>
 <summary>Request Body</summary>
 
 ```yaml jsonSchema
-  $ref: '../../rvm-openapi.yaml#/components/schemas/Product'
+  $ref: '../../models/Product.yaml'
 ```
 
 

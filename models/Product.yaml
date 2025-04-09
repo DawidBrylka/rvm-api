@@ -14,7 +14,7 @@ required:
   - label
   - weight
 allOf:
-- $ref: 'ProudctPost.yaml'
+- $ref: 'ProductPost.yaml'
 - type: object
   properties:
     id:
