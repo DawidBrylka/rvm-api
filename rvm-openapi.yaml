@@ -341,6 +341,16 @@ components:
   schemas:
     PostMachine:
       type: object
+      x-stoplight:
+        id: 77cce22d44de5
+      allOf:
+        - $ref: '#/components/schemas/MachineBase'
+        - properties:
+            authorizationCode:
+              type: string
+              description: Authorization code required to register machine
+    MachineBase:
+      type: object
       required:
         - serialNumber
         - location
@@ -366,24 +376,25 @@ components:
         id: fvntp98cbkrsr
     Machine:
       type: object
+      internal: true
       allOf:
-      - $ref: "#/components/schemas/PostMachine"
-      - properties:
-          id:
-            type: string
-            format: uuid
-          health:
-            $ref: '#/components/schemas/Health'
-          bins:
-            type: array
-            items:
-              $ref: '#/components/schemas/Bin'
-          ean_sync_date:
-            type: string
-            format: date-time
-          lastTransaction:
-            type: string
-            format: date-time
+        - $ref: '#/components/schemas/MachineBase'
+        - properties:
+            id:
+              type: string
+              format: uuid
+            health:
+              $ref: '#/components/schemas/Health'
+            bins:
+              type: array
+              items:
+                $ref: '#/components/schemas/Bin'
+            ean_sync_date:
+              type: string
+              format: date-time
+            lastTransaction:
+              type: string
+              format: date-time
       x-stoplight:
         id: 8g021fi6n2gxd
     Health:
