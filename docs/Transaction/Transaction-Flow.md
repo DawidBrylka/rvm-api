@@ -1,16 +1,17 @@
 ---
 stoplight-id: nb5tsjecxrsga
-
-internal: true
 ---
+
 ![TransactionProcess.png](../../assets/images/TransactionProcess.png)
 
 # Transaction Process
 
 ## Overview
+
 The **Transaction Process** handles interactions between **RVM Cloud** and **DRS**, ensuring that transaction data is transmitted and confirmed correctly.
 
 ## Process Flow
+
 1. **Start:** The transaction process begins in **RVM Cloud**.
 2. **API Endpoint:** The transaction data is sent to the one of endpoints in **DRS**:
    - `POST /transaction` for single transaction details.
@@ -31,7 +32,7 @@ Representation of API endpoints exposed by **RVM Cloud** to complete this proces
 
 ### POST /transaction
 
-For a full overview of this endpoint, please visit: [POST - /transaction](../../rvm-openapi.yaml/paths/~1transaction/post)
+For a full overview of this endpoint, please visit: [POST - /transaction](../../rvm-openapi.yaml/paths/\~1transaction/post)
 
 <details>
 <summary>Request Body</summary>
@@ -39,12 +40,14 @@ For a full overview of this endpoint, please visit: [POST - /transaction](../../
 ```yaml jsonSchema
   $ref: '../../models/Transaction.yaml'
 ```
+
 </details>
 
 <br> <br>
+
 ### POST /transaction/bulk
 
-For a full overview of this endpoint, please visit: [POST - /transaction](../../rvm-openapi.yaml/paths/~1transaction/post)
+For a full overview of this endpoint, please visit: [POST - /transaction](../../rvm-openapi.yaml/paths/\~1transaction/post)
 
 <details>
 <summary>Request Body</summary>

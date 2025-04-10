@@ -1,17 +1,20 @@
 ---
 stoplight-id: rnjtx7f30glgy
-internal: true
 ---
+
 ![RVMInfo.png](../../assets/images/RVMHealthcheck.png)
 
 # Machine Information Retrieval
 
 ## Overview
+
 The **Machine Information Retrieval** process allows **DRS** to obtain details about registered RVM machines from **RVM Cloud**. This can be done in two ways:
+
 1. **Single Machine Data:** Retrieve information about a specific machine using its unique ID.
 2. **All Machines Data:** Retrieve a paginated list of all registered RVM machines.
 
 ## Process Flow
+
 1. **Start:** The information retrieval process is initiated from the **DRS system**.
 2. **API Endpoint:** The request is made to one of the two endpoints in **RVM Cloud**:
    - `GET /machine/{id}` for single machine details.
@@ -29,7 +32,7 @@ Representation of API endpoints exposed by **RVM Cloud** to complete this proces
 
 Retrieves detailed information about a specific machine using its unique identifier.
 
-For a full overview of this endpoint, please visit: [GET - /machine/{id}](../../rvm-openapi.yaml/paths/~1machine~1{id}/get)
+For a full overview of this endpoint, please visit: [GET - /machine/{id}](../../rvm-openapi.yaml/paths/\~1machine\~1{id}/get)
 
 <details>
 <summary>Path Parameter</summary>
@@ -39,6 +42,7 @@ id:
   type: string
   description: Unique identifier of the machine.
 ```
+
 </details>
 
 <details>
@@ -47,16 +51,16 @@ id:
 ```yaml jsonSchema
   $ref: '../../rvm-openapi.yaml#/components/schemas/Machine'
 ```
+
 </details>
 
 <br>
-
 
 ### GET /machine
 
 Retrieves detailed information about all machines.
 
-For a full overview of this endpoint, please visit: [GET - /machine](../../rvm-openapi.yaml/paths/~1machine/get)
+For a full overview of this endpoint, please visit: [GET - /machine](../../rvm-openapi.yaml/paths/\~1machine/get)
 
 <details>
 <summary>Response Body</summary>
@@ -64,7 +68,7 @@ For a full overview of this endpoint, please visit: [GET - /machine](../../rvm-o
 ```yaml jsonSchema
   $ref: '../../rvm-openapi.yaml#/components/schemas/MachinePaginated'
 ```
-</details>
 
+</details>
 
 <!-- type: tab-end -->

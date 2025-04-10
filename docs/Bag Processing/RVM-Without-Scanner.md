@@ -1,15 +1,16 @@
 ---
 stoplight-id: rvm-noscan-xyz789
-internal: true
 ---
+
 ![RVMWithoutScanner.png](../../assets/images/RVMNoScanner.png)
 
 # RVM Without Scanner
 
 ## Overview
+
 For **RVMs that do not have an internal scanner**, the process of scanning the seal is handled via a **mobile application** provided by the DRS Operator or an equivalent device.
 
->  **RVM** must only be unblocked after receiving confirmation of sealing from **DRS**.
+> **RVM** must only be unblocked after receiving confirmation of sealing from **DRS**.
 
 ## Process Flow
 
@@ -31,8 +32,6 @@ For **RVMs that do not have an internal scanner**, the process of scanning the s
 4. **Seal Confirmation:** PZ sends confirmation of sealing `POST /bag-seal`
 5. **Machine Unblock:** DRS unblocks the RVM -  `POST /machine/{id}/unblock`
 
-
-
 ## API Endpoints
 
 List of endpoints that should be exposed from **Deposit Return System (DRS)** and **RVM Cloud** in order to complete described process.
@@ -46,7 +45,7 @@ title: DRS
 
 Sent by **Collection Point** via Mobile App to **DRS** to confirm sealing of the bag.
 
-For full overwiev of this endpoint please visit: [POST - /bag-seal](../../drs-openapi.yaml/paths/~1bag-seal/post)
+For full overwiev of this endpoint please visit: [POST - /bag-seal](../../drs-openapi.yaml/paths/\~1bag-seal/post)
 
 <details>
 
@@ -55,6 +54,7 @@ For full overwiev of this endpoint please visit: [POST - /bag-seal](../../drs-op
 ```yaml jsonSchema
   $ref: '../../drs-openapi.yaml#/components/schemas/BagSeal'
 ```
+
 </details>
 <br>
 
@@ -62,7 +62,7 @@ For full overwiev of this endpoint please visit: [POST - /bag-seal](../../drs-op
 
 Informs DRS that the RVM's bag is full.
 
-For full overwiev of this endpoint please visit: [POST - /bag-is-full](../../drs-openapi.yaml/paths/~1bag-is-full/post)
+For full overwiev of this endpoint please visit: [POST - /bag-is-full](../../drs-openapi.yaml/paths/\~1bag-is-full/post)
 
 <details>
 
@@ -71,6 +71,7 @@ For full overwiev of this endpoint please visit: [POST - /bag-is-full](../../drs
 ```yaml jsonSchema
   $ref: '../../drs-openapi.yaml#/components/schemas/BagFull'
 ```
+
 </details>
 <br>
 
@@ -80,7 +81,7 @@ For full overwiev of this endpoint please visit: [POST - /bag-is-full](../../drs
 
 Informs DRS that a bag has been replaced.
 
-For full overwiev of this endpoint please visit: [POST - /bag-replacement](../../drs-openapi.yaml/paths/~1bag-replacement/post)
+For full overwiev of this endpoint please visit: [POST - /bag-replacement](../../drs-openapi.yaml/paths/\~1bag-replacement/post)
 
 <details>
 
@@ -89,6 +90,7 @@ For full overwiev of this endpoint please visit: [POST - /bag-replacement](../..
 ```yaml jsonSchema
   $ref: '../../drs-openapi.yaml#/components/schemas/BagReplacement'
 ```
+
 </details>
 <br>
 
@@ -101,7 +103,7 @@ title: RVM
 
 Sent by DRS to unblock the RVM after sealing is confirmed.
 
-For full overwiev of this endpoint please visit: [PUT - /machine/{id}/unblock](../../rvm-openapi.yaml/paths/~1machine~1{id}~1unblock/put)
+For full overwiev of this endpoint please visit: [PUT - /machine/{id}/unblock](../../rvm-openapi.yaml/paths/\~1machine\~1{id}\~1unblock/put)
 
 <details>
 <summary>Path Parameter</summary>
@@ -111,6 +113,7 @@ id:
   type: string
   description: Unique identifier of the machine.
 ```
+
 </details>
 
 <!-- type: tab-end -->

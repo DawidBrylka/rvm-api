@@ -1,6 +1,5 @@
 ---
 stoplight-id: 9yhko2vrj5xqa
-internal: true
 ---
 
 ![DepositCatalogueSync.png](../../assets/images/DepositCatalogueSync.png)

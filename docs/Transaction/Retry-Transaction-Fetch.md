@@ -1,15 +1,17 @@
 ---
 stoplight-id: lostsync-abc123
-internal: true
 ---
+
 ![LostDataSync.png](../../assets/images/LostDataSync.png)
 
 # Lost Data Sync
 
 ## Overview
+
 The **Lost Data Sync** process ensures that any transactions not marked as delivered in **RVM Cloud** are identified and confirmed by **DRS**. This mechanism helps maintain data consistency in case of transmission failures or missed confirmations.
 
 ## Process Flow
+
 1. **Start:** The sync process is triggered on the **DRS** side (e.g., once daily).
 2. **Fetch Unconfirmed Transactions:** DRS calls the following endpoint on **RVM Cloud**:
    - `GET /transaction?delivered=false`
@@ -32,7 +34,8 @@ Representation of API endpoints exposed by **RVM Cloud** to support this process
 ### GET /transaction?delivered=false
 
 Returns all transactions not yet marked as delivered.
-For a full overview of this endpoint, please visit: [GET - /transaction](../../rvm-openapi.yaml/paths/~1transaction/get)
+For a full overview of this endpoint, please visit: [GET - /transaction](../../rvm-openapi.yaml/paths/\~1transaction/get)
+
 <details>
 <summary>Query Parameters</summary>
 
@@ -41,6 +44,7 @@ delivered:
   type: boolean
   description: Filter to only return transactions that are not marked as delivered.
 ```
+
 </details>
 
 <details>
@@ -49,6 +53,7 @@ delivered:
 ```yaml jsonSchema
   $ref: '../../rvm-openapi.yaml#/components/schemas/PaginatedTransaction'
 ```
+
 </details>
 
 <br><br>
@@ -56,7 +61,8 @@ delivered:
 ### POST /transaction/{id}/confirmation
 
 Confirms delivery of a single transaction by ID.
-For a full overview of this endpoint, please visit: [POST - /transaction/{id}/confirmation](../../rvm-openapi.yaml/paths/~1transaction~1{id}~1confirmation)
+For a full overview of this endpoint, please visit: [POST - /transaction/{id}/confirmation](../../rvm-openapi.yaml/paths/\~1transaction\~1{id}\~1confirmation)
+
 <details>
 <summary>Path Parameter</summary>
 
@@ -65,6 +71,7 @@ id:
   type: string
   description: Unique identifier of the transaction.
 ```
+
 </details>
 
 <!-- type: tab-end -->

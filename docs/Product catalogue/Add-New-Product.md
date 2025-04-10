@@ -1,7 +1,6 @@
 ---
 stoplight-id: r2zehj4qe028o
 tags: [Product, Catalog]
-internal: true
 ---
 
 ![NewProductAdded.png](../../assets/images/NewProductAdded.png)
@@ -34,8 +33,7 @@ Representation of API Endpoinds exposed by **Deposit Return System (DRS)** in or
 
 ### POST /product
 
-For full overwiev of this endpoint please visit: [POST - /product](../../drs-openapi.yaml/paths/~1product/get)
-
+For full overwiev of this endpoint please visit: [POST - /product](../../drs-openapi.yaml/paths/\~1product/get)
 
 <details>
 
@@ -73,9 +71,7 @@ Representation of API Endpoinds exposed by **RVM Cloud** in order to complete th
 
 ### POST /product
 
-For full overwiev of this endpoint please visit: [POST - /product](../../rvm-openapi.yaml/paths/~1product/post)
-
-
+For full overwiev of this endpoint please visit: [POST - /product](../../rvm-openapi.yaml/paths/\~1product/post)
 
 <details>
 <summary>Request Body</summary>
@@ -83,7 +79,6 @@ For full overwiev of this endpoint please visit: [POST - /product](../../rvm-ope
 ```yaml jsonSchema
   $ref: '../../models/Product.yaml'
 ```
-
 
 </details>
 
