@@ -46,6 +46,8 @@ title: DRS
 
 Sent by **Collection Point** via Mobile App to **DRS** to confirm sealing of the bag.
 
+For full overwiev of this endpoint please visit: [POST - /bag-seal](../../drs-openapi.yaml/paths/~1bag-seal/post)
+
 <details>
 
 <summary>Request Body</summary>
@@ -55,17 +57,40 @@ Sent by **Collection Point** via Mobile App to **DRS** to confirm sealing of the
 ```
 </details>
 <br>
+
 ### POST /bag-is-full
 
 Informs DRS that the RVM's bag is full.
 
+For full overwiev of this endpoint please visit: [POST - /bag-is-full](../../drs-openapi.yaml/paths/~1bag-is-full/post)
+
+<details>
+
+<summary>Request Body</summary>
+
+```yaml jsonSchema
+  $ref: '../../drs-openapi.yaml#/components/schemas/BagFull'
+```
+</details>
+<br>
 
 <br>
+
 ### POST /bag-replacement
 
 Informs DRS that a bag has been replaced.
 
+For full overwiev of this endpoint please visit: [POST - /bag-replacement](../../drs-openapi.yaml/paths/~1bag-replacement/post)
 
+<details>
+
+<summary>Request Body</summary>
+
+```yaml jsonSchema
+  $ref: '../../drs-openapi.yaml#/components/schemas/BagReplacement'
+```
+</details>
+<br>
 
 <!--
 type: tab
@@ -76,5 +101,16 @@ title: RVM
 
 Sent by DRS to unblock the RVM after sealing is confirmed.
 
+For full overwiev of this endpoint please visit: [PUT - /machine/{id}/unblock](../../rvm-openapi.yaml/paths/~1machine~1{id}~1unblock/put)
+
+<details>
+<summary>Path Parameter</summary>
+
+```yaml
+id:
+  type: string
+  description: Unique identifier of the machine.
+```
+</details>
 
 <!-- type: tab-end -->

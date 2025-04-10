@@ -32,10 +32,10 @@ Representation of API endpoints exposed by **RVM Cloud** to support this process
 ### GET /transaction?delivered=false
 
 Returns all transactions not yet marked as delivered.
-
+For a full overview of this endpoint, please visit: [GET - /transaction](../../rvm-openapi.yaml/paths/~1transaction/get)
 <details>
 <summary>Query Parameters</summary>
-For a full overview of this endpoint, please visit: [GET - /transaction]
+
 ```yaml
 delivered:
   type: boolean
