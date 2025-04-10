@@ -35,7 +35,7 @@ Returns all transactions not yet marked as delivered.
 
 <details>
 <summary>Query Parameters</summary>
-
+For a full overview of this endpoint, please visit: [GET - /transaction]
 ```yaml
 delivered:
   type: boolean
@@ -56,7 +56,7 @@ delivered:
 ### POST /transaction/{id}/confirmation
 
 Confirms delivery of a single transaction by ID.
-
+For a full overview of this endpoint, please visit: [POST - /transaction/{id}/confirmation](../../rvm-openapi.yaml/paths/~1transaction~1{id}~1confirmation)
 <details>
 <summary>Path Parameter</summary>
 
