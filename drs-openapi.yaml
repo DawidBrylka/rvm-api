@@ -155,9 +155,7 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: models/Transaction.yaml
+              $ref: '#/components/schemas/BulkTransaction'
       summary: Post multiple Transaction
       description: Post multiple Transaction
       responses:
@@ -357,6 +355,14 @@ components:
             $ref: models/ContainerFull.yaml
       x-stoplight:
         id: ty6l3ytww8zew
+    BulkTransaction:
+      internal: true
+      title: BulkTransaction
+      x-stoplight:
+        id: 5g2jzhz7bryao
+      type: array
+      items:
+        $ref: models/Transaction.yaml
   responses:
     200PostReturnId:
       description: OK

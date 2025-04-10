@@ -1,0 +1,56 @@
+---
+stoplight-id: nb5tsjecxrsga
+
+internal: true
+---
+![TransactionProcess.png](../../assets/images/TransactionProcess.png)
+
+# Transaction Process
+
+## Overview
+The **Transaction Process** handles interactions between **RVM Cloud** and **DRS**, ensuring that transaction data is transmitted and confirmed correctly.
+
+## Process Flow
+1. **Start:** The transaction process begins in **RVM Cloud**.
+2. **API Endpoint:** The transaction data is sent to the one of endpoints in **DRS**:
+   - `POST /transaction` for single transaction details.
+   - `POST /transaction/bulk` for multiple transaction details - it does accept an array of transactions posted.
+3. **Response:** DRS processes the transaction and returns a **confirmation** response to **RVM Cloud**.
+4. After **DRS** return confirmation **RVM Cloud** set transaction as processed in its system.
+
+> **Note:** In case of unuccesful attempt, **RVM Cloud** is expected to retry the call several times. Also there will be mechanism on **DRS** side to fetch all unprocessed transaction once per day - Process is described in [DRS Transaction Retry Mechanism](Retry-Transaction-Fetch.md).
+
+> **Note**: In case of duplicate ID, HTTP Code 409 will be returned.
+
+<!--
+type: tab
+title: RVM
+-->
+
+Representation of API endpoints exposed by **RVM Cloud** to complete this process.
+
+### POST /transaction
+
+For a full overview of this endpoint, please visit: [POST - /transaction](../../rvm-openapi.yaml/paths/~1transaction/post)
+
+<details>
+<summary>Request Body</summary>
+
+```yaml jsonSchema
+  $ref: '../../models/Transaction.yaml'
+```
+</details>
+
+<br> <br>
+### POST /transaction/bulk
+
+For a full overview of this endpoint, please visit: [POST - /transaction](../../rvm-openapi.yaml/paths/~1transaction/post)
+
+<details>
+<summary>Request Body</summary>
+
+```yaml jsonSchema
+  $ref: '../../drs-openapi.yaml#/components/schemas/BulkTransaction'
+```
+
+<!-- type: tab-end -->

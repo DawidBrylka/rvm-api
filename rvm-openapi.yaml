@@ -65,19 +65,7 @@ paths:
           description: Successful operation
           content:
             application/json:
-              schema:
-                type: object
-                properties:
-                  pageNo:
-                    type: integer
-                  pageSize:
-                    type: integer
-                  totalItemCount:
-                    type: integer
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Machine'
+              schema: null
         '400':
           description: Invalid input
         '422':
@@ -201,19 +189,7 @@ paths:
           description: Successful operation
           content:
             application/json:
-              schema:
-                type: object
-                properties:
-                  pageNo:
-                    type: integer
-                  pageSize:
-                    type: integer
-                  totalItemCount:
-                    type: integer
-                  data:
-                    type: array
-                    items:
-                      $ref: models/Transaction.yaml
+              schema: null
         '400':
           description: Invalid input
         '422':
@@ -517,3 +493,36 @@ components:
       type: apiKey
       name: api_key
       in: header
+    MachinePaginated:
+      title: MachinePaginated
+      x-stoplight:
+        id: sqsbu8f97riig
+      type: object
+      properties:
+        pageNo:
+          type: integer
+        pageSize:
+          type: integer
+        totalItemCount:
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Machine'
+    PaginatedTransaction:
+      title: Paginated Transaction
+      internal: true
+      x-stoplight:
+        id: s5bjjg7m4yg5m
+      type: object
+      properties:
+        pageNo:
+          type: integer
+        pageSize:
+          type: integer
+        totalItemCount:
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: models/Transaction.yaml

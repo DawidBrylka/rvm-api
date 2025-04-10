@@ -3,7 +3,7 @@ internal: true
 ---
 ![RVMRegistration.png](../../assets/images/RVMRegistration.png)
 
-# Machine Registration Process
+# Machine Registration
 
 ## Overview
 The **Machine Registration** process is a performed by **DRS** through their mobile application. It ensures that a new machine is properly registered in **RVM Cloud**.
