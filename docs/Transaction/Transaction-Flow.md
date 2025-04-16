@@ -35,14 +35,14 @@ The **Transaction Process** handles interactions between **RVM Cloud** and **DRS
 
 <!--
 type: tab
-title: RVM
+title: DRS
 -->
 
-Representation of API endpoints exposed by **RVM Cloud** to complete this process.
+Representation of API endpoints exposed by **DRSo** to complete this process.
 
 ### POST /transaction
 
-For a full overview of this endpoint, please visit: [POST - /transaction](../../rvm-openapi.yaml/paths/\~1transaction/post)
+For a full overview of this endpoint, please visit: [POST - /transaction](../../drs-openapi.yaml/paths/\~1transaction/post)
 
 <details>
 <summary>Request Body</summary>
@@ -66,7 +66,7 @@ For a full overview of this endpoint, please visit: [POST - /transaction](../../
 
 ### POST /transaction/bulk
 
-For a full overview of this endpoint, please visit: [POST - /transaction](../../rvm-openapi.yaml/paths/\~1transaction/post)
+For a full overview of this endpoint, please visit: [POST - /transaction](../../drs-openapi.yaml/paths/\~1transaction/post)
 
 <details>
 <summary>Request Body</summary>
