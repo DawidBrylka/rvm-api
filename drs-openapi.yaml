@@ -31,7 +31,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: models/ProudctPost.yaml
+              $ref: models/Product.yaml
       responses:
         '200':
           $ref: '#/components/responses/200PostReturnId'
@@ -137,7 +137,7 @@ paths:
       description: Post single Transaction
       responses:
         '200':
-          description: Successful operation
+          $ref: '#/components/responses/200TransactionProcessed'
         '400':
           description: Invalid input
         '409':
@@ -160,7 +160,7 @@ paths:
       description: Post multiple Transaction
       responses:
         '200':
-          description: Successful operation
+          $ref: "#/components/responses/200BulkTransactionProcessed"
         '400':
           description: Invalid input
         '409':
@@ -363,6 +363,29 @@ components:
       type: array
       items:
         $ref: models/Transaction.yaml
+    TransactionConfirmation:
+      internal: true
+      title: TransactionConfirmation
+      x-stoplight:
+        id: l9yurkyx2wr88
+      type: object
+      properties:
+        transactionId:
+          type: string
+          format: uuid
+          description: Unique ID of the transaction
+        blocked:
+          type: boolean
+          default: false
+          description: Indicates whether the transaction is blocked from payment by RVM 
+        amount:
+          type: number
+          example: 10.50
+          description: Amount to be paid by RVM for the returned bottles
+        currency:
+          type: string
+          default: PLN
+          description: Currency in which RVM pays for returned bottles
   responses:
     200PostReturnId:
       description: OK
@@ -385,6 +408,24 @@ components:
           schema:
             $ref: models/ErrorMessage.yaml
           examples: null
+    200TransactionProcessed:
+      description: |
+        Response returned by transaction.
+        Indicates whether coupon should be granted and for what amount. 
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/TransactionConfirmation"
+    200BulkTransactionProcessed:
+      description: |
+        Response returned by transaction.
+        Indicates whether coupon should be granted and for what amount. 
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/TransactionConfirmation"
   examples:
     ConflictMessage:
       value:

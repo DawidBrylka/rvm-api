@@ -2,7 +2,7 @@
 stoplight-id: nb5tsjecxrsga
 ---
 
-![TransactionProcess.png](../../assets/images/TransactionProcess.png)
+![TransactionProcess.png](../../assets/images/TransactionDataExchange.png)
 
 # Transaction Process
 
