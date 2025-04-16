@@ -363,17 +363,25 @@ components:
       type: array
       items:
         $ref: models/Transaction.yaml
+    BulkTransactionConfirmation:
+      internal: true
+      title: Bulk Transaction Confrimation
+      type: array
+      items:
+        allOf:
+          - properties:
+              transactionId:
+                type: string
+                format: uuid
+                description: Unique ID of the transaction
+          - $ref: "#/components/schemas/TransactionConfirmation"
     TransactionConfirmation:
       internal: true
-      title: TransactionConfirmation
+      title: Transaction Confirmation
       x-stoplight:
         id: l9yurkyx2wr88
       type: object
       properties:
-        transactionId:
-          type: string
-          format: uuid
-          description: Unique ID of the transaction
         blocked:
           type: boolean
           default: false
@@ -423,9 +431,7 @@ components:
       content:
         application/json:
           schema:
-            type: array
-            items:
-              $ref: "#/components/schemas/TransactionConfirmation"
+            $ref: "#/components/schemas/BulkTransactionConfirmation"
   examples:
     ConflictMessage:
       value:
