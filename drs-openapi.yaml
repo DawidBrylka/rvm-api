@@ -328,9 +328,10 @@ components:
         rvmId:
           type: string
           format: uuid
-        binId:
-          type: string
-          format: uuid
+        fractions:
+          type: array
+          items:
+            $ref: "models/enum/WasteTypeEnum.yaml"
         rvmBlocked:
           type: boolean
           example: false
