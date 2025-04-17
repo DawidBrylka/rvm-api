@@ -25,6 +25,6 @@ Representation of API endpoints exposed by **RVM Cloud** to complete this proces
 
 ### DELETE /machine/{id}/delete
 
-For a full overview of this endpoint, please visit: [DELETE - /machine/{id}/delete](../../rvm-openapi.yaml/paths/\~1machine\~1{id}/delete)
+For a full overview of this endpoint, please visit: [DELETE - /machine/{id}/delete](../../rvm-openapi.yaml/paths/~1machine~1{id}/delete)
 
 <!-- type: tab-end -->
