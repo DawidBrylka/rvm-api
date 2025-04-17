@@ -356,7 +356,6 @@ components:
       x-stoplight:
         id: ty6l3ytww8zew
     BulkTransaction:
-      internal: true
       title: BulkTransaction
       x-stoplight:
         id: 5g2jzhz7bryao
@@ -364,7 +363,6 @@ components:
       items:
         $ref: models/Transaction.yaml
     BulkTransactionConfirmation:
-      internal: true
       title: Bulk Transaction Confrimation
       type: array
       items:
@@ -376,7 +374,6 @@ components:
                 description: Unique ID of the transaction
           - $ref: "#/components/schemas/TransactionConfirmation"
     TransactionConfirmation:
-      internal: true
       title: Transaction Confirmation
       x-stoplight:
         id: l9yurkyx2wr88
