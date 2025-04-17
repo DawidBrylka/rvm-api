@@ -2,9 +2,9 @@
 stoplight-id: foryzcd3xzn6k
 ---
 
-# Update Machine In DRS
+# Update Machine In DRS by RVM Operator
 
-![RVMConfigUpdate.png](../../assets/images/MachineUpdateInDRS.png)
+![RVMConfigUpdate.png](../../assets/images/RVMActionInDRS.png)
 
 # RVM Configuration Update
 
@@ -13,7 +13,7 @@ This process allows **RVM providers** to update selected configuration parameter
 
 ## Process Flow
 1. **Start:** The update process is initiated from the **RVM Cloud**.
-2. **API Endpoint:** Configuration data is sent to the **DRS** system using the following endpoint `POST /machine/{id}/update`
+2. **API Endpoint:** Configuration data is sent to the **DRS** system using the following endpoint `POST /machine/{id}`
 3. **Response:** After the update is processed, **DRS** responds with a **confirmation**.
 
 ## Possible Updates by RVM Provider
@@ -34,9 +34,9 @@ title: DRS
 
 Representation of API endpoint exposed by **DRS** for configuration update.
 
-### POST /machine/{id}/update
+### POST /machine/{id}
 
-For a full overview of this endpoint, please visit: [POST - /machine/{id}/update](../../drs-openapi.yaml/paths/~1machine~1{id}~1update/post)
+For a full overview of this endpoint, please visit: [POST - /machine/{id}](../../drs-openapi.yaml/paths/~1machine~1{id}/post)
 
 <details>
 <summary>Request Body</summary>

@@ -233,7 +233,7 @@ paths:
           description: Invalid input
         '422':
           description: Validation exception
-  '/machine/{id}/registered':
+  '/machine/{id}':
     parameters:
       - $ref: '#/components/parameters/id'
     head:
@@ -248,9 +248,6 @@ paths:
       operationId: get-machine-id-registered
       x-stoplight:
         id: l2akxxutrhklj
-  '/machine/{id}/update':
-    parameters:
-      - $ref: '#/components/parameters/id'
     post:
       summary: Machine Update
       description: |
@@ -267,9 +264,7 @@ paths:
       operationId: get-machine-id-update
       x-stoplight:
         id: bu3ambgd8l19t
-  '/machine/{id}/delete':
-    parameters:
-      - $ref: '#/components/parameters/id'
+
     delete:
       summary: Machine Delete
       description: |
