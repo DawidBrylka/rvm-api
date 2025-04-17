@@ -14,23 +14,40 @@ For **RVMs that do not have an internal scanner**, the process of scanning the s
 
 ## Process Flow
 
-### Case 1 – Full Bag Notification Present
+We do expect to follow one of available cases, one of th
 
-1. **Start:** The RVM detects that the bag is full.
-2. **API Endpoint:** RVM Cloud sends a notification to DRS using `POST /bag-is-full`
-3. **Propagation:** DRS informs Collection Point about the full bag.
-4. **Bag Replacement:** Once the bag is emptied, **RVM Cloud** notifies **DRS** via `POST /bag-replacement`
-5. **Seal Request:** DRS requests a seal from PZ.
-6. **Seal Confirmation:** Collection Point confirms **DRS** sealing `POST /bag-seal`
-7. **Machine Unblock:** DRS sends a command to RVM Cloud to unblock the machine `POST /machine/{id}/unblock`
+### Case 1 – Bag Fill Status Notification Present
 
-### Case 2 – Proactive bag replacement (Bag is not full yet)
+This flow applies to RVMs that support **bag fill level detection** and notify DRS when the bag is filling up or full.
 
-1. **Start:** Bag replacement is performed manually.
-2. **Bag Replacement:** RVM Cloud informs DRS via `POST /bag-replacement`
-3. **Seal Request:** DRS notifies PZ that a seal is needed.
-4. **Seal Confirmation:** PZ sends confirmation of sealing `POST /bag-seal`
-5. **Machine Unblock:** DRS unblocks the RVM -  `POST /machine/{id}/unblock`
+1. **Start:** The RVM detects the bag has reached a certain fill threshold.
+2. **Bag Fill Notification:** RVM Cloud sends fill status to DRS via `POST /bag-fill-status`. 
+3. **Notification Propagation:** DRS notifies the Collection Point Warning about filled bag.
+4. **Full Bag Notification:** When the bag is full, RVM Cloud sends a another `POST /bag-fill-status` request - now RVM should lock itself until seal is applied.
+5. **Notification Propagation:** DRS notifies the Collection Point about the full bag.
+6. **Bag Replacement:** After the bag is emptied, RVM Cloud sends `POST /bag-replacement` to DRS.
+7. **Seal Request:** DRS requests the Collection Point to confirm sealing.
+8. **Seal Confirmation:** Collection Point sends confirmation to DRS via `POST /bag-seal`.
+9. **Machine Unblock:** Once sealing is confirmed, DRS sends `POST /machine/{id}/unblock` to RVM Cloud.
+
+> In case single transaction have filled from normal status to full, warning should not be sent. Only single call that informs that bag is full.
+
+---
+
+### Case 2 – No Bag Fill Status Notification
+
+This flow applies when:
+
+- The RVM **does not support bag fill status detection**, **or**
+- The bag was already replaced **before** any notification could be sent
+
+1. **Start:** The bag is replaced manually (proactively or without system detection).
+2. **Bag Replacement:** RVM Cloud informs DRS via `POST /bag-replacement`. At this point RVM should be blocked until Seal is applied
+3. **Seal Request:** DRS notifies the Collection Point that sealing is required.
+4. **Seal Confirmation:** Collection Point confirms sealing via `POST /bag-seal`.
+5. **Machine Unblock:** DRS sends a command to RVM Cloud to unblock the machine using `POST /machine/{id}/unblock`.
+
+
 
 ## API Endpoints
 
@@ -60,16 +77,16 @@ For full overwiev of this endpoint please visit: [POST - /bag-seal](../../drs-op
 
 ### POST /bag-is-full
 
-Informs DRS that the RVM's bag is full.
+Informs DRS about the RVM's bag fill level. 
 
-For full overwiev of this endpoint please visit: [POST - /bag-is-full](../../drs-openapi.yaml/paths/\~1bag-is-full/post)
+For full overwiev of this endpoint please visit: [POST - /bag-fill-status](../../drs-openapi.yaml/paths/~1bag-fill-status/post)
 
 <details>
 
 <summary>Request Body</summary>
 
 ```yaml jsonSchema
-  $ref: '../../drs-openapi.yaml#/components/schemas/BagFull'
+  $ref: '../../drs-openapi.yaml#/components/schemas/BagFillStatus'
 ```
 
 </details>

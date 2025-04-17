@@ -160,7 +160,7 @@ paths:
       description: Post multiple Transaction
       responses:
         '200':
-          $ref: "#/components/responses/200BulkTransactionProcessed"
+          $ref: '#/components/responses/200BulkTransactionProcessed'
         '400':
           description: Invalid input
         '409':
@@ -212,17 +212,20 @@ paths:
           description: Validation exception
       x-stoplight:
         id: lqz2mv777xppe
-  /bag-is-full:
+  /bag-fill-status:
     post:
       tags:
         - rvm
-      summary: Call performed when bag is full
+      summary: Notify about bag fill level
+      description: |
+        This endpoint is used to notify DRS about the current fill level of a bag.
+        It can be triggered at any configured threshold (e.g., 80% for warning, 100% when full).
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BagFull'
+              $ref: '#/components/schemas/BagFillStatus'
       responses:
         '200':
           description: Successful operation
@@ -230,15 +233,9 @@ paths:
           description: Invalid input
         '422':
           description: Validation exception
-      x-stoplight:
-        id: d1asmq08b0uj1
   '/machine/{id}/registered':
     parameters:
-      - schema:
-          type: string
-        name: id
-        in: path
-        required: true
+      - $ref: '#/components/parameters/id'
     head:
       summary: Query For Machine in DRS system
       tags:
@@ -251,23 +248,42 @@ paths:
       operationId: get-machine-id-registered
       x-stoplight:
         id: l2akxxutrhklj
-# '/product/{ean}/mapping':
-#   parameters:
-#     - schema:
-#         type: string
-#       name: ean
-#       in: path
-#       required: true
-#   get:
-#     summary: EAN Mapping
-#     description: | 
-#       Special endpoint to discover whether there are similar bottles with different EAN,
-#       that DRS is aware 
-#     tags: []
-#     responses: {}
-#     operationId: get-product-ean-mapping
-#     x-stoplight:
-#       id: d988ysn6j49w8
+  '/machine/{id}/update':
+    parameters:
+      - $ref: '#/components/parameters/id'
+    post:
+      summary: Machine Update
+      description: |
+        Endpoint used by RVM providers to notify DRS whether something changed to the RVM.
+      tags:
+        - machine
+      requestBody:
+        $ref: '#/components/requestBodies/MachineUpdate'
+      responses:
+        '200':
+          description: Operation Successful
+        '404':
+          description: Unknown Machine
+      operationId: get-machine-id-update
+      x-stoplight:
+        id: bu3ambgd8l19t
+  '/machine/{id}/delete':
+    parameters:
+      - $ref: '#/components/parameters/id'
+    delete:
+      summary: Machine Delete
+      description: |
+        Endpoint used by RVM providers to notify DRS that machine was Deleted.
+      tags:
+        - machine
+      responses:
+        '200':
+          description: Operation Successful
+        '404':
+          description: Unknown Machine
+      operationId: get-machine-id-update
+      x-stoplight:
+        id: bu3ambgd8l19t
 security:
   - bearerAuth: []
 components:
@@ -289,6 +305,14 @@ components:
       description: Start index for paging
       schema:
         type: number
+    id:
+      name: id
+      in: path
+      required: true
+      description: |
+        Unique ID of RVM
+      schema:
+        type: string
   schemas:
     BagSeal:
       type: object
@@ -303,7 +327,7 @@ components:
           format: date-time
       x-stoplight:
         id: cyqmwjxrizrej
-    BagFull:
+    BagFillStatus:
       type: object
       properties:
         rvmId:
@@ -312,11 +336,24 @@ components:
         binId:
           type: string
           format: uuid
-        overflowDate:
+        rvmBlocked:
+          type: boolean
+          example: false
+          description: Defines whether Rvm was blocked from further usage
+        fillLevelPercent:
+          type: number
+          format: float
+          description: Fill level in percent (e.g., 0.8 for 80%)
+        reportedAt:
           type: string
           format: date-time
-      x-stoplight:
-        id: ddq57l9gf506c
+      required:
+        - rvmId
+        - binId
+        - fillLevelPercent
+        - rvmBlocked
+        - reportedAt
+
     BagReplacement:
       type: object
       required:
@@ -372,7 +409,7 @@ components:
                 type: string
                 format: uuid
                 description: Unique ID of the transaction
-          - $ref: "#/components/schemas/TransactionConfirmation"
+          - $ref: '#/components/schemas/TransactionConfirmation'
     TransactionConfirmation:
       title: Transaction Confirmation
       x-stoplight:
@@ -382,15 +419,27 @@ components:
         blocked:
           type: boolean
           default: false
-          description: Indicates whether the transaction is blocked from payment by RVM 
+          description: Indicates whether the transaction is blocked from payment by RVM
         amount:
           type: number
-          example: 10.50
+          example: 10.5
           description: Amount to be paid by RVM for the returned bottles
         currency:
           type: string
           default: PLN
           description: Currency in which RVM pays for returned bottles
+    MachineUpdate:
+      title: Machine Update
+      description: |
+        Model representing what RVM provider can update in machines that are being stored in DRS
+      x-stoplight:
+        id: zk239eslozgw8
+      type: object
+      properties:
+        location:
+          $ref: models/Location.yaml
+        bins:
+          $ref: models/BinPost.yaml
   responses:
     200PostReturnId:
       description: OK
@@ -420,7 +469,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/TransactionConfirmation"
+            $ref: '#/components/schemas/TransactionConfirmation'
     200BulkTransactionProcessed:
       description: |
         Response returned by transaction.
@@ -428,10 +477,16 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/BulkTransactionConfirmation"
+            $ref: '#/components/schemas/BulkTransactionConfirmation'
   examples:
     ConflictMessage:
       value:
         msg: Conflicting ID of the request.
         errorCode: 5
         path: <path of the request>
+  requestBodies:
+    MachineUpdate:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MachineUpdate'

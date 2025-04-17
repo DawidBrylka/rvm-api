@@ -346,7 +346,7 @@ components:
         bins:
           type: array
           items:
-            $ref: '#/components/schemas/BinPost'
+            $ref: 'models/BinPost.yaml'
       x-internal: false
       x-stoplight:
         id: fvntp98cbkrsr
@@ -389,22 +389,9 @@ components:
           format: date-time
       x-stoplight:
         id: sj89q9h8uo3dh
-    BinPost:
-      type: object
-      properties:
-        wasteType:
-          type: array
-          items:
-            $ref: models/enum/WasteTypeEnum.yaml
-        litrage:
-          type: integer
-          example: 240
-          description: Capacity of bag in liters
-      x-stoplight:
-        id: nthgfqrhpl4tl
     Bin:
       allOf:
-        - $ref: '#/components/schemas/BinPost'
+        - $ref: 'models/BinPost.yaml'
         - type: object
           properties:
             isFull:
@@ -430,34 +417,15 @@ components:
       x-stoplight:
         id: r7i834ho3kwqk
     Location:
+      internal: true
       type: object
       required:
         - city
         - zipcode
         - country
         - address
-      properties:
-        city:
-          type: string
-          example: Szczecin
-        zipcode:
-          type: string
-          format: zipcode
-          example: 11-111
-        country:
-          type: string
-          format: country
-          example: Polska
-        address:
-          type: string
-          format: address
-          example: Dąbrowska 20
-        longitude:
-          type: number
-          example: 51.11
-        latitude:
-          type: number
-          example: 52.22
+      allOf:
+        - $ref: "models/Location.yaml"
       x-stoplight:
         id: k1p0x39errlzd
     RvmHealthStatusCodeEnum:

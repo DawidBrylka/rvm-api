@@ -1,0 +1,49 @@
+---
+stoplight-id: foryzcd3xzn6k
+---
+
+# Update Machine In DRS
+
+![RVMConfigUpdate.png](../../assets/images/MachineUpdateInDRS.png)
+
+# RVM Configuration Update
+
+## Overview
+This process allows **RVM providers** to update selected configuration parameters of the **RVM** directly in the **DRS** system.
+
+## Process Flow
+1. **Start:** The update process is initiated from the **RVM Cloud**.
+2. **API Endpoint:** Configuration data is sent to the **DRS** system using the following endpoint `POST /machine/{id}/update`
+3. **Response:** After the update is processed, **DRS** responds with a **confirmation**.
+
+## Possible Updates by RVM Provider
+
+The following parameters can be updated in the DRS system by the RVM provider:
+
+1. **RVM Location**  
+   Update the location where the RVM is installed.
+
+2. **Bin Configuration**  
+   Define or modify the number of bins in the RVM, their types (e.g., plastic, cans) and the target destination assigned to each bin.
+
+
+<!--
+type: tab
+title: DRS
+-->
+
+Representation of API endpoint exposed by **DRS** for configuration update.
+
+### POST /machine/{id}/update
+
+For a full overview of this endpoint, please visit: [POST - /machine/{id}/update](../../drs-openapi.yaml/paths/~1machine~1{id}~1update/post)
+
+<details>
+<summary>Request Body</summary>
+
+```yaml jsonSchema
+  $ref: '../../drs-openapi.yaml#/components/schemas/MachineUpdate'
+```
+
+
+<!-- type: tab-end -->
