@@ -338,6 +338,7 @@ components:
         fillLevelPercent:
           type: number
           format: float
+          example: 0.8
           description: Fill level in percent (e.g., 0.8 for 80%)
         reportedAt:
           type: string
