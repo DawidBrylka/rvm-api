@@ -61,7 +61,7 @@ delivered:
 ### POST /transaction/{id}/confirmation
 
 Confirms delivery of a single transaction by ID.
-For a full overview of this endpoint, please visit: [POST - /transaction/{id}/confirmation](../../rvm-openapi.yaml/paths/\~1transaction\~1{id}\~1confirmation)
+For a full overview of this endpoint, please visit: [POST - /transaction/{id}/confirmation](../../rvm-openapi.yaml/paths/~1transaction~1{id}~1confirmation/put)
 
 <details>
 <summary>Path Parameter</summary>
