@@ -10,8 +10,8 @@ Desired communcation format by Kacuja Pl looks like:
 
 This document defines two separate files, each specifying the endpoints that should be exposed on either side of the integration.
 
-  * [DRS](drs-openapi.yaml) This file defines the API that will be exposed by kaucja.pl. It handles communication and data exchange with external systems.
+  * [DRS](../drs-openapi.yaml) This file defines the API that will be exposed by kaucja.pl. It handles communication and data exchange with external systems.
 
-  * [RVM](rvm-openapi.yaml) This file specifies the API that RVM providers should expose. This allows DRS to establish a connection and exchange information with RVM systems.
+  * [RVM](../rvm-openapi.yaml) This file specifies the API that RVM providers should expose. This allows DRS to establish a connection and exchange information with RVM systems.
 
 The purpose of this document is to clearly define how both systems will communicate, ensuring compatibility and seamless integration.

@@ -25,11 +25,7 @@ The `/product` endpoint is **paginated**. By default, the response contains **ap
 
 List of endpoints that should be exposed from **Deposit Return System (DRS)** and **RVM Cloud** in order to complete described process.
 
-<!--
-type: tab
-title: DRS
--->
-
+## DRS Exposed Endpoints
 Representation of API Endpoinds exposed by **Deposit Return System (DRS)** in order to complete this prcess.
 
 ### GET /product
@@ -44,5 +40,3 @@ For full overwiev of this endpoint please visit: [GET /product](https://kaucja.s
 ```
 
 </details>
-
-<!-- type: tab-end -->

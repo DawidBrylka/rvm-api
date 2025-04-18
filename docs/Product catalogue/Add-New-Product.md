@@ -24,10 +24,7 @@ This process ensures that new products are registered in the **DRS** and can be 
 
 List of endpoints that should be exposed from **Deposit Return System (DRS)** and **RVM Cloud** in order to complete described process.
 
-<!--
-type: tab
-title: DRS
--->
+## DRS Exposed Endpoints
 
 Representation of API Endpoinds exposed by **Deposit Return System (DRS)** in order to complete this prcess.
 
@@ -62,10 +59,7 @@ For full overwiev of this endpoint please visit: [POST - /product](../../drs-ope
 
 </details>
 
-<!--
-type: tab
-title: RVM
--->
+## RVM Exposed Endpoints
 
 Representation of API Endpoinds exposed by **RVM Cloud** in order to complete this prcess.
 
@@ -81,5 +75,3 @@ For full overwiev of this endpoint please visit: [POST - /product](../../rvm-ope
 ```
 
 </details>
-
-<!-- type: tab-end -->

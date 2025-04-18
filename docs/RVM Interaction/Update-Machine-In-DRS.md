@@ -27,10 +27,7 @@ The following parameters can be updated in the DRS system by the RVM provider:
    Define or modify the number of bins in the RVM, their types (e.g., plastic, cans) and the target destination assigned to each bin.
 
 
-<!--
-type: tab
-title: DRS
--->
+## DRS Exposed Enpoints
 
 Representation of API endpoint exposed by **DRS** for configuration update.
 
@@ -44,6 +41,3 @@ For a full overview of this endpoint, please visit: [POST - /machine/{id}](../..
 ```yaml jsonSchema
   $ref: '../../drs-openapi.yaml#/components/schemas/MachineUpdate'
 ```
-
-
-<!-- type: tab-end -->

@@ -44,10 +44,7 @@ This case covers scenarios where:
 3. **Seal Handling:** The internal scanner scans the seal and includes it in the replacement message automatically.
 
 
-<!--
-type: tab
-title: DRS
--->
+## DRS Exposed Endpoints
 
 ### POST /bag-fill-status
 
@@ -66,7 +63,6 @@ For full overwiev of this endpoint please visit: [POST - /bag-fill-status](../..
 </details>
 <br>
 
-<br>
 
 ### POST /bag-replacement
 
@@ -85,4 +81,3 @@ For full overwiev of this endpoint please visit: [POST - /bag-replacement](../..
 </details>
 <br>
 
-<!-- type: tab-end -->

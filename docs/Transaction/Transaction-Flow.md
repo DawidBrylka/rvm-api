@@ -33,10 +33,7 @@ The **Transaction Process** handles interactions between **RVM Cloud** and **DRS
 > **Note**: In case of duplicate ID, HTTP Code 409 will be returned.
 
 
-<!--
-type: tab
-title: DRS
--->
+## DRS Exposed Endpoits
 
 Representation of API endpoints exposed by **DRSo** to complete this process.
 
@@ -85,5 +82,3 @@ For a full overview of this endpoint, please visit: [POST - /transaction](../../
 
 </details>
 
-
-<!-- type: tab-end -->

@@ -16,15 +16,10 @@ The **Machine Deletion** process is performed by **DRS** through their mobile or
 2. **API Endpoint:** The request is made to the `/machine/{id}/delete` endpoint in **RVM Cloud**.
 3. **Response:** RVM Cloud processes the deletion request and returns a **confirmation**.
 
-<!--
-type: tab
-title: RVM
--->
+## RVM Exposed Endpoints
 
 Representation of API endpoints exposed by **RVM Cloud** to complete this process.
 
 ### DELETE /machine/{id}/delete
 
 For a full overview of this endpoint, please visit: [DELETE - /machine/{id}/delete](../../rvm-openapi.yaml/paths/~1machine~1{id}/delete)
-
-<!-- type: tab-end -->

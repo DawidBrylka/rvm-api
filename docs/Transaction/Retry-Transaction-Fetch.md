@@ -24,10 +24,7 @@ The **Lost Data Sync** process ensures that any transactions not marked as deliv
 
 > **Note:** This is separate from the standard retry mechanism initiated by **RVM Cloud** upon submission failure.
 
-<!--
-type: tab
-title: RVM
--->
+## RVM Exposed Endpoints
 
 Representation of API endpoints exposed by **RVM Cloud** to support this process.
 
@@ -74,4 +71,3 @@ id:
 
 </details>
 
-<!-- type: tab-end -->

@@ -53,10 +53,7 @@ This flow applies when:
 
 List of endpoints that should be exposed from **Deposit Return System (DRS)** and **RVM Cloud** in order to complete described process.
 
-<!--
-type: tab
-title: DRS
--->
+## DRS Exposed Endpoints
 
 ### POST /bag-seal
 
@@ -111,10 +108,7 @@ For full overwiev of this endpoint please visit: [POST - /bag-replacement](../..
 </details>
 <br>
 
-<!--
-type: tab
-title: RVM
--->
+## RVM Exposed Endpoints
 
 ### POST /machine/{id}/unblock
 
@@ -132,5 +126,3 @@ id:
 ```
 
 </details>
-
-<!-- type: tab-end -->

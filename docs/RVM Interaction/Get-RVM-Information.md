@@ -21,11 +21,7 @@ The **Machine Information Retrieval** process allows **DRS** to obtain details a
    - `GET /machine` for a paginated list of all machines.
 3. **Response:** RVM Cloud processes the request and returns the requested machine data.
 
-<!--
-type: tab
-title: RVM
--->
-
+## RVM Exposed Endpoints
 Representation of API endpoints exposed by **RVM Cloud** to complete this process.
 
 ### GET /machine/{id}
@@ -71,4 +67,3 @@ For a full overview of this endpoint, please visit: [GET - /machine](../../rvm-o
 
 </details>
 
-<!-- type: tab-end -->
