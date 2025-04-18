@@ -20,7 +20,7 @@ The **Transaction Process** handles interactions between **RVM Cloud** and **DRS
    - Response contains information about voucher that should be paid to customer e.g it's value, currency and whether it should be pait at all.
 4. After **DRS** return confirmation **RVM Cloud** set transaction as processed in its system.
 
-<!-- theme: danger --> 
+<!-- theme: none --> 
 > **Information**: Payment should be determined as follows:
 >
 >   - If the DRS is operational, issue the coupon based on its response.

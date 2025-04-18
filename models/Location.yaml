@@ -1,0 +1,26 @@
+title: Location
+x-stoplight:
+  id: ih2snr3gvwhzr
+type: object
+properties:
+  city:
+    type: string
+    example: Szczecin
+  zipcode:
+    type: string
+    format: zipcode
+    example: 11-111
+  country:
+    type: string
+    format: country
+    example: Polska
+  address:
+    type: string
+    format: address
+    example: Dąbrowska 20
+  longitude:
+    type: number
+    example: 51.11
+  latitude:
+    type: number
+    example: 52.22

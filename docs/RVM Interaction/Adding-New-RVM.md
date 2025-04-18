@@ -1,12 +1,11 @@
 ![RVMRegistration.png](../../assets/images/RVMRegistration.png)
 
-# Machine Registration
+# Add/Update Machine 
 
 ## Overview
 
-The **Machine Registration** process is a performed by **DRS** through their mobile application. It ensures that a new machine is properly registered in **RVM Cloud**.
+The **Add or update Machine** process is a performed by **DRS** through their mobile application. It ensures that a new machine is properly registered in **RVM Cloud**.
 
-Operation is done once per RVM machine. If machine change operator, will be replaced in Collection Point - machine needs to be deleted and then new one added.
 
 ## Process Flow
 

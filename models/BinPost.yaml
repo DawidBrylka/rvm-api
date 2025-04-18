@@ -1,0 +1,13 @@
+title: BinPost
+x-stoplight:
+  id: lqcxto41jxubc
+type: object
+properties:
+  wasteType:
+    type: array
+    items:
+      $ref: enum/WasteTypeEnum.yaml
+  litrage:
+    type: integer
+    example: 240
+    description: Capacity of bag in liters
