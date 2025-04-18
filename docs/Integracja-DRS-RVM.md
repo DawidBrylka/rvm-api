@@ -15,3 +15,8 @@ This document defines two separate files, each specifying the endpoints that sho
   * [RVM](../rvm-openapi.yaml) This file specifies the API that RVM providers should expose. This allows DRS to establish a connection and exchange information with RVM systems.
 
 The purpose of this document is to clearly define how both systems will communicate, ensuring compatibility and seamless integration.
+
+
+
+---
+<div style="text-align: right"> Version: 0.9</div>

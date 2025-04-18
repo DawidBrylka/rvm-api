@@ -31,7 +31,10 @@ RVM providers may request removal of a machine in the following cases:
 
 ---
 
-## DRS Exposed Endpoints
+<!--
+type: tab
+title: DRS
+-->
 ### DELETE /machine/{id}
 
 Used by **RVM Cloud** to request the removal of a machine from the DRS registry.
@@ -46,4 +49,9 @@ id:
   type: string
   description: Unique identifier of the machine to be removed.
 ```
-</detals>
+</details>
+
+<!-- type: tab-end -->
+
+---
+<div style="text-align: right"> Version: 0.9</div>

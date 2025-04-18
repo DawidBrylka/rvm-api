@@ -13,7 +13,10 @@ The **Add or update Machine** process is a performed by **DRS** through their mo
 2. **API Endpoint:** The request is made to the `/machine` endpoint in **RVM Cloud**.
 3. **Response:** RVM Cloud processes the request and sends back a **confirmation**.
 
-## RVM Exposed Endpoints
+<!--
+type: tab
+title: RVM
+-->
 
 Representation of API Endpoinds exposed by **RVM Cloud** in order to complete this prcess.
 
@@ -29,3 +32,8 @@ For full overwiev of this endpoint please visit: [POST - /machine](../../rvm-ope
 ```
 
 </details>
+
+<!-- type: tab-end -->
+
+---
+<div style="text-align: right"> Version: 0.9</div>
