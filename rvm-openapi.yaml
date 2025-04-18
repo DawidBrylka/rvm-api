@@ -60,12 +60,16 @@ paths:
         - machine
       summary: Get All Machine data
       description: Get Machine data
+      parameters:
+        - $ref: '#/components/parameters/Startindex'
+        - $ref: '#/components/parameters/Pagelength'
       responses:
         '200':
           description: Successful operation
           content:
             application/json:
-              schema: null
+              schema:
+                $ref: '#/components/schemas/MachinePaginated'
         '400':
           description: Invalid input
         '422':
@@ -189,7 +193,8 @@ paths:
           description: Successful operation
           content:
             application/json:
-              schema: null
+              schema:
+                $ref: '#/components/schemas/PaginatedTransaction'
         '400':
           description: Invalid input
         '422':
@@ -215,9 +220,8 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: models/Transaction.yaml
+                $ref: "#/components/schemas/Transaction"
+                  
         '400':
           description: Invalid input
         '422':
@@ -235,8 +239,9 @@ paths:
           required: true
           schema:
             type: string
-      summary: Get Transaction
-      description: Get Transaction
+      summary: Transaction Confirmation
+      description: |
+        Endpoint Used to confirm that Transaction was processed by DRS
       responses:
         '200':
           description: Successful operation
@@ -346,13 +351,17 @@ components:
         bins:
           type: array
           items:
-            $ref: 'models/BinPost.yaml'
+            $ref: models/BinPost.yaml
       x-internal: false
       x-stoplight:
         id: fvntp98cbkrsr
     Machine:
       type: object
       internal: true
+      required:
+        - id
+        - health
+        - ean_sync_date
       allOf:
         - $ref: '#/components/schemas/MachineBase'
         - properties:
@@ -391,7 +400,7 @@ components:
         id: sj89q9h8uo3dh
     Bin:
       allOf:
-        - $ref: 'models/BinPost.yaml'
+        - $ref: models/BinPost.yaml
         - type: object
           properties:
             isFull:
@@ -425,7 +434,7 @@ components:
         - country
         - address
       allOf:
-        - $ref: "models/Location.yaml"
+        - $ref: models/Location.yaml
       x-stoplight:
         id: k1p0x39errlzd
     RvmHealthStatusCodeEnum:
@@ -477,9 +486,23 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Machine'
+    Transaction:
+      internal: true
+      x-stoplight:
+        id: e6a9c46f3beee
+      required:
+        - paidAmount
+      allOf:
+        - $ref: models/Transaction.yaml
+        - properties:
+            paidAmount:
+              type: number
+              example: 11.5
+              description: Amount paid to the customer
     PaginatedTransaction:
       title: Paginated Transaction
       internal: true
+      required: null
       x-stoplight:
         id: s5bjjg7m4yg5m
       type: object
@@ -493,4 +516,4 @@ components:
         data:
           type: array
           items:
-            $ref: models/Transaction.yaml
+            $ref: "#/components/schemas/Transaction"
