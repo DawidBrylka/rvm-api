@@ -264,7 +264,6 @@ paths:
       operationId: get-machine-id-update
       x-stoplight:
         id: bu3ambgd8l19t
-
     delete:
       summary: Machine Delete
       description: |
@@ -278,7 +277,7 @@ paths:
           description: Unknown Machine
       operationId: get-machine-id-update
       x-stoplight:
-        id: bu3ambgd8l19t
+        id: bu3ambgd8l19t1
 security:
   - bearerAuth: []
 components:
