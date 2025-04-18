@@ -333,7 +333,7 @@ components:
           format: uuid
           description: |
             (Optional) ID of bin that is filled out
-        fractions:
+        wasteType:
           type: array
           items:
             $ref: "models/enum/WasteTypeEnum.yaml"
@@ -351,7 +351,7 @@ components:
           format: date-time
       required:
         - rvmId
-        - fractions
+        - wasteType
         - fillLevelPercent
         - rvmBlocked
         - reportedAt
