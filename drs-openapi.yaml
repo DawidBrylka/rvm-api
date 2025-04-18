@@ -328,6 +328,11 @@ components:
         rvmId:
           type: string
           format: uuid
+        binId:
+          type: string
+          format: uuid
+          description: |
+            (Optional) ID of bin that is filled out
         fractions:
           type: array
           items:
@@ -346,7 +351,7 @@ components:
           format: date-time
       required:
         - rvmId
-        - binId
+        - fractions
         - fillLevelPercent
         - rvmBlocked
         - reportedAt
@@ -354,12 +359,12 @@ components:
     BagReplacement:
       type: object
       required:
-        - id
+        - bagId
         - rvmId
         - replacementDate
         - containers
       properties:
-        id:
+        bagId:
           type: string
           format: uuid
           description: ID of a bag in UUID format

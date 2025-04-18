@@ -2,6 +2,12 @@ title: Transaction
 x-stoplight:
   id: tflmwiqdun34m
 type: object
+required:
+  - id
+  - rvmId
+  - transactionBlocked
+  - paidAmount
+  - containers
 properties:
   id:
     type: string
@@ -9,10 +15,6 @@ properties:
   rvmId:
     type: string
     format: uuid
-  paidAmount:
-    type: number
-    example: 11.50
-    description: Amount paid to the customer
   transactionBlocked:
     type: boolean
     example: false
