@@ -53,7 +53,7 @@ title: DRS
 
 Informs DRS about the RVM's bag fill level. 
 
-For full overwiev of this endpoint please visit: [POST - /bag-fill-status](../../drs-openapi.yaml/paths/~1bag-fill-status/post)
+For full overwiev of this endpoint please visit: [POST - /bag-fill-status](https://kaucja.stoplight.io/docs/rvm-api/bd2d38b8c5dc3-notify-about-bag-fill-level)
 
 <details>
 
@@ -71,7 +71,7 @@ For full overwiev of this endpoint please visit: [POST - /bag-fill-status](../..
 
 Informs DRS that a bag has been replaced.
 
-For full overwiev of this endpoint please visit: [POST - /bag-replacement](../../drs-openapi.yaml/paths/\~1bag-replacement/post)
+For full overwiev of this endpoint please visit: [POST - /bag-replacement](https://kaucja.stoplight.io/docs/rvm-api/3r55dg8tllqbx-trigger-an-replacement-action-for-rvm)
 
 <details>
 

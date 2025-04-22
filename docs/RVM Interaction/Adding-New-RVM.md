@@ -22,7 +22,7 @@ Representation of API Endpoinds exposed by **RVM Cloud** in order to complete th
 
 ### POST /product
 
-For full overwiev of this endpoint please visit: [POST - /machine](../../rvm-openapi.yaml/paths/\~1machine/post)
+For full overwiev of this endpoint please visit: [POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/35nqny8k7q39d-add-new-rvm)
 
 <details>
 <summary>Request Body</summary>

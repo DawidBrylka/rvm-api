@@ -39,7 +39,7 @@ title: DRS
 
 Used by **RVM Cloud** to request the removal of a machine from the DRS registry.
 
-For a full overview of this endpoint, please visit: [DELETE - /machine/{id}](../../drs-openapi.yaml/paths/~1machine~1{id}/delete)
+For a full overview of this endpoint, please visit: [DELETE - /machine/{id}](https://kaucja.stoplight.io/docs/rvm-api/bu3ambgd8l19t1-machine-delete)
 
 <details>
 <summary>Path Parameter</summary>

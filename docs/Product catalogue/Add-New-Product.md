@@ -32,7 +32,7 @@ Representation of API Endpoinds exposed by **Deposit Return System (DRS)** in or
 
 ### POST /product
 
-For full overwiev of this endpoint please visit: [POST - /product](../../drs-openapi.yaml/paths/\~1product/get)
+For full overwiev of this endpoint please visit: [POST - /product](https://kaucja.stoplight.io/docs/rvm-api/31bd1367b3f33-add-or-update-product)
 
 <details>
 
@@ -70,7 +70,7 @@ Representation of API Endpoinds exposed by **RVM Cloud** in order to complete th
 
 ### POST /product
 
-For full overwiev of this endpoint please visit: [POST - /product](../../rvm-openapi.yaml/paths/\~1product/post)
+For full overwiev of this endpoint please visit: [POST - /product](https://kaucja.stoplight.io/docs/rvm-api/rxi2pcz3px8sq-add-or-update-product)
 
 <details>
 <summary>Request Body</summary>

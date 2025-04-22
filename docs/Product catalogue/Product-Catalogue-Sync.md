@@ -33,7 +33,7 @@ Representation of API Endpoinds exposed by **Deposit Return System (DRS)** in or
 
 ### GET /product
 
-For full overwiev of this endpoint please visit: [GET /product](https://kaucja.stoplight.io/docs/rvm-api/drs-openapi.yaml/paths/\~1product/get)
+For full overwiev of this endpoint please visit: [GET /product](https://kaucja.stoplight.io/docs/rvm-api/i8big2em2kghv-get-product-data)
 
 <details>
 <summary>Response</summary>
