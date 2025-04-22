@@ -66,7 +66,7 @@ For a full overview of this endpoint, please visit: [POST - /transaction](../../
 
 ### POST /transaction/bulk
 
-For a full overview of this endpoint, please visit: [POST - /transaction](../../drs-openapi.yaml/paths/~1transaction~1bulk/post)
+For a full overview of this endpoint, please visit: [POST - /transaction](../../drs-openapi.yaml/paths/\~1transaction\~1bulk/post)
 
 <details>
 <summary>Request Body</summary>
