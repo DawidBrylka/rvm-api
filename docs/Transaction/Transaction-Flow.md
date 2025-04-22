@@ -42,7 +42,7 @@ Representation of API endpoints exposed by **DRSo** to complete this process.
 
 ### POST /transaction
 
-For a full overview of this endpoint, please visit: [POST - /transaction](../../drs-openapi.yaml/paths/\~1transaction/post)
+For a full overview of this endpoint, please visit: [POST - /transaction](../../drs-openapi.yaml/paths/~1transaction/post)
 
 <details>
 <summary>Request Body</summary>
@@ -66,7 +66,7 @@ For a full overview of this endpoint, please visit: [POST - /transaction](../../
 
 ### POST /transaction/bulk
 
-For a full overview of this endpoint, please visit: [POST - /transaction](../../drs-openapi.yaml/paths/\~1transaction\~1bulk/post)
+For a full overview of this endpoint, please visit: [POST - /transaction](../../drs-openapi.yaml/paths/~1transaction~1bulk/post)
 
 <details>
 <summary>Request Body</summary>
