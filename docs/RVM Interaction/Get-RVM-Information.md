@@ -31,7 +31,7 @@ Representation of API endpoints exposed by **RVM Cloud** to complete this proces
 
 Retrieves detailed information about a specific machine using its unique identifier.
 
-For a full overview of this endpoint, please visit: [GET - /machine/{id}](../../rvm-openapi.yaml/paths/\~1machine\~1\{id\}/get)
+For a full overview of this endpoint, please visit: [GET - /machine/{id}](../../rvm-openapi.yaml/paths/~1machine~1{id}/get)
 
 <details>
 <summary>Path Parameter</summary>
