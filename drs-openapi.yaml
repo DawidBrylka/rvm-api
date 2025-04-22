@@ -139,7 +139,7 @@ paths:
         '200':
           $ref: '#/components/responses/200TransactionProcessed'
         '400':
-          description: Invalid input
+          $ref: '#/components/responses/400MachineUnknown'
         '409':
           $ref: '#/components/responses/409Conflict'
         '422':
@@ -162,7 +162,7 @@ paths:
         '200':
           $ref: '#/components/responses/200BulkTransactionProcessed'
         '400':
-          description: Invalid input
+          $ref: '#/components/responses/400MachineUnknown'
         '409':
           $ref: '#/components/responses/409Conflict'
         '422':
@@ -335,7 +335,7 @@ components:
         wasteType:
           type: array
           items:
-            $ref: "models/enum/WasteTypeEnum.yaml"
+            $ref: models/enum/WasteTypeEnum.yaml
         rvmBlocked:
           type: boolean
           example: false
@@ -344,7 +344,7 @@ components:
           type: number
           format: float
           example: 0.8
-          description: Fill level in percent (e.g., 0.8 for 80%)
+          description: 'Fill level in percent (e.g., 0.8 for 80%)'
         reportedAt:
           type: string
           format: date-time
@@ -354,7 +354,6 @@ components:
         - fillLevelPercent
         - rvmBlocked
         - reportedAt
-
     BagReplacement:
       type: object
       required:
@@ -479,7 +478,15 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/BulkTransactionConfirmation'
-  examples:
+    400MachineUnknown:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: models/ErrorMessage.yaml
+          examples:
+            machineUnknown:
+              $ref: "#/components/examples/MachineUnknown"
     ConflictMessage:
       value:
         msg: Conflicting ID of the request.
@@ -491,3 +498,9 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/MachineUpdate'
+  examples:
+    MachineUnknown:
+      values:
+        msg: Machine doesn't belong to given DRS operator.
+        errorCode: 8
+        path: <path of the request>
