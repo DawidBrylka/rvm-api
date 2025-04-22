@@ -357,7 +357,6 @@ components:
         id: fvntp98cbkrsr
     Machine:
       type: object
-      internal: true
       required:
         - id
         - health
@@ -426,7 +425,6 @@ components:
       x-stoplight:
         id: r7i834ho3kwqk
     Location:
-      internal: true
       type: object
       required:
         - city
@@ -487,7 +485,6 @@ components:
           items:
             $ref: '#/components/schemas/Machine'
     Transaction:
-      internal: true
       x-stoplight:
         id: e6a9c46f3beee
       required:
@@ -501,7 +498,6 @@ components:
               description: Amount paid to the customer
     PaginatedTransaction:
       title: Paginated Transaction
-      internal: true
       required: null
       x-stoplight:
         id: s5bjjg7m4yg5m
