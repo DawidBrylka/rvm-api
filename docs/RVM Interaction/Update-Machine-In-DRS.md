@@ -36,7 +36,7 @@ Representation of API endpoint exposed by **DRS** for configuration update.
 
 ### POST /machine/{id}
 
-For a full overview of this endpoint, please visit: [POST - /machine/{id}](../../drs-openapi.yaml/paths/~1machine~1{id}/post)
+For a full overview of this endpoint, please visit: [POST - /machine/{id}](https://kaucja.stoplight.io/docs/rvm-api/bu3ambgd8l19t-machine-update)
 
 <details>
 <summary>Request Body</summary>

@@ -34,7 +34,7 @@ Representation of API endpoints exposed by **RVM Cloud** to support this process
 ### GET /transaction?delivered=false
 
 Returns all transactions not yet marked as delivered.
-For a full overview of this endpoint, please visit: [GET - /transaction](../../rvm-openapi.yaml/paths/\~1transaction/get)
+For a full overview of this endpoint, please visit: [GET - /transaction](https://kaucja.stoplight.io/docs/rvm-api/9jlaedwrqzo5n-get-all-transactions)
 
 <details>
 <summary>Query Parameters</summary>
@@ -61,7 +61,7 @@ delivered:
 ### POST /transaction/{id}/confirmation
 
 Confirms delivery of a single transaction by ID.
-For a full overview of this endpoint, please visit: [POST - /transaction/{id}/confirmation](../../rvm-openapi.yaml/paths/~1transaction~1{id}~1confirmation/put)
+For a full overview of this endpoint, please visit: [POST - /transaction/{id}/confirmation](https://kaucja.stoplight.io/docs/rvm-api/sw1i2ci6d2hgr-transaction-confirmation)
 
 <details>
 <summary>Path Parameter</summary>
