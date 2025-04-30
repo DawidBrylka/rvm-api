@@ -1,0 +1,14 @@
+title: PackagingTypeEnum
+x-stoplight:
+  id: ow74gk2r2ht9q
+type: integer
+
+enum:
+  - 1
+  - 2
+  - 3
+description: |
+  Descriptor for Packaging Type <br> Where:
+  * 1 - Plastic
+  * 2 - Can
+  * 3 - Glass

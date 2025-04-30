@@ -1,0 +1,60 @@
+title: ProductBase
+x-stoplight:
+  id: mluw4i7x5qewt
+type: object
+required:
+  - ean
+  - name
+  - publishedName
+  - productStatusId
+  - packaging
+  - diameters
+  - deposit
+  - sleeveLabel
+  - weight
+  - feeAmount
+properties:
+  ean:
+    type: string
+    format: gid
+    x-stoplight:
+      id: zgnx010o3ipme
+  name:
+    type: string
+    x-stoplight:
+      id: 3sadhcgqv1z6y
+  publishedName:
+    type: string
+    x-stoplight:
+      id: f001ae4w5qwmt
+  deposit:
+    $ref: Deposit.yaml
+    x-stoplight:
+      id: tx1zxq97px1zs
+  productStatusId:
+    $ref: enum/ProductStatusEnum.yaml
+    x-stoplight:
+      id: akn4cgxleoas1
+  packaging:
+    $ref: Packaging.yaml
+    x-stoplight:
+      id: nttyrpttdesbs
+  diameters:
+    $ref: Diameters.yaml
+    x-stoplight:
+      id: izwage8aqsa4e
+  sleeveLabel:
+    description: Does packaging contains sleeve label
+    type: boolean
+    x-stoplight:
+      id: izwage8aqsa4e
+  weight:
+    $ref: Weight.yaml
+    x-stoplight:
+      id: nfvgn984e3y5l
+  image:
+    type: string
+    format: uri
+    example: 'https://editor.swagger.io/image.jpg'
+    x-stoplight:
+      id: sovrrhcabsahf

@@ -7,6 +7,8 @@ properties:
     type: boolean
     x-stoplight:
       id: 3kid8znv5yve0
+  packagingCode:
+    $ref: enum/PackagingTypeEnum.yaml
   materialCode:
     $ref: enum/WasteTypeEnum.yaml
     x-stoplight:
@@ -15,7 +17,3 @@ properties:
     $ref: enum/ColorEnum.yaml
     x-stoplight:
       id: d57p9f0rb7ki1
-  capColorId:
-    $ref: enum/ColorEnum.yaml
-    x-stoplight:
-      id: zycrkjvhnx21x
