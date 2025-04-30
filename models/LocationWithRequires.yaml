@@ -1,0 +1,11 @@
+title: LocationWithRequires
+x-stoplight:
+  id: 2oku6u441hagi
+type: object
+required:
+  - city
+  - zipcode
+  - country
+  - address
+allOf:
+  - $ref: Location.yaml

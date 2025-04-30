@@ -3,72 +3,31 @@ x-stoplight:
   id: sza93xu1duwl4
 type: object
 required:
-  - ean
-  - name
-  - publishedName
   - market
-  - productStatusId
-  - packaging
-  - diameters
-  - deposit
-  - weight
-  - feeAmount
-properties:
-  ean:
-    type: string
-    format: gid
-    x-stoplight:
-      id: zgnx010o3ipme
-  name:
-    type: string
-    x-stoplight:
-      id: 3sadhcgqv1z6y
-  publishedName:
-    type: string
-    x-stoplight:
-      id: f001ae4w5qwmt
-  market:
-    type: object
-    properties:
-      entryDate:
-        type: string
-        format: date-time
-        x-stoplight:
-          id: jovvcg3atuc82
-      exitDate:
-        type: string
-        format: date-time
-        x-stoplight:
-          id: fjy6meqa13h6z
-    x-stoplight:
-      id: ap1aw4pc0eibf
-  deposit:
-    $ref: Deposit.yaml
-    x-stoplight:
-      id: tx1zxq97px1zs
-  productStatusId:
-    $ref: enum/ProductStatusEnum.yaml
-    x-stoplight:
-      id: akn4cgxleoas1
-  packaging:
-    $ref: Packaging.yaml
-    x-stoplight:
-      id: nttyrpttdesbs
-  diameters:
-    $ref: Diameters.yaml
-    x-stoplight:
-      id: izwage8aqsa4e
-  label:
-    $ref: Label.yaml
-    x-stoplight:
-      id: xod1yig6e1vra
-  weight:
-    $ref: Weight.yaml
-    x-stoplight:
-      id: nfvgn984e3y5l
-  image:
-    type: string
-    format: uri
-    example: 'https://editor.swagger.io/image.jpg'
-    x-stoplight:
-      id: sovrrhcabsahf
+  - biodegradable
+  - inDepositSystem
+allOf:
+- $ref: 'ProductBase.yaml'
+- type: object
+  properties:
+    biodegradable:
+      type: boolean
+      description: Is product biodegradable
+    inDepositSystem:
+      type: boolean
+      description: Is product in deposit system
+    market:
+      type: object
+      properties:
+        entryDate:
+          type: string
+          format: date-time
+          x-stoplight:
+            id: jovvcg3atuc82
+        exitDate:
+          type: string
+          format: date-time
+          x-stoplight:
+            id: fjy6meqa13h6z
+      x-stoplight:
+        id: ap1aw4pc0eibf

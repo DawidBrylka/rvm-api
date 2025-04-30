@@ -1,0 +1,25 @@
+title: MachineBase
+x-stoplight:
+  id: 7g1n8jsn61nhq
+type: object
+required:
+  - serialNumber
+  - location
+  - bins
+
+properties:
+    serialNumber:
+      type: string
+      format: uuid
+      description: Serial number of machine
+      x-stoplight:
+        id: 8pp4kxobuhvlh
+    name:
+      type: string
+      description: RVM Customer/provider given name.
+    location:
+      $ref: 'LocationWithRequires.yaml'
+    bins:
+      type: array
+      items:
+        $ref: BinPost.yaml

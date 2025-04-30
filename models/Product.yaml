@@ -14,12 +14,15 @@ required:
   - label
   - weight
 allOf:
-- $ref: 'ProductPost.yaml'
+- $ref: 'ProductBase.yaml'
 - type: object
   properties:
     id:
       type: string
       format: uuid
+    drsOperatorId:
+      type: int
+      description: DRS Operator descriptior 
     creationDate:
       type: string
       format: date-time

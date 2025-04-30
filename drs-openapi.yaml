@@ -278,6 +278,23 @@ paths:
       operationId: get-machine-id-update
       x-stoplight:
         id: bu3ambgd8l19t1
+  /machine:
+    post:
+      summary: Add new RVM to Collection Point
+      description: |
+        Endpoint used to Register new RVM in DRS system for given Collection Point.
+      tags:
+        - machine
+      requestBody:
+          $ref: "#/components/requestBodies/RegisterMachine"
+      responses:
+        '200':
+          description: Operation Successful
+        '404':
+          description: Unknown Machine
+      operationId: post-machine
+      x-stoplight:
+        id: ltd4iqkgs22yd
 security:
   - bearerAuth: []
 components:
@@ -440,6 +457,20 @@ components:
           $ref: models/Location.yaml
         bins:
           $ref: models/BinPost.yaml
+    RegisterMachine:
+      title: RegisterMachine
+      x-stoplight:
+        id: pavk7ohndqzt1
+      type: object
+      required:
+        - rvmModelId
+      allOf:
+        - $ref: 'models/PostMachine.yaml'
+        - properties:
+            rvmModelId:
+              type: string
+              format: uuid
+              description: Model of RVM that is used.
   responses:
     200PostReturnId:
       description: OK
@@ -486,7 +517,7 @@ components:
             $ref: models/ErrorMessage.yaml
           examples:
             machineUnknown:
-              $ref: "#/components/examples/MachineUnknown"
+              $ref: '#/components/examples/MachineUnknown'
     ConflictMessage:
       value:
         msg: Conflicting ID of the request.
@@ -498,6 +529,11 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/MachineUpdate'
+    RegisterMachine:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RegisterMachine"
   examples:
     MachineUnknown:
       values:
