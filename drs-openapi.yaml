@@ -39,7 +39,7 @@ paths:
           $ref: '#/components/responses/400ValidationFailed'
     get:
       tags:
-        - products
+        - product
       summary: Get product data
       parameters:
         - name: sendImages
@@ -92,7 +92,7 @@ paths:
   '/product/{ean}':
     get:
       tags:
-        - products
+        - product
       summary: Get product data
       description: |
         Get data of single product.
