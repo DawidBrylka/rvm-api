@@ -42,6 +42,7 @@ properties:
   diameters:
     $ref: Diameters.yaml
     x-stoplight:
+      
       id: izwage8aqsa4e
   sleeveLabel:
     description: Does packaging contains sleeve label
