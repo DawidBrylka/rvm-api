@@ -22,7 +22,8 @@ allOf:
       format: uuid
     drsOperatorId:
       type: int
-      description: DRS Operator descriptior 
+      description: DRS Operator descriptior
+      example: 01
     creationDate:
       type: string
       format: date-time

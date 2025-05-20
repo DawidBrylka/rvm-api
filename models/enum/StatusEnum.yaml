@@ -1,0 +1,12 @@
+title: StatusEnum
+x-stoplight:
+  id: h707onalux6f6
+type: integer
+enum:
+  - 1
+  - 2
+
+description: |
+  Descriptor for Status ID <br> Where:
+  * 1 - NEW
+  * 2 - PUBLISHED

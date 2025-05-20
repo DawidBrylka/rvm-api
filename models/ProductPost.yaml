@@ -10,12 +10,30 @@ allOf:
 - $ref: 'ProductBase.yaml'
 - type: object
   properties:
+    sleeveLabel:
+      description: Does packaging contains sleeve label
+      type: boolean
+      x-stoplight:
+        id: ezwage8aqsa4e
+    comment:
+      type: string
+    status:
+      $ref: "enum/StatusEnum.yaml"
     biodegradable:
       type: boolean
       description: Is product biodegradable
     inDepositSystem:
       type: boolean
       description: Is product in deposit system
+    test:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
     market:
       type: object
       properties:

@@ -31,7 +31,7 @@ properties:
     $ref: Deposit.yaml
     x-stoplight:
       id: tx1zxq97px1zs
-  productStatusId:
+  collectionStatusId:
     $ref: enum/ProductStatusEnum.yaml
     x-stoplight:
       id: akn4cgxleoas1
@@ -43,11 +43,6 @@ properties:
     $ref: Diameters.yaml
     x-stoplight:
       id: izwage8aqsa4e
-  sleeveLabel:
-    description: Does packaging contains sleeve label
-    type: boolean
-    x-stoplight:
-      id: ezwage8aqsa4e
   weight:
     $ref: Weight.yaml
     x-stoplight:
