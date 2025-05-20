@@ -47,7 +47,7 @@ properties:
     description: Does packaging contains sleeve label
     type: boolean
     x-stoplight:
-      id: izwage8aqsa4e
+      id: doopalan
   weight:
     $ref: Weight.yaml
     x-stoplight:
