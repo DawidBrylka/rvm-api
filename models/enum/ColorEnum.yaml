@@ -10,8 +10,8 @@ enum:
   - 5
 description: |
   Descriptor for ColorID <br> Where:
-  * 1 - Clear
+  * 1 - Transparent
   * 2 - Brown
   * 3 - Green
   * 4 - Blue
-  * 5 - Other
+  * 99 - Other

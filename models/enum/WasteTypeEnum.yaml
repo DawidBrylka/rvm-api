@@ -11,25 +11,37 @@ enum:
   - 8
   - 9
   - 10
+  - 11
+  - 12
+  - 13
+  - 99
 description: |
   Descriptor for Waste Type <br>
   Where:
-  * 1 - PET
+  * 1 - Glass
 
-  * 2 - Glass
+  * 2 - Steel
 
-  * 3 - Steel
+  * 3 - Aluminium
 
-  * 4 - Aluminium
+  * 4 - Steel with Aluminium
 
-  * 5 - Steel with Aluminium
+  * 5 - Aluminium with widget
 
   * 6 - Steel with widget
 
-  * 7 - Aluminium with widget
+  * 7 - PET
 
-  * 8 - Other
+  * 8 - HDPE
 
-  * 9 - HDPE
+  * 9 - LDPE
 
-  * 10 - Plastic
+  * 10 - PVC
+
+  * 11 - PP
+
+  * 12 - PS
+  
+  * 13 - PUR
+
+  * 99 - Other

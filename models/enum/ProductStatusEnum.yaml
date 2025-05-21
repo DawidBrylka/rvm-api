@@ -6,8 +6,10 @@ enum:
   - 0
   - 1
   - 2
+  - 3
 description: |
   Descriptor for Product Status <br> Where:
   * 0 - Item in early phase. Should not be accepted neither by RVM or Manual Collection 
   * 1 - Item should be accepted by RVM and Manual Collection.
   * 2 - RVM and Manual Collection should reject those items
+  * 3 - Item in test Phase
