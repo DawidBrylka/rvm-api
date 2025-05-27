@@ -84,4 +84,4 @@ For full overwiev of this endpoint please visit: [POST - /product](https://kaucj
 <!-- type: tab-end -->
 
 ---
-<div style="text-align: right"> Version: 0.9</div>
+<div style="text-align: right"> Version: 0.9.1</div>

@@ -2,14 +2,14 @@
 stoplight-id: foryzcd3xzn6k
 ---
 
-# Update Machine In DRS by RVM Operator
+# Add or Update Machine In DRS by RVM Operator
 
 ![RVMConfigUpdate.png](../../assets/images/RVMActionInDRS.png)
 
 # RVM Configuration Update
 
 ## Overview
-This process allows **RVM providers** to update selected configuration parameters of the **RVM** directly in the **DRS** system.
+This process allows **RVM providers** to add or update selected configuration parameters of the **RVM** directly in the **DRS** system.
 
 ## Process Flow
 1. **Start:** The update process is initiated from the **RVM Cloud**.
@@ -49,4 +49,4 @@ For a full overview of this endpoint, please visit: [POST - /machine/{id}](https
 <!-- type: tab-end -->
 
 ---
-<div style="text-align: right"> Version: 0.9</div>
+<div style="text-align: right"> Version: 0.9.1</div>

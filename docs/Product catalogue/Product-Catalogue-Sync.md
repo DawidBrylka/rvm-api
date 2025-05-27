@@ -47,4 +47,4 @@ For full overwiev of this endpoint please visit: [GET /product](https://kaucja.s
 <!-- type: tab-end -->
 
 ---
-<div style="text-align: right"> Version: 0.9</div>
+<div style="text-align: right"> Version: 0.9.1</div>

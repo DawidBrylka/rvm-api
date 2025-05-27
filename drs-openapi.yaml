@@ -137,7 +137,7 @@ paths:
       description: Post single Transaction
       responses:
         '200':
-          $ref: '#/components/responses/200TransactionProcessed'
+          description: Successful operation
         '400':
           $ref: '#/components/responses/400MachineUnknown'
         '409':
@@ -160,7 +160,7 @@ paths:
       description: Post multiple Transaction
       responses:
         '200':
-          $ref: '#/components/responses/200BulkTransactionProcessed'
+          description: Successful operation
         '400':
           $ref: '#/components/responses/400MachineUnknown'
         '409':
@@ -249,7 +249,7 @@ paths:
       x-stoplight:
         id: l2akxxutrhklj
     post:
-      summary: Machine Update
+      summary: Add/Machine Update By RVM Vendor
       description: |
         Endpoint used by RVM providers to notify DRS whether something changed to the RVM.
       tags:
@@ -327,7 +327,14 @@ components:
   schemas:
     BagSeal:
       type: object
+      required:
+        - sealNumber
+        - bagId
+        - sealTime
       properties:
+        lockingPersonId:
+          type: string
+          format: uuid
         sealNumber:
           type: string
         bagId:
@@ -391,6 +398,9 @@ components:
           example: <SEAL NUMBER>
           description: |
             Optional. If RVM is able to seal bag on it's own it should send us seal number on this particular call.
+        lockingPersonId:
+          type: string
+          format: uuid
         replacementDate:
           type: string
           format: date-time
@@ -452,11 +462,14 @@ components:
       x-stoplight:
         id: zk239eslozgw8
       type: object
-      properties:
-        location:
-          $ref: models/Location.yaml
-        bins:
-          $ref: models/BinPost.yaml
+      allOf:
+        - $ref: 'models/PostMachine.yaml'
+        - properties:
+            model:
+              type: string
+              example: Tomra 9
+            drsClientId:
+              description: Client number given by DRS.
     RegisterMachine:
       title: RegisterMachine
       x-stoplight:

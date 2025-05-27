@@ -20,13 +20,6 @@ The **Transaction Process** handles interactions between **RVM Cloud** and **DRS
    - Response contains information about voucher that should be paid to customer e.g it's value, currency and whether it should be pait at all.
 4. After **DRS** return confirmation **RVM Cloud** set transaction as processed in its system.
 
-<!-- theme: none --> 
-> **Information**: Payment should be determined as follows:
->
->   - If the DRS is operational, issue the coupon based on its response.
->   - If the DRS is down or unreachable, issue the coupon based on Product Catalogue Data prices.
->   - If the RVM machine is in offline mode, issue the coupon based on Product Catalogue Data prices.
-
 
 > **Note:** In case of unuccesful attempt, **RVM Cloud** is expected to retry the call several times. Also there will be mechanism on **DRS** side to fetch all unprocessed transaction once per day - Process is described in [DRS Transaction Retry Mechanism](Retry-Transaction-Fetch.md).
 
@@ -88,5 +81,5 @@ For a full overview of this endpoint, please visit: [POST - /transaction](https:
 <!-- type: tab-end -->
 
 ---
-<div style="text-align: right"> Version: 0.9</div>
+<div style="text-align: right"> Version: 0.9.1</div>
 
