@@ -17,8 +17,7 @@ properties:
     name:
       type: string
       description: RVM Customer/provider given name.
-    location:
-      $ref: 'LocationWithRequires.yaml'
+    
     bins:
       type: array
       items:

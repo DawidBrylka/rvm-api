@@ -233,21 +233,7 @@ paths:
           description: Invalid input
         '422':
           description: Validation exception
-  '/machine/{id}':
-    parameters:
-      - $ref: '#/components/parameters/id'
-    head:
-      summary: Query For Machine in DRS system
-      tags:
-        - machine
-      responses:
-        '200':
-          description: Machine is known and registered in Kaucja DRS
-        '404':
-          description: Unknown Machine
-      operationId: get-machine-id-registered
-      x-stoplight:
-        id: l2akxxutrhklj
+  '/machine':
     post:
       summary: Add/Machine Update By RVM Vendor
       description: |
@@ -264,6 +250,21 @@ paths:
       operationId: get-machine-id-update
       x-stoplight:
         id: bu3ambgd8l19t
+  '/machine/{id}':
+    parameters:
+      - $ref: '#/components/parameters/id'
+    head:
+      summary: Query For Machine in DRS system
+      tags:
+        - machine
+      responses:
+        '200':
+          description: Machine is known and registered in Kaucja DRS
+        '404':
+          description: Unknown Machine
+      operationId: get-machine-id-registered
+      x-stoplight:
+        id: l2akxxutrhklj
     delete:
       summary: Machine Delete
       description: |
@@ -278,11 +279,12 @@ paths:
       operationId: get-machine-id-update
       x-stoplight:
         id: bu3ambgd8l19t1
-  /machine:
+  mobileapp/machine:
     post:
       summary: Add new RVM to Collection Point
       description: |
         Endpoint used to Register new RVM in DRS system for given Collection Point.
+        <br>Internal. Only Used from Mobile app.
       tags:
         - machine
       requestBody:
@@ -465,6 +467,9 @@ components:
       allOf:
         - $ref: 'models/PostMachine.yaml'
         - properties:
+            id:
+              type: string
+              format: uuid
             model:
               type: string
               example: Tomra 9
@@ -476,14 +481,21 @@ components:
         id: pavk7ohndqzt1
       type: object
       required:
-        - rvmModelId
+        - rvmModel
       allOf:
         - $ref: 'models/PostMachine.yaml'
         - properties:
-            rvmModelId:
+            id:
+              type: string
+              format: uuid
+              description: ID of machine
+            rvmModel:
               type: string
               format: uuid
               description: Model of RVM that is used.
+            authorizationCode:
+              type: string
+              description: Authorization code required to register machine
   responses:
     200PostReturnId:
       description: OK

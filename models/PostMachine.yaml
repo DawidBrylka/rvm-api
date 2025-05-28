@@ -2,9 +2,6 @@ title: PostMachine
 x-stoplight:
   id: lftfzv4rdk3v3
 type: object
+
 allOf:
   - $ref: 'MachineBase.yaml'
-  - properties:
-      authorizationCode:
-        type: string
-        description: Authorization code required to register machine

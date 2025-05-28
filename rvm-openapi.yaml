@@ -37,7 +37,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: 'models/PostMachine.yaml'
+              $ref: '#/components/schemas/PostMachine'
       responses:
         '200':
           description: Successful operation
@@ -326,11 +326,13 @@ components:
         - health
         - ean_sync_date
       allOf:
-        - $ref: 'models/MachineBase.yaml'
+        - $ref: models/MachineBase.yaml
         - properties:
             id:
               type: string
               format: uuid
+            location:
+              $ref: 'models/LocationWithRequires.yaml'   
             health:
               $ref: '#/components/schemas/Health'
             bins:
@@ -466,3 +468,16 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Transaction'
+    PostMachine:
+      title: PostMachine
+      x-stoplight:
+        id: 26eqm7yxd21uk
+      type: object
+      allOf:
+        - $ref: models/PostMachine.yaml
+        - properties:
+            location:
+              $ref: 'models/LocationWithRequires.yaml'   
+            authorizationCode:
+              type: string
+              description: Authorization code required to register machine
