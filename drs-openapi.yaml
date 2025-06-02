@@ -473,7 +473,7 @@ components:
             model:
               type: string
               example: Tomra 9
-            drsClientId:
+            drsCollectionPointId:
               description: Client number given by DRS.
     RegisterMachine:
       title: RegisterMachine
