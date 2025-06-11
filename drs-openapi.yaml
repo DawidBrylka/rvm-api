@@ -15,7 +15,7 @@ externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
 servers:
-  - url: 'https://drs.kaucja.pl/api/v3'
+  - url: 'https://drs-sandbox.kaucja.pl/api/rvm/'
 paths:
   /product:
     post:
@@ -279,7 +279,7 @@ paths:
       operationId: get-machine-id-update
       x-stoplight:
         id: bu3ambgd8l19t1
-  mobileapp/machine:
+  /mobileapp/machine:
     post:
       summary: Add new RVM to Collection Point
       description: |

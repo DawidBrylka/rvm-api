@@ -4,6 +4,9 @@ stoplight-id: qlcl5lzd2yxfb
 
 # CHANGELOG
 
+## 0.9.2
+* Removed RVM unblock Endpoints. Kaucja.pl will not require RVM locking for sealing
+
 ## 0.9.1
 
 * Removed response from DRS [POST - /transaction](https://kaucja.stoplight.io/docs/rvm-api/sbyw8qv8u7gj8-post-single-transaction) endpoint. Only RVM Machine decides about receipt print.

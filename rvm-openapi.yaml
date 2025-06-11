@@ -76,28 +76,6 @@ paths:
           description: Validation exception
       x-stoplight:
         id: vlhfuryxrsykg
-  '/machine/{id}/unblock':
-    put:
-      tags:
-        - machine
-      summary: Unblock RVM to working state
-      description: Unblock RVM to working state
-      parameters:
-        - name: id
-          in: path
-          description: ID/SN of a Machine
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Successful operation
-        '400':
-          description: Invalid input
-        '422':
-          description: Validation exception
-      x-stoplight:
-        id: qodfbkmaqt7j5
   '/machine/{id}':
     delete:
       tags:
@@ -332,7 +310,7 @@ components:
               type: string
               format: uuid
             location:
-              $ref: 'models/LocationWithRequires.yaml'   
+              $ref: models/LocationWithRequires.yaml
             health:
               $ref: '#/components/schemas/Health'
             bins:
@@ -477,7 +455,7 @@ components:
         - $ref: models/PostMachine.yaml
         - properties:
             location:
-              $ref: 'models/LocationWithRequires.yaml'   
+              $ref: models/LocationWithRequires.yaml
             authorizationCode:
               type: string
               description: Authorization code required to register machine

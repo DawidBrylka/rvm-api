@@ -30,4 +30,4 @@ For a full overview of this endpoint, please visit: [DELETE - /machine/{id}](htt
 <!-- type: tab-end -->
 
 ---
-<div style="text-align: right"> Version: 0.9.1</div>
+<div style="text-align: right"> Version: 0.9.2</div>

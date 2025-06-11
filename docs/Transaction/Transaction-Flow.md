@@ -81,5 +81,5 @@ For a full overview of this endpoint, please visit: [POST - /transaction](https:
 <!-- type: tab-end -->
 
 ---
-<div style="text-align: right"> Version: 0.9.1</div>
+<div style="text-align: right"> Version: 0.9.2</div>
 

@@ -2,15 +2,14 @@
 stoplight-id: rvm-noscan-xyz789
 ---
 
-![RVMWithoutScanner.png](../../assets/images/RVMNoScanner.png)
+![RVM-No-Scanner.png](../../assets/images/RVM-No-Scanner.png)
+
 
 # RVM Without Scanner
 
 ## Overview
 
 For **RVMs that do not have an internal scanner**, the process of scanning the seal is handled via a **mobile application** provided by the DRS Operator or an equivalent device.
-
-> **RVM** must only be unblocked after receiving confirmation of sealing from **DRS**.
 
 ## Process Flow
 
@@ -23,12 +22,11 @@ This flow applies to RVMs that support **bag fill level detection** and notify D
 1. **Start:** The RVM detects the bag has reached a certain fill threshold.
 2. **Bag Fill Notification:** RVM Cloud sends fill status to DRS via `POST /bag-fill-status`. 
 3. **Notification Propagation:** DRS notifies the Collection Point Warning about filled bag.
-4. **Full Bag Notification:** When the bag is full, RVM Cloud sends a another `POST /bag-fill-status` request - now RVM should lock itself until seal is applied.
+4. **Full Bag Notification:** When the bag is full, RVM Cloud sends a another `POST /bag-fill-status` request.
 5. **Notification Propagation:** DRS notifies the Collection Point about the full bag.
 6. **Bag Replacement:** After the bag is emptied, RVM Cloud sends `POST /bag-replacement` to DRS.
 7. **Seal Request:** DRS requests the Collection Point to confirm sealing.
 8. **Seal Confirmation:** Collection Point sends confirmation to DRS via `POST /bag-seal`.
-9. **Machine Unblock:** Once sealing is confirmed, DRS sends `POST /machine/{id}/unblock` to RVM Cloud.
 
 > In case single transaction have filled from normal status to full, warning should not be sent. Only single call that informs that bag is full.
 
@@ -42,10 +40,8 @@ This flow applies when:
 - The bag was already replaced **before** any notification could be sent
 
 1. **Start:** The bag is replaced manually (proactively or without system detection).
-2. **Bag Replacement:** RVM Cloud informs DRS via `POST /bag-replacement`. At this point RVM should be blocked until Seal is applied
 3. **Seal Request:** DRS notifies the Collection Point that sealing is required.
 4. **Seal Confirmation:** Collection Point confirms sealing via `POST /bag-seal`.
-5. **Machine Unblock:** DRS sends a command to RVM Cloud to unblock the machine using `POST /machine/{id}/unblock`.
 
 
 
@@ -111,29 +107,8 @@ For full overwiev of this endpoint please visit: [POST - /bag-replacement](https
 </details>
 <br>
 
-<!--
-type: tab
-title: RVM
--->
-
-### POST /machine/{id}/unblock
-
-Sent by DRS to unblock the RVM after sealing is confirmed.
-
-For full overwiev of this endpoint please visit: [PUT - /machine/{id}/unblock](https://kaucja.stoplight.io/docs/rvm-api/qodfbkmaqt7j5-unblock-rvm-to-working-state)
-
-<details>
-<summary>Path Parameter</summary>
-
-```yaml
-id:
-  type: string
-  description: Unique identifier of the machine.
-```
-
-</details>
 
 <!-- type: tab-end -->
 
 ---
-<div style="text-align: right"> Version: 0.9.1</div>
+<div style="text-align: right"> Version: 0.9.2</div>
