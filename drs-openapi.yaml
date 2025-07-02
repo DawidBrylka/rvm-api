@@ -475,7 +475,7 @@ components:
               example: Tomra 9
             drsCpNo:
               description: Client number given by DRS.
-            address:
+            location:
               $ref: "models/Location.yaml" 
     RegisterMachine:
       title: RegisterMachine
@@ -498,7 +498,7 @@ components:
             authorizationCode:
               type: string
               description: Authorization code required to register machine
-            address:
+            location:
               $ref: "models/Location.yaml" 
   responses:
     200PostReturnId:
