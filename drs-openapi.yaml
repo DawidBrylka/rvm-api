@@ -473,8 +473,10 @@ components:
             model:
               type: string
               example: Tomra 9
-            drsCollectionPointId:
+            drsCpNo:
               description: Client number given by DRS.
+            address:
+              $ref: "models/Location.yaml" 
     RegisterMachine:
       title: RegisterMachine
       x-stoplight:
@@ -496,6 +498,8 @@ components:
             authorizationCode:
               type: string
               description: Authorization code required to register machine
+            address:
+              $ref: "models/Location.yaml" 
   responses:
     200PostReturnId:
       description: OK
