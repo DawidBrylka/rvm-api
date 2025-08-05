@@ -13,7 +13,6 @@ required:
   - totalAccepted
   - totalRejected
   - totalWeight
-  - totalAmount
 properties:
   id:
     type: string
