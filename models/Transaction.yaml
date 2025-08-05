@@ -8,6 +8,12 @@ required:
   - transactionBlocked
   - paidAmount
   - containers
+  - transactionStartTime
+  - transactionEndTime
+  - totalAccepted
+  - totalRejected
+  - totalWeight
+  - totalAmount
 properties:
   id:
     type: string
