@@ -233,7 +233,7 @@ paths:
           description: Invalid input
         '422':
           description: Validation exception
-  '/machine':
+  /machine:
     post:
       summary: Add/Machine Update By RVM Vendor
       description: |
@@ -281,6 +281,7 @@ paths:
         id: bu3ambgd8l19t1
   /mobileapp/machine:
     post:
+      internal: true
       summary: Add new RVM to Collection Point
       description: |
         Endpoint used to Register new RVM in DRS system for given Collection Point.
@@ -288,7 +289,7 @@ paths:
       tags:
         - machine
       requestBody:
-          $ref: "#/components/requestBodies/RegisterMachine"
+        $ref: '#/components/requestBodies/RegisterMachine'
       responses:
         '200':
           description: Operation Successful
@@ -297,6 +298,20 @@ paths:
       operationId: post-machine
       x-stoplight:
         id: ltd4iqkgs22yd
+  /voucher/buffer:
+    get:
+      summary: Get Buffer of Vouchers
+      description: Get Buffer of Vouchers for RVM
+      parameters:
+        - $ref: '#/components/parameters/rvmId'
+      tags:
+        - voucher
+      responses:
+        '200':
+          $ref: "#/components/responses/200OkBufferReturned"
+      operationId: get-voucher-buffer
+      x-stoplight:
+        id: rsbvxnuugs8t7
 security:
   - bearerAuth: []
 components:
@@ -324,6 +339,13 @@ components:
       required: true
       description: |
         Unique ID of RVM
+      schema:
+        type: string
+    rvmId:
+      name: rvmId
+      description: id of a RVM machine
+      in: query
+      required: true
       schema:
         type: string
   schemas:
@@ -465,7 +487,7 @@ components:
         id: zk239eslozgw8
       type: object
       allOf:
-        - $ref: 'models/PostMachine.yaml'
+        - $ref: models/PostMachine.yaml
         - properties:
             id:
               type: string
@@ -483,7 +505,7 @@ components:
       required:
         - rvmModel
       allOf:
-        - $ref: 'models/PostMachine.yaml'
+        - $ref: models/PostMachine.yaml
         - properties:
             id:
               type: string
@@ -496,6 +518,23 @@ components:
             authorizationCode:
               type: string
               description: Authorization code required to register machine
+    VoucherBuffer:
+      title: VoucherBuffer
+      x-stoplight:
+        id: mii4730sid7h4
+      type: object
+      properties:
+        voucherIdList:  
+          items:
+            type: string
+            example: 20012312312
+        voucherPrintType:
+          type: int64
+          enum: [0, 1]
+          description: |
+            Decscriptor for Voucher Type where
+              - 0 - Code128/EAN13 type - Barcode
+              - 1 - QR Code
   responses:
     200PostReturnId:
       description: OK
@@ -548,6 +587,12 @@ components:
         msg: Conflicting ID of the request.
         errorCode: 5
         path: <path of the request>
+    200OkBufferReturned:
+      description: OK. Buffer returned
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/VoucherBuffer'
   requestBodies:
     MachineUpdate:
       content:
@@ -558,7 +603,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/RegisterMachine"
+            $ref: '#/components/schemas/RegisterMachine'
   examples:
     MachineUnknown:
       values:

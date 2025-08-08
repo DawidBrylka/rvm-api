@@ -31,7 +31,9 @@ properties:
   totalWeight:
     type: integer
     example: 1211
-    description: Total weight of containers of taken containers. 
+    description: Total weight of containers of taken containers.
+  voucher:
+    $ref: 'VoucherBase.yaml'
   transactionStartTime:
     type: string
     format: date-time

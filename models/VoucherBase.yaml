@@ -1,0 +1,32 @@
+x-stoplight:
+  id: 1r18av626zlr9
+type: object
+title: VoucherBase
+
+description: Entity of a Voucher
+properties:
+  id:
+    type: string
+    description: Id of a voucher
+    x-stoplight:
+      id: y5momn4z6nk8b
+  redeemed:
+    type: boolean
+    description: |
+      Was Refund redeemed as part of single transaction.
+      E.g. as paid out in cash or there was discount on bill.
+  redeemType:
+    type: number
+    enum:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 99
+    description: |
+      Descriptor for Reedem Type where <br>
+        - 0 - Valid
+        - 1 - Exchanged For Cash
+        - 2 - Discount on bill
+        - 3 - Charity
+        - 99 - Other

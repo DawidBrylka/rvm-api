@@ -4,6 +4,11 @@ stoplight-id: qlcl5lzd2yxfb
 
 # CHANGELOG
 
+## 08-08-2025
+* Added Endpoint to buffer coupon
+* Added Information about issued voucher in [POST - /transaction](https://kaucja.stoplight.io/docs/rvm-api/sbyw8qv8u7gj8-post-single-transaction) endpoint
+
+
 ## 0.9.2
 * Removed RVM unblock Endpoints. Kaucja.pl will not require RVM locking for sealing
 
