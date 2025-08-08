@@ -313,6 +313,30 @@ paths:
       operationId: get-voucher-buffer
       x-stoplight:
         id: rsbvxnuugs8t7
+  /voucher/redeem:
+    post:
+      summary: Voucher
+      description: Post information about voucher reedem
+      requestBody:
+        $ref: '#/components/requestBodies/RedeemVoucher'
+      tags:
+        - voucher
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+      operationId: post-voucher-redeem
+      x-stoplight:
+        id: xasro8ur97dkn
 security:
   - bearerAuth: []
 components:
@@ -350,6 +374,105 @@ components:
       schema:
         type: string
   schemas:
+    ApiException:
+      title: ApiException
+      x-stoplight:
+        id: je3kztlbezwpl
+      type: object
+      properties:
+        httpStatus:
+          type: integer
+          format: int32
+          example: 400
+        errorType:
+          type: string
+          example: api.err.type.validation
+        path:
+          type: string
+          example: POST /transaction/
+        objectId:
+          type: string
+          example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+          description: ID of the object for which the error occurred
+        errorMsg:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorMsg'
+    RedeemType:
+      title: RedeemType
+      x-stoplight:
+        id: zl59bi4je1cpy
+      type: number
+      enum:
+        - 1
+        - 2
+        - 3
+        - 99
+      description: |
+        Descriptor for Reedem Type where <br>
+          - 1 - Exchanged For Cash
+          - 2 - Discount on bill
+          - 3 - Charity
+          - 99 - Other
+    Voucher:
+      title: Voucher
+      x-stoplight:
+        id: xycd2rl0p4qwm
+      type: object
+      required:
+        - id
+        - redeemType
+        - redeemDate
+      properties:
+        id:
+          type: string
+          description: Id of a voucher
+          x-stoplight:
+            id: oxadjinwkm40p
+        redeemType:
+          $ref: '#/components/schemas/RedeemType'
+        redeemDate:
+          type: string
+          format: date-time
+        rvmId:
+          type: string
+          format: guid
+
+    ErrorMsg:
+      title: ErrorMsg
+      x-stoplight:
+        id: mkkp4hygj6eod
+      type: object
+      properties:
+        errorCode:
+          type: string
+          example: TRS_PRODUCT_BAD_STATUS
+          description: Error code
+        field:
+          type: string
+          example: containers.ean
+          description: Field to which the error applies
+        idRow:
+          type: integer
+          format: int32
+          example: 2
+          description: Index of the 1st-level list element the error applies to (e.g. the 14th element of the `transaction` list)
+        idRow2:
+          type: integer
+          format: int32
+          example: 9
+          description: Index of the 2nd-level list element the error applies to (e.g. the 9th element of the `items` list)
+        errorMsgLabel:
+          type: string
+          example: api.err.msg.trs.product.bad.status
+          description: 'Label in the multilingual file with the corresponding error message. If there are variables to be substituted, they are contained in tags {{0}}, {{1}}, {{2}}, etc.'
+        errorMsgArgs:
+          type: array
+          description: 'List of values to be substituted into the above-mentioned tags {{0}}, {{1}}, {{2}}, etc.'
+          items:
+            type: string
+            example: INACTIVE
+            description: Element of the list of values to be substituted into the above-mentioned tags
     BagSeal:
       type: object
       required:
@@ -566,6 +689,36 @@ components:
           type: string
           example: 30d
   responses:
+    '400':
+      description: 'REQUIRED - One or more required fields has not been provided <br>ENUM_ERROR - Format of one or more fields is incorrect <br>INCONSISTENT - Value is inconsistent comparing to ether system elements <br>TOO_LONG - Exceeded maximum length <br>INCORRECT_FORMAT - Incorrect format <br>VALUE_TOO_HIGH - Exceeded maximum value <br>VALUE_TOO_LOW - Value is below minimum allowed <br>...  '
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/ApiException'
+    '401':
+      description: UNAUTHORIZED - api.err.msg.unauthorized
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/ApiException'
+    '403':
+      description: FORBIDDEN - api.err.msg.forbidden
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/ApiException'
+    '404':
+      description: NOT_FOUND - Resource not found
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/ApiException'
+    '500':
+      description: INTERNAL - Internal error has occurred
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/ApiException'
     200PostReturnId:
       description: OK
       content:
@@ -632,6 +785,12 @@ components:
           schema:
             $ref: '#/components/schemas/VoucherBuffer'
   requestBodies:
+    RedeemVoucher:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Voucher'
     MachineUpdate:
       content:
         application/json:

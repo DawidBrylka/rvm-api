@@ -6,6 +6,7 @@ stoplight-id: qlcl5lzd2yxfb
 
 ## 08-08-2025
 * Added Endpoint to buffer coupon
+* Added Endpoint to inform DRS Operator about burned Voucher
 * Added Information about issued voucher in [POST - /transaction](https://kaucja.stoplight.io/docs/rvm-api/sbyw8qv8u7gj8-post-single-transaction) endpoint
 
 
