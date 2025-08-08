@@ -137,7 +137,7 @@ paths:
       description: Post single Transaction
       responses:
         '200':
-          description: Successful operation
+          $ref: "#/components/responses/200VoucherData"
         '400':
           $ref: '#/components/responses/400MachineUnknown'
         '409':
@@ -148,6 +148,7 @@ paths:
         id: sbyw8qv8u7gj8
   /transaction/bulk:
     post:
+      internal: true
       tags:
         - transaction
       requestBody:
@@ -518,6 +519,36 @@ components:
             authorizationCode:
               type: string
               description: Authorization code required to register machine
+    VoucherData:
+      title: VoucherData
+      x-stoplight:
+        id: ato1zk3jv1nrl
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 44s2k53bhg2hz
+        printType:
+          $ref: "#/components/schemas/VocuherPrintTypeEnum"
+        issuedAt:
+          type: string
+          format: date-time
+        validUntil:
+          type: string
+          format: date-time
+    VocuherPrintTypeEnum:
+      title: VocuherPrintTypeEnum
+      x-stoplight:
+        id: wjgw9ypmmrjlh
+      type: integer
+      enum:
+        - 0
+        - 1
+      description: |
+        Decscriptor for Voucher Type where
+          - 0 - Code128/EAN13 type - Barcode
+          - 1 - QR Code
     VoucherBuffer:
       title: VoucherBuffer
       x-stoplight:
@@ -528,13 +559,12 @@ components:
           items:
             type: string
             example: 20012312312
-        voucherPrintType:
-          type: int64
-          enum: [0, 1]
-          description: |
-            Decscriptor for Voucher Type where
-              - 0 - Code128/EAN13 type - Barcode
-              - 1 - QR Code
+        printType:
+          $ref: "#/components/schemas/VocuherPrintTypeEnum"
+        daysUntilExpiration:
+          description: Parameter saying how long voucher will be valid after issuing it by RVM
+          type: string
+          example: 30d
   responses:
     200PostReturnId:
       description: OK
@@ -587,6 +617,14 @@ components:
         msg: Conflicting ID of the request.
         errorCode: 5
         path: <path of the request>
+    200VoucherData:
+      description: Response of Voucer Data. If Voucher was supplied in Transaction Body - Response will be empty
+      content:
+        application/json:
+          schema:
+              oneOf:
+                - $ref: '#/components/schemas/VoucherData'
+                - $ref: null
     200OkBufferReturned:
       description: OK. Buffer returned
       content:
