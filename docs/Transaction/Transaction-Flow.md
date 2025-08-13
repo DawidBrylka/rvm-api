@@ -50,14 +50,14 @@ For a full overview of this endpoint, please visit: [POST - /transaction](https:
 <summary>Response</summary>
 
 ```yaml jsonSchema
-  $ref: '../../drs-openapi.yaml#/components/schemas/TransactionConfirmation'
+  $ref: '../../drs-openapi.yaml#/components/schemas/VoucherData'
 ```
 
 </details>
 <br> <br>
 
 
-### POST /transaction/bulk
+<!-- ### POST /transaction/bulk
 
 For a full overview of this endpoint, please visit: [POST - /transaction](https://kaucja.stoplight.io/docs/rvm-api/zpsfrh56cuuti-post-multiple-transaction)
 
@@ -74,7 +74,7 @@ For a full overview of this endpoint, please visit: [POST - /transaction](https:
 
 ```yaml jsonSchema
   $ref: '../../drs-openapi.yaml#/components/schemas/BulkTransactionConfirmation'
-```
+``` -->
 
 </details>
 
