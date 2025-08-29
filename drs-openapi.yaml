@@ -347,13 +347,13 @@ components:
       bearerFormat: JWT
   parameters:
     Pagelength:
-      name: pagelength
+      name: pageLength
       in: query
       description: Number of records to return
       schema:
         type: number
     Startindex:
-      name: startindex
+      name: startIndex
       in: query
       description: Start index for paging
       schema:
