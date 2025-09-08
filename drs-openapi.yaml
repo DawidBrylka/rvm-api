@@ -137,7 +137,7 @@ paths:
       description: Post single Transaction
       responses:
         '200':
-          $ref: "#/components/responses/200VoucherData"
+          $ref: '#/components/responses/200VoucherData'
         '400':
           $ref: '#/components/responses/400MachineUnknown'
         '409':
@@ -170,6 +170,7 @@ paths:
           description: Validation exception
       x-stoplight:
         id: zpsfrh56cuuti
+      x-internal: true
   /bag-replacement:
     post:
       tags:
@@ -299,6 +300,7 @@ paths:
       operationId: post-machine
       x-stoplight:
         id: ltd4iqkgs22yd
+      x-internal: true
   /voucher/buffer:
     get:
       summary: Get Buffer of Vouchers
@@ -309,7 +311,7 @@ paths:
         - voucher
       responses:
         '200':
-          $ref: "#/components/responses/200OkBufferReturned"
+          $ref: '#/components/responses/200OkBufferReturned'
       operationId: get-voucher-buffer
       x-stoplight:
         id: rsbvxnuugs8t7
@@ -437,7 +439,6 @@ components:
         rvmId:
           type: string
           format: guid
-
     ErrorMsg:
       title: ErrorMsg
       x-stoplight:
@@ -653,7 +654,7 @@ components:
           x-stoplight:
             id: 44s2k53bhg2hz
         printType:
-          $ref: "#/components/schemas/VocuherPrintTypeEnum"
+          $ref: '#/components/schemas/VocuherPrintTypeEnum'
         issuedAt:
           type: string
           format: date-time
@@ -678,12 +679,12 @@ components:
         id: mii4730sid7h4
       type: object
       properties:
-        voucherIdList:  
+        voucherIdList:
           items:
             type: string
             example: 20012312312
         printType:
-          $ref: "#/components/schemas/VocuherPrintTypeEnum"
+          $ref: '#/components/schemas/VocuherPrintTypeEnum'
         daysUntilExpiration:
           description: Parameter saying how long voucher will be valid after issuing it by RVM
           type: string
@@ -775,9 +776,9 @@ components:
       content:
         application/json:
           schema:
-              oneOf:
-                - $ref: '#/components/schemas/VoucherData'
-                - $ref: null
+            oneOf:
+              - $ref: '#/components/schemas/VoucherData'
+              - $ref: null
     200OkBufferReturned:
       description: OK. Buffer returned
       content:
