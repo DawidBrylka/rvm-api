@@ -15,7 +15,5 @@ description: |
   * 0 - All Good
   * 1 - Fraudalent behavior detected
   * 2 - Container crushed
-  * 3 - Barcode damaged
-  * 4 - Barcode missing
   * 5 - Invalid EAN
   * 6 - Container not accepted

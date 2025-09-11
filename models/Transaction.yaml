@@ -2,54 +2,6 @@ title: Transaction
 x-stoplight:
   id: tflmwiqdun34m
 type: object
-required:
-  - id
-  - rvmId
-  - transactionBlocked
-  - paidAmount
-  - containers
-  - transactionStartTime
-  - transactionEndTime
-  - totalAccepted
-  - totalRejected
-  - totalWeight
-properties:
-  id:
-    type: string
-    format: uuid
-  rvmId:
-    type: string
-    format: uuid
-  transactionBlocked:
-    type: boolean
-    example: false
-    description: Descriptor wheter RVM blocked entire transaction due to frauds etc.
-  totalAmount:
-    type: integer
-    example: 20
-    description: null
-  totalWeight:
-    type: integer
-    example: 1211
-    description: Total weight of containers of taken containers.
-  voucher:
-    $ref: VoucherBase.yaml
-  transactionStartTime:
-    type: string
-    format: date-time
-  transactionEndTime:
-    type: string
-    format: date-time
-  totalAccepted:
-    type: integer
-    example: 20
-  totalRejected:
-    type: integer
-    example: 1
-  containers:
-    type: array
-    items:
-      $ref: Container.yaml
 examples:
   - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
     rvmId: 658f31ac-13dd-457e-8c8a-f79ab379d57f
@@ -69,3 +21,52 @@ examples:
         count: 20
         weight: 10
         rejectionCauseCode: 0
+required:
+  - id
+  - rvmId
+  - transactionBlocked
+  - totalWeight
+  - transactionStartTime
+  - transactionEndTime
+  - totalAccepted
+  - totalRejected
+  - containers
+properties:
+  id:
+    type: string
+    format: uuid
+  rvmId:
+    type: string
+    format: uuid
+  transactionBlocked:
+    type: boolean
+    example: false
+    description: Descriptor wheter RVM blocked entire transaction due to frauds etc.
+  totalAmount:
+    type: integer
+    example: 20
+    description: 'The aggregate count of all containers in the transaction; should equal the sum in array[Container]while also equating the sum of `totalAccepted` + `totalRejected`.'
+  totalWeight:
+    type: integer
+    example: 1211
+    description: Total weight of containers of taken containers.
+  voucher:
+    $ref: VoucherBase.yaml
+  transactionStartTime:
+    type: string
+    format: date-time
+  transactionEndTime:
+    type: string
+    format: date-time
+  totalAccepted:
+    type: integer
+    example: 20
+    description: 'Total number of accepted containers in the transaction (i.e., all containers where `rejectionCauseCode == 0`).'
+  totalRejected:
+    type: integer
+    example: 1
+    description: 'The sum of all containers rejected in the transaction. Must equal the sum of containers in `array[Container]` with rejectionCauseCode>0'
+  containers:
+    type: array
+    items:
+      $ref: Container.yaml

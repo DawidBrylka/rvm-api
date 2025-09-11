@@ -2,19 +2,16 @@ x-stoplight:
   id: 1r18av626zlr9
 type: object
 title: VoucherBase
-
 description: Entity of a Voucher
 properties:
   id:
     type: string
-    description: Id of a voucher
+    description: Unique voucher code. This exact string is encoded in the printed barcode/QR.
     x-stoplight:
       id: y5momn4z6nk8b
   redeemed:
     type: boolean
-    description: |
-      Was Refund redeemed as part of single transaction.
-      E.g. as paid out in cash or there was discount on bill.
+    description: ' Was Refund redeemed as part of single transaction. E.g. as paid out in cash or there was discount on bill. Always FALSE in /transaction from RVM (RVM does not redeem/burn vouchers).'
   redeemType:
     type: number
     enum:
