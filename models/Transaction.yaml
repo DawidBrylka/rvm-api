@@ -27,13 +27,13 @@ properties:
   totalAmount:
     type: integer
     example: 20
-    description: 
+    description: null
   totalWeight:
     type: integer
     example: 1211
     description: Total weight of containers of taken containers.
   voucher:
-    $ref: 'VoucherBase.yaml'
+    $ref: VoucherBase.yaml
   transactionStartTime:
     type: string
     format: date-time
@@ -49,4 +49,23 @@ properties:
   containers:
     type: array
     items:
-      $ref: 'Container.yaml'
+      $ref: Container.yaml
+examples:
+  - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+    rvmId: 658f31ac-13dd-457e-8c8a-f79ab379d57f
+    transactionBlocked: false
+    totalAmount: 20
+    totalWeight: 1211
+    voucher:
+      id: string
+      redeemed: true
+      redeemType: 0
+    transactionStartTime: '2019-08-24T14:15:22Z'
+    transactionEndTime: '2019-08-24T14:15:22Z'
+    totalAccepted: 20
+    totalRejected: 0
+    containers:
+      - ean: '20123123'
+        count: 20
+        weight: 10
+        rejectionCauseCode: 0

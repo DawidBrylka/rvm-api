@@ -4,6 +4,19 @@ stoplight-id: qlcl5lzd2yxfb
 
 # CHANGELOG
 
+## 10-09-2025
+
+### Removed
+* Removed references to `volume` from [POST - /transaction](https://kaucja.stoplight.io/docs/rvm-api/sbyw8qv8u7gj8-post-single-transaction) endpoint; currently this field is not supported.
+* Removed error descriptions related to “missing/damaged EAN” (e.g., cases without EAN on rejections) [POST - /transaction](https://kaucja.stoplight.io/docs/rvm-api/sbyw8qv8u7gj8-post-single-transaction) endpoint; these scenarios are not currently supported.
+
+### Changed
+- Updated the request example for [POST - /transaction](https://kaucja.stoplight.io/docs/rvm-api/sbyw8qv8u7gj8-post-single-transaction) endpoint to a correct, Sandbox-verified payload.
+- Added explanations for `totalAccepted`, `totalRejected`, and `totalAmount` in [POST - /transaction](https://kaucja.stoplight.io/docs/rvm-api/sbyw8qv8u7gj8-post-single-transaction) endpoint, including cross-field validation rules
+- Clarified the unit for `totalWeight` in [POST - /transaction](https://kaucja.stoplight.io/docs/rvm-api/sbyw8qv8u7gj8-post-single-transaction) endpoint: **grams**, in field descriptions and examples.
+-  Clarified voucher fields in transaction requests in the [POST - /transaction](https://kaucja.stoplight.io/docs/rvm-api/sbyw8qv8u7gj8-post-single-transaction) endpoint (voucher.id, voucher.redeemed, voucher.redeemType)
+
+
 ## 08-08-2025
 * Added Endpoint to buffer coupon
 * Added Endpoint to inform DRS Operator about burned Voucher
