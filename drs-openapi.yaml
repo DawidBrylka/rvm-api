@@ -351,7 +351,13 @@ components:
     Pagelength:
       name: pageLength
       in: query
-      description: Number of records to return
+      description: |
+        Number of records to return. 
+        Values that are above max will be trimmed to max <br>
+        Min: 0 <br>
+        Max: 50
+      min: 0
+      max: 50
       schema:
         type: number
     Startindex:
