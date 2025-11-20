@@ -6,12 +6,12 @@ description: Entity of a Voucher
 properties:
   id:
     type: string
-    description: Unique voucher code. This exact string is encoded in the printed barcode/QR.
+    description: "Unique voucher code. This exact string is encoded in the printed barcode/QR.\r\n<br><br> If this field is left empty, voucher data will\r\nbe returned in the response body."
     x-stoplight:
       id: y5momn4z6nk8b
   redeemed:
     type: boolean
-    description: ' Was Refund redeemed as part of single transaction. E.g. as paid out in cash or there was discount on bill. Always FALSE in /transaction from RVM (RVM does not redeem/burn vouchers).'
+    description: 'Indicates whether the refund was redeemed in this transaction; will be **FALSE** for most RVMs, unless the device pays out the refund immediately (cash/discount/card) - in which case, it should be set to **TRUE**.'
   redeemType:
     type: number
     enum:

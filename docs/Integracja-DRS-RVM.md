@@ -1,8 +1,8 @@
 # Overview
 
-This document is describing API expected by Kaucja.pl for contact between RVM and Kaucja.pl core DRS system.
+This document describes the APIs used by Kaucja.pl to enable communication between Reverse Vending Machines (RVMs) and the Kaucja.pl core DRS system.
 
-Desired communcation format by Kacuja Pl looks like:
+The communication model used by Kaucja.pl is illustrated below:
 
 ![InteractionModel.jpg](../assets/images/InteractionModel.jpg)
 
@@ -10,11 +10,11 @@ Desired communcation format by Kacuja Pl looks like:
 
 This document defines two separate files, each specifying the endpoints that should be exposed on either side of the integration.
 
-  * [DRS](../drs-openapi.yaml) This file defines the API that will be exposed by kaucja.pl. It handles communication and data exchange with external systems.
+  * [DRS](../drs-openapi.yaml) This file defines the API exposed by kaucja.pl. It handles communication and data exchange with external systems.
 
   * [RVM](../rvm-openapi.yaml) This file specifies the API that RVM providers should expose. This allows DRS to establish a connection and exchange information with RVM systems.
 
-The purpose of this document is to clearly define how both systems will communicate, ensuring compatibility and seamless integration.
+The purpose of this document is to clearly define how both systems should communicate, ensuring compatibility and seamless integration.
 
 
 

@@ -93,7 +93,7 @@ paths:
     get:
       tags:
         - products
-      summary: Get product data
+      summary: Get product data - single product
       description: |
         Get data of single product.
       parameters:
@@ -247,6 +247,17 @@ paths:
       responses:
         '200':
           description: Operation Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    x-stoplight:
+                      id: wrtzghy4ghwrg
+                    format: uuid
+                    description: 'Unique identifier of the machine in the DRS system (later reffered to as rvmId). If provided in the request body, it will not be provided in the reponse.'
         '404':
           description: Unknown Machine
       operationId: get-machine-id-update
@@ -271,6 +282,8 @@ paths:
       summary: Machine Delete
       description: |
         Endpoint used by RVM providers to notify DRS that machine was Deleted.
+
+        The **{id}** is the same UUID that was assigned to the machine during registration via [POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/bu3ambgd8l19t-add-machine-update-by-rvm-vendor)
       tags:
         - machine
       responses:
@@ -535,6 +548,8 @@ components:
         - reportedAt
     BagReplacement:
       type: object
+      x-stoplight:
+        id: ty6l3ytww8zew
       required:
         - bagId
         - rvmId
@@ -544,15 +559,16 @@ components:
         bagId:
           type: string
           format: uuid
-          description: ID of a bag in UUID format
+          description: "Bag ID in UUID format. \r\nGiven by the RVM provider and visible to the client (Collection Point) in the DRS system."
         rvmId:
           type: string
           format: uuid
+          description: "Set during the registration of the machine in\r\n[POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/bu3ambgd8l19t-add-machine-update-by-rvm-vendor).\r\n<br>Either sent in the registration request, or returned in the response - as **id**"
         sealNumber:
           type: string
           example: <SEAL NUMBER>
           description: |
-            Optional. If RVM is able to seal bag on it's own it should send us seal number on this particular call.
+            Optional. If RVM is able to seal bag on it's own it should send us seal number on this particular call. If sent in a request, is subject to checksum verification on Kaucja's side.
         lockingPersonId:
           type: string
           format: uuid
@@ -565,6 +581,7 @@ components:
           type: integer
         relatedTransactionsIds:
           type: array
+          description: "Optional but **highly preferable**. Enables the customer (Colelction Point)\r\nto preview all of the transactions that a closed bag consists of."
           items:
             type: string
             format: uuid
@@ -572,8 +589,6 @@ components:
           type: array
           items:
             $ref: models/ContainerFull.yaml
-      x-stoplight:
-        id: ty6l3ytww8zew
     BulkTransaction:
       title: BulkTransaction
       x-stoplight:
@@ -616,18 +631,32 @@ components:
         Model representing what RVM provider can update in machines that are being stored in DRS
       x-stoplight:
         id: zk239eslozgw8
-      type: object
       allOf:
         - $ref: models/PostMachine.yaml
-        - properties:
+        - required:
+            - drsCpNo
+          properties:
             id:
               type: string
+              description: "Unique machine identifier in the DRS. This value is required later when sending transactions and closing bags, where it's reffered to as **rvmId**. \r\n\r\nIf omitted in this request, DRS will generate the id and return it in the response."
               format: uuid
             model:
               type: string
               example: Tomra 9
             drsCpNo:
-              description: Client number given by DRS.
+              description: 'Number of the Collection Point created by the client (the owner of the Collection Point) in the DRS system, example: 1100061-152.'
+      x-examples:
+        Example 1:
+          serialNumber: 148d7a56-176d-413b-9eb5-c62f6f5bb67a
+          name: string
+          bins:
+            - wasteType:
+                - 1
+              litrage: 240
+          id: string
+          model: Tomra 9
+          drsCpNo: null
+      type: object
     RegisterMachine:
       title: RegisterMachine
       x-stoplight:

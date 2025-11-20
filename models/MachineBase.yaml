@@ -4,21 +4,17 @@ x-stoplight:
 type: object
 required:
   - serialNumber
-  - location
   - bins
-
 properties:
-    serialNumber:
-      type: string
-      format: uuid
-      description: Serial number of machine
-      x-stoplight:
-        id: 8pp4kxobuhvlh
-    name:
-      type: string
-      description: RVM Customer/provider given name.
-    
-    bins:
-      type: array
-      items:
-        $ref: BinPost.yaml
+  serialNumber:
+    type: string
+    description: Serial number of a machine
+    x-stoplight:
+      id: 8pp4kxobuhvlh
+  name:
+    type: string
+    description: "RVM Customer/provider given name. Visible on the customer's \r\n(Collection Point's) side in the DRS portal. "
+  bins:
+    type: array
+    items:
+      $ref: BinPost.yaml

@@ -13,7 +13,7 @@ This process allows **RVM providers** to add or update selected configuration pa
 
 ## Process Flow
 1. **Start:** The update process is initiated from the **RVM Cloud**.
-2. **API Endpoint:** Configuration data is sent to the **DRS** system using the following endpoint `POST /machine/{id}`
+2. **API Endpoint:** Configuration data is sent to the **DRS** system using the following endpoint `POST /machine`
 3. **Response:** After the update is processed, **DRS** responds with a **confirmation**.
 
 ## Possible Updates by RVM Provider
@@ -34,9 +34,9 @@ title: DRS
 
 Representation of API endpoint exposed by **DRS** for configuration update.
 
-### POST /machine/{id}
+### POST /machine
 
-For a full overview of this endpoint, please visit: [POST - /machine/{id}](https://kaucja.stoplight.io/docs/rvm-api/bu3ambgd8l19t-machine-update)
+For a full overview of this endpoint, please visit: [POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/bu3ambgd8l19t-machine-update)
 
 <details>
 <summary>Request Body</summary>

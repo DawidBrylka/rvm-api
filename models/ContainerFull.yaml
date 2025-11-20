@@ -3,11 +3,13 @@ type: object
 required:
   - ean
   - count
-description: |
+description: |-
   Returns list of only accepted containers <br> Where one record contains only one occurence of EAN e.g. <br> { <br>
     "ean": "123422",<br>
     "count": 100, <br>
   }
+
+  The list includes only containers accepted since the last bag replacement.
 properties:
   ean:
     type: string

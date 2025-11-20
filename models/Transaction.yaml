@@ -21,6 +21,7 @@ examples:
         count: 20
         weight: 10
         rejectionCauseCode: 0
+description: 'Endpoint used for reporting transactions carried out on Stands created via [POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/bu3ambgd8l19t-add-machine-update-by-rvm-vendor)'
 required:
   - id
   - rvmId
@@ -35,9 +36,11 @@ properties:
   id:
     type: string
     format: uuid
+    description: id of the transaction
   rvmId:
     type: string
     format: uuid
+    description: "Set during the registration of the machine in\r\n[POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/bu3ambgd8l19t-add-machine-update-by-rvm-vendor).\r\n<br>Either sent in the registration request, or returned in the response - as **id**"
   transactionBlocked:
     type: boolean
     example: false
@@ -49,7 +52,7 @@ properties:
   totalWeight:
     type: integer
     example: 1211
-    description: Total weight of containers of taken containers.
+    description: Total weight of containers returned in the transaction (in grams).
   voucher:
     $ref: VoucherBase.yaml
   transactionStartTime:
