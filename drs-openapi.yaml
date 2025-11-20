@@ -566,7 +566,7 @@ components:
           description: "Set during the registration of the machine in\r\n[POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/bu3ambgd8l19t-add-machine-update-by-rvm-vendor).\r\n<br>Either sent in the registration request, or returned in the response - as **id**"
         sealNumber:
           type: string
-          example: <SEAL NUMBER>
+          example: '017824770475060'
           description: |
             Optional. If RVM is able to seal bag on it's own it should send us seal number on this particular call. If sent in a request, is subject to checksum verification on Kaucja's side.
         lockingPersonId:
