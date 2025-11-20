@@ -36,7 +36,10 @@ stoplight-id: qlcl5lzd2yxfb
   - Renamed [Get product data](https://kaucja.stoplight.io/docs/rvm-api/5o6n5p23xf20f-get-product-data) to **“Get data for a single product”** to distinguish it from the list endpoint.  
   - For [GET - /product](https://drs-sandbox.kaucja.pl/api/rvm/product), documented that `pageLength` supports a maximum of 50 items per page.
 
+- **Other**  
+  - Applied minor wording and formatting changes.
 
+ 
 
 ## 08-08-2025
 * Added Endpoint to buffer coupon
