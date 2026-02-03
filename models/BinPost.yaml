@@ -2,7 +2,15 @@ title: BinPost
 x-stoplight:
   id: lqcxto41jxubc
 type: object
+required:
+  - wasteType
+  - litrage
+  - binNo
 properties:
+  binNo:
+    type: numeric
+    example: 1
+    description: Numerator of the bin. 
   wasteType:
     type: array
     items:
