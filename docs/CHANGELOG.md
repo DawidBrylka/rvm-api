@@ -4,7 +4,7 @@ stoplight-id: qlcl5lzd2yxfb
 
 # CHANGELOG
 
-## 15-01-2026
+## 07-02-2026
 
 ### Changed
 
