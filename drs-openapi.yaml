@@ -519,9 +519,9 @@ components:
         rvmId:
           type: string
           format: uuid
-        binId:
-          type: string
-          format: uuid
+        binNo:
+          type: number
+          example: 1
           description: |
             (Optional) ID of bin that is filled out
         wasteType:
