@@ -577,6 +577,7 @@ components:
           format: date-time
         bagWeight:
           type: number
+          description: Weight of the bag in kilograms (kg)
         containerAmount:
           type: integer
         relatedTransactionsIds:
