@@ -3,7 +3,12 @@ stoplight-id: qlcl5lzd2yxfb
 ---
 
 # CHANGELOG
+## 19-03-2026
 
+### Changed
+
+- **Bag replacement**  
+    - Clarified the unit (kg) expected in the `bagWeight` field 
 ## 20-11-2025
 
 ### Changed
