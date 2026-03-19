@@ -582,6 +582,7 @@ components:
           format: date-time
         bagWeight:
           type: number
+          description: Weight of the bag in kilograms (kg)
         containerAmount:
           type: integer
         relatedTransactionsIds:
@@ -740,7 +741,6 @@ components:
         model:
           type: string
           example: Tomra 9
-
     VoucherBuffer:
       title: VoucherBuffer
       x-stoplight:
