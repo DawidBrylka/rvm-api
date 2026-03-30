@@ -3,14 +3,14 @@ x-stoplight:
   id: lqcxto41jxubc
 type: object
 required:
+  - binNo
   - wasteType
   - litrage
-  - binNo
 properties:
   binNo:
     type: numeric
     example: 1
-    description: Numerator of the bin. 
+    description: Numerator of the bin.
   wasteType:
     type: array
     items:
@@ -18,4 +18,4 @@ properties:
   litrage:
     type: integer
     example: 240
-    description: Capacity of bag in liters
+    description: Capacity of bag in liters - **not less than 120 liters**.

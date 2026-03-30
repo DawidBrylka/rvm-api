@@ -3,6 +3,14 @@ stoplight-id: qlcl5lzd2yxfb
 ---
 
 # CHANGELOG
+
+## 30-03-2026
+
+### Changed
+
+- **Add / update machine**  
+    - Added information on the minimal litrage of the bin (120 liters)
+
 ## 19-03-2026
 
 ### Changed
