@@ -23,7 +23,7 @@ stoplight-id: qlcl5lzd2yxfb
 ### Changed
 
 - **Add / update machine**  
-  - In [POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/bu3ambgd8l19t-machine-update):  
+  - In [POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/branches/RVM-Model-Changes/bu3ambgd8l19t-add-machine-update-by-rvm-vendor):  
     - Updated machine specification to require explicit bin configuration.  
     - **Marked `bins` as a required field.**  
     - **Added required `binNo`** to uniquely identify each bin within the machine.  
@@ -31,7 +31,7 @@ stoplight-id: qlcl5lzd2yxfb
     - Clarified that machine configuration data must represent the actual RVM configuration.
 
 - **Bag replacement**  
-  - Updated [POST - /bag-replacement](https://kaucja.stoplight.io/docs/rvm-api/3r55dg8tllqbx-trigger-an-replacement-action-for-rvm):  
+  - Updated [POST - /bag-replacement](https://kaucja.stoplight.io/docs/rvm-api/branches/RVM-Model-Changes/3r55dg8tllqbx-trigger-an-replacement-action-for-rvm):  
     - **Added required `binNo`** to explicitly indicate which bin is being emptied during bag replacement.  
     - Updated request model to support bin-level bag replacement handling.  
     - Improved validation to ensure consistency between machine bin configuration and bag replacement data.
@@ -40,7 +40,7 @@ stoplight-id: qlcl5lzd2yxfb
 ### Changed
 
 - **Add / update machine**  
-  - In [POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/bu3ambgd8l19t-machine-update):  
+  - In [POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/branches/RVM-Model-Changes/bu3ambgd8l19t-add-machine-update-by-rvm-vendor):  
   - Clarified `id` (`string<uuid>`) as the machine identifier used later in transactions and bag closing (`rvmId`).
   - **Marked `drsCpNo` as a required field.** 
   - Clarified the format of `serialNumber`.

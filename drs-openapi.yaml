@@ -146,6 +146,143 @@ paths:
           description: Validation exception
       x-stoplight:
         id: sbyw8qv8u7gj8
+  /transaction_copy:
+    post:
+      tags:
+        - transaction
+      summary: Register a return transaction
+      description: >
+        Accepts a packaging return transaction from a POS checkout or an RVM machine.
+
+        **Business logic:**
+
+        - Exactly one of the `cstId` or `rvmId` fields must be provided (XOR).
+        - `cstId` means POS stand type, `rvmId` means RVM stand type.
+        - The stand must exist in the database and be active.
+        - `transactionStartTime` must be less than or equal to `transactionEndTime`.
+        - `transactionEndTime` cannot be more than 5 minutes in the future.
+        - The `value` field, if provided, must be greater than or equal to the calculated deposit sum.
+        - If `value` is not provided, the system calculates it automatically.
+        - The calculated value must be greater than 0.
+        - The transaction `id` must be unique.
+
+        **Voucher logic:**
+
+        - If `voucher.id` is provided, `redeemed` and `redeemType` are required.
+        - If `voucher.id` is not provided, `redeemed` and `redeemType` must be empty.
+      operationId: postTransactionCopy
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionRequest'
+            examples:
+              rvm_new_voucher:
+                summary: RVM transaction with new voucher
+                value:
+                  id: "497f6eca-6276-4993-bfeb-53cbbbba6f08"
+                  rvmId: "313ba123-cb88-44be-98e6-0b326b105a2a"
+                  totalAmount: 20
+                  transactionStartTime: "2025-03-20T10:00:00Z"
+                  transactionEndTime: "2025-03-20T10:05:00Z"
+                  containers:
+                    - ean: "20123123"
+                      count: 15
+                    - ean: "50999888"
+                      count: 5
+              pos_existing_voucher:
+                summary: POS transaction with existing voucher
+                value:
+                  id: "7c9e6679-7425-40de-944b-e07fc1f90ae7"
+                  cstId: "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+                  posId: "POS-001"
+                  value: 10.0
+                  totalAmount: 20
+                  transactionStartTime: "2025-03-20T11:00:00Z"
+                  transactionEndTime: "2025-03-20T11:03:00Z"
+                  voucher:
+                    id: "VCH-001"
+                    redeemed: true
+                    redeemType: 0
+                  containers:
+                    - ean: "20123123"
+                      count: 15
+                    - ean: "50999888"
+                      count: 5
+      responses:
+        '200':
+          description: Transaction accepted, voucher issued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoucherResponse'
+              examples:
+                success:
+                  summary: Issued voucher
+                  value:
+                    id: "VCH-20250320-0042"
+                    printType: 1
+                    issuedAt: "2025-03-20T10:05:01Z"
+                    validUntil: "2025-04-20T23:59:59Z"
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                no_active_stand:
+                  summary: No active stand
+                  value:
+                    message: "No active stand or collection point found for provided rvmId"
+                xor_violation:
+                  summary: Both cstId and rvmId were provided
+                  value:
+                    message: "cstId and rvmId are mutually exclusive - provide only one"
+                missing_stand_id:
+                  summary: Neither cstId nor rvmId was provided
+                  value:
+                    message: "Either cstId or rvmId must be provided"
+                invalid_time_order:
+                  summary: StartTime later than EndTime
+                  value:
+                    message: "transactionStartTime cannot be greater than transactionEndTime"
+                future_end_time:
+                  summary: EndTime in the future
+                  value:
+                    message: "transactionEndTime cannot be in the future"
+                value_too_low:
+                  summary: Provided value lower than calculated deposit
+                  value:
+                    message: "Value 1.00 < min deposit sum 5.00"
+                zero_value:
+                  summary: No deposit-eligible EANs
+                  value:
+                    message: "Voucher value must be a positive number. Check if containers are valid for deposit."
+                invalid_json:
+                  summary: Invalid or empty body
+                  value:
+                    message: "Invalid or empty JSON body"
+                dto_validation:
+                  summary: DTO field validation error
+                  value:
+                    message: "Validation failed"
+                    errors:
+                      - id: "id must be a UUID"
+        '502':
+          description: Communication error with voucher service
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                voucher_service_error:
+                  summary: Voucher service unavailable or returned an error
+                  value:
+                    message: "Failed to communicate with Voucher Service: Voucher Service returned 503: Service Unavailable"
+      x-stoplight:
+        id: w4d3ap89vbhpf
   /transaction/bulk:
     post:
       internal: true
@@ -757,6 +894,157 @@ components:
           description: Parameter saying how long voucher will be valid after issuing it by RVM
           type: string
           example: 30d
+    TransactionRequest:
+      type: object
+      required:
+        - id
+        - totalAmount
+        - transactionStartTime
+        - transactionEndTime
+        - containers
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique transaction identifier.
+          example: "497f6eca-6276-4993-bfeb-53cbbbba6f08"
+        cstId:
+          type: string
+          format: uuid
+          nullable: true
+          description: POS stand identifier. Mutually exclusive with rvmId.
+          example: "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+        rvmId:
+          type: string
+          format: uuid
+          nullable: true
+          description: RVM machine identifier. Mutually exclusive with cstId.
+          example: "313ba123-cb88-44be-98e6-0b326b105a2a"
+        posId:
+          type: string
+          nullable: true
+          description: Optional POS terminal identifier.
+          example: "POS-001"
+        value:
+          type: number
+          nullable: true
+          description: Total deposit value in PLN.
+          example: 10.0
+        totalAmount:
+          type: number
+          description: Total number of containers accepted in the transaction.
+          example: 20
+        transactionStartTime:
+          type: string
+          format: date-time
+          description: Transaction start time.
+          example: "2025-03-20T10:00:00Z"
+        transactionEndTime:
+          type: string
+          format: date-time
+          description: Transaction end time.
+          example: "2025-03-20T10:05:00Z"
+        voucher:
+          $ref: '#/components/schemas/VoucherInput'
+        containers:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/ContainerItem'
+
+    VoucherInput:
+      type: object
+      nullable: true
+      description: Voucher data for existing or new voucher handling.
+      properties:
+        id:
+          type: string
+          description: Existing voucher identifier.
+          example: "VCH-001"
+        redeemed:
+          type: boolean
+          description: Whether the voucher has already been redeemed.
+          example: true
+        redeemType:
+          type: integer
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 98
+            - 99
+          description: Voucher redemption type.
+          example: 0
+
+    ContainerItem:
+      type: object
+      required:
+        - ean
+        - count
+      properties:
+        ean:
+          type: string
+          description: Container EAN code.
+          example: "20123123"
+        count:
+          type: integer
+          minimum: 1
+          description: Number of containers with the given EAN.
+          example: 15
+        weight:
+          type: number
+          nullable: true
+          description: Container weight in grams.
+          example: 28.5
+        rejectionCauseCode:
+          type: integer
+          nullable: true
+          description: Rejection cause code.
+          example: 3
+
+    VoucherResponse:
+      type: object
+      required:
+        - id
+        - printType
+      description: Voucher data returned by the voucher service.
+      properties:
+        id:
+          type: string
+          description: Identifier of the issued or updated voucher.
+          example: "VCH-20250320-0042"
+        printType:
+          type: integer
+          description: Voucher print type.
+          example: 1
+        issuedAt:
+          type: string
+          format: date-time
+          description: Voucher issue date and time.
+          example: "2025-03-20T10:05:01Z"
+        validUntil:
+          type: string
+          format: date-time
+          description: Voucher expiration date.
+          example: "2025-04-20T23:59:59Z"
+
+    ErrorResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: Error description.
+          example: "Either cstId or rvmId must be provided"
+        errors:
+          type: array
+          description: DTO validation error details.
+          items:
+            type: object
+            additionalProperties:
+              type: string
   responses:
     '400':
       description: 'REQUIRED - One or more required fields has not been provided <br>ENUM_ERROR - Format of one or more fields is incorrect <br>INCONSISTENT - Value is inconsistent comparing to ether system elements <br>TOO_LONG - Exceeded maximum length <br>INCORRECT_FORMAT - Incorrect format <br>VALUE_TOO_HIGH - Exceeded maximum value <br>VALUE_TOO_LOW - Value is below minimum allowed <br>...  '
@@ -872,6 +1160,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/RegisterMachine'
+
   examples:
     MachineUnknown:
       values:
