@@ -4,12 +4,27 @@ stoplight-id: qlcl5lzd2yxfb
 
 # CHANGELOG
 
-## 30-03-2026
+
+## 24-04-2026
 
 ### Changed
 
-- **Add / update machine**  
-    - Added information on the minimal litrage of the bin (120 liters)
+ **Add / update machine**  
+  - In [POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/branches/RVM-Model-Changes/bu3ambgd8l19t-add-machine-update-by-rvm-vendor):  
+    - Updated machine specification to require explicit bin configuration.  
+    - **Marked `bins` as a optional field.** 
+    - **Added optional `binNo`** to uniquely identify each bin within the machine.  
+    - **Marked `litrage` as an optional field** to ensure declared bin capacity reflects the physical setup of the RVM.  
+    - Clarified that machine configuration data must represent the actual RVM configuration.
+    - The current description of fields within this endpoint reflects the production envioronemnt. The desired state is desribed in a [separate branch](https://kaucja.stoplight.io/docs/rvm-api/branches/RVM-Model-Changes/qlcl5lzd2yxfb-changelog).
+
+- **Bag replacement**  
+  - Updated [POST - /bag-replacement](https://kaucja.stoplight.io/docs/rvm-api/branches/RVM-Model-Changes/3r55dg8tllqbx-trigger-an-replacement-action-for-rvm):  
+    - **Added optional `binNo`** to explicitly indicate which bin is being emptied during bag replacement.  
+    - Updated request model to support bin-level bag replacement handling.  
+    - Improved validation to ensure consistency between machine bin configuration and bag replacement data.
+    - The current description of fields within this endpoint reflects the production envioronemnt. The desired state is desribed in a [separate branch](https://kaucja.stoplight.io/docs/rvm-api/branches/RVM-Model-Changes/qlcl5lzd2yxfb-changelog).
+
 
 ## 19-03-2026
 
@@ -17,30 +32,12 @@ stoplight-id: qlcl5lzd2yxfb
 
 - **Bag replacement**  
     - Clarified the unit (kg) expected in the `bagWeight` field 
-
-## 07-02-2026
-
-### Changed
-
-- **Add / update machine**  
-  - In [POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/branches/RVM-Model-Changes/bu3ambgd8l19t-add-machine-update-by-rvm-vendor):  
-    - Updated machine specification to require explicit bin configuration.  
-    - **Marked `bins` as a required field.**  
-    - **Added required `binNo`** to uniquely identify each bin within the machine.  
-    - **Marked `litrage` as a required field** to ensure declared bin capacity reflects the physical setup of the RVM.  
-    - Clarified that machine configuration data must represent the actual RVM configuration.
-
-- **Bag replacement**  
-  - Updated [POST - /bag-replacement](https://kaucja.stoplight.io/docs/rvm-api/branches/RVM-Model-Changes/3r55dg8tllqbx-trigger-an-replacement-action-for-rvm):  
-    - **Added required `binNo`** to explicitly indicate which bin is being emptied during bag replacement.  
-    - Updated request model to support bin-level bag replacement handling.  
-    - Improved validation to ensure consistency between machine bin configuration and bag replacement data.
 ## 20-11-2025
 
 ### Changed
 
 - **Add / update machine**  
-  - In [POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/branches/RVM-Model-Changes/bu3ambgd8l19t-add-machine-update-by-rvm-vendor):  
+  - In [POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/bu3ambgd8l19t-machine-update):  
   - Clarified `id` (`string<uuid>`) as the machine identifier used later in transactions and bag closing (`rvmId`).
   - **Marked `drsCpNo` as a required field.** 
   - Clarified the format of `serialNumber`.

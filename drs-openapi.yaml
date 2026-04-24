@@ -151,25 +151,12 @@ paths:
       tags:
         - transaction
       summary: Register a return transaction
-      description: >
+      description: |
         Accepts a packaging return transaction from a POS checkout or an RVM machine.
-
         **Business logic:**
-
-        - Exactly one of the `cstId` or `rvmId` fields must be provided (XOR).
-        - `cstId` means POS stand type, `rvmId` means RVM stand type.
-        - The stand must exist in the database and be active.
-        - `transactionStartTime` must be less than or equal to `transactionEndTime`.
-        - `transactionEndTime` cannot be more than 5 minutes in the future.
-        - The `value` field, if provided, must be greater than or equal to the calculated deposit sum.
-        - If `value` is not provided, the system calculates it automatically.
-        - The calculated value must be greater than 0.
-        - The transaction `id` must be unique.
-
+        - Exactly one of the `cstId` or `rvmId` fields must be provided (XOR). - `cstId` means POS stand type, `rvmId` means RVM stand type. - The stand must exist in the database and be active. - `transactionStartTime` must be less than or equal to `transactionEndTime`. - `transactionEndTime` cannot be more than 5 minutes in the future. - The `value` field, if provided, must be greater than or equal to the calculated deposit sum. - If `value` is not provided, the system calculates it automatically. - The calculated value must be greater than 0. - The transaction `id` must be unique.
         **Voucher logic:**
-
-        - If `voucher.id` is provided, `redeemed` and `redeemType` are required.
-        - If `voucher.id` is not provided, `redeemed` and `redeemType` must be empty.
+        - If `voucher.id` is provided, `redeemed` and `redeemType` are required. - If `voucher.id` is not provided, `redeemed` and `redeemType` must be empty.
       operationId: postTransactionCopy
       requestBody:
         required: true
@@ -181,38 +168,38 @@ paths:
               rvm_new_voucher:
                 summary: RVM transaction with new voucher
                 value:
-                  id: "497f6eca-6276-4993-bfeb-53cbbbba6f08"
-                  rvmId: "313ba123-cb88-44be-98e6-0b326b105a2a"
+                  id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                  rvmId: 313ba123-cb88-44be-98e6-0b326b105a2a
                   totalAmount: 20
-                  transactionStartTime: "2025-03-20T10:00:00Z"
-                  transactionEndTime: "2025-03-20T10:05:00Z"
+                  transactionStartTime: '2025-03-20T10:00:00Z'
+                  transactionEndTime: '2025-03-20T10:05:00Z'
                   containers:
-                    - ean: "20123123"
+                    - ean: '20123123'
                       count: 15
-                    - ean: "50999888"
+                    - ean: '50999888'
                       count: 5
               pos_existing_voucher:
                 summary: POS transaction with existing voucher
                 value:
-                  id: "7c9e6679-7425-40de-944b-e07fc1f90ae7"
-                  cstId: "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
-                  posId: "POS-001"
-                  value: 10.0
+                  id: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+                  cstId: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+                  posId: POS-001
+                  value: 10
                   totalAmount: 20
-                  transactionStartTime: "2025-03-20T11:00:00Z"
-                  transactionEndTime: "2025-03-20T11:03:00Z"
+                  transactionStartTime: '2025-03-20T11:00:00Z'
+                  transactionEndTime: '2025-03-20T11:03:00Z'
                   voucher:
-                    id: "VCH-001"
+                    id: VCH-001
                     redeemed: true
                     redeemType: 0
                   containers:
-                    - ean: "20123123"
+                    - ean: '20123123'
                       count: 15
-                    - ean: "50999888"
+                    - ean: '50999888'
                       count: 5
       responses:
         '200':
-          description: Transaction accepted, voucher issued
+          description: 'Transaction accepted, voucher issued'
           content:
             application/json:
               schema:
@@ -221,10 +208,10 @@ paths:
                 success:
                   summary: Issued voucher
                   value:
-                    id: "VCH-20250320-0042"
+                    id: VCH-20250320-0042
                     printType: 1
-                    issuedAt: "2025-03-20T10:05:01Z"
-                    validUntil: "2025-04-20T23:59:59Z"
+                    issuedAt: '2025-03-20T10:05:01Z'
+                    validUntil: '2025-04-20T23:59:59Z'
         '400':
           description: Validation error
           content:
@@ -235,41 +222,41 @@ paths:
                 no_active_stand:
                   summary: No active stand
                   value:
-                    message: "No active stand or collection point found for provided rvmId"
+                    message: No active stand or collection point found for provided rvmId
                 xor_violation:
                   summary: Both cstId and rvmId were provided
                   value:
-                    message: "cstId and rvmId are mutually exclusive - provide only one"
+                    message: cstId and rvmId are mutually exclusive - provide only one
                 missing_stand_id:
                   summary: Neither cstId nor rvmId was provided
                   value:
-                    message: "Either cstId or rvmId must be provided"
+                    message: Either cstId or rvmId must be provided
                 invalid_time_order:
                   summary: StartTime later than EndTime
                   value:
-                    message: "transactionStartTime cannot be greater than transactionEndTime"
+                    message: transactionStartTime cannot be greater than transactionEndTime
                 future_end_time:
                   summary: EndTime in the future
                   value:
-                    message: "transactionEndTime cannot be in the future"
+                    message: transactionEndTime cannot be in the future
                 value_too_low:
                   summary: Provided value lower than calculated deposit
                   value:
-                    message: "Value 1.00 < min deposit sum 5.00"
+                    message: Value 1.00 < min deposit sum 5.00
                 zero_value:
                   summary: No deposit-eligible EANs
                   value:
-                    message: "Voucher value must be a positive number. Check if containers are valid for deposit."
+                    message: Voucher value must be a positive number. Check if containers are valid for deposit.
                 invalid_json:
                   summary: Invalid or empty body
                   value:
-                    message: "Invalid or empty JSON body"
+                    message: Invalid or empty JSON body
                 dto_validation:
                   summary: DTO field validation error
                   value:
-                    message: "Validation failed"
+                    message: Validation failed
                     errors:
-                      - id: "id must be a UUID"
+                      - id: id must be a UUID
         '502':
           description: Communication error with voucher service
           content:
@@ -280,7 +267,7 @@ paths:
                 voucher_service_error:
                   summary: Voucher service unavailable or returned an error
                   value:
-                    message: "Failed to communicate with Voucher Service: Voucher Service returned 503: Service Unavailable"
+                    message: 'Failed to communicate with Voucher Service: Voucher Service returned 503: Service Unavailable'
       x-stoplight:
         id: w4d3ap89vbhpf
   /transaction/bulk:
@@ -689,7 +676,6 @@ components:
         id: ty6l3ytww8zew
       required:
         - bagId
-        - binNo
         - rvmId
         - replacementDate
         - containers
@@ -701,7 +687,7 @@ components:
         binNo:
           type: numeric
           example: 1
-          description: Descriptior which bin is being emptied
+          description: Descriptior which bin is being emptied. <b>Will soon be required - official date to be anounced. </b>
         rvmId:
           type: string
           format: uuid
@@ -907,29 +893,29 @@ components:
           type: string
           format: uuid
           description: Unique transaction identifier.
-          example: "497f6eca-6276-4993-bfeb-53cbbbba6f08"
+          example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
         cstId:
           type: string
           format: uuid
           nullable: true
           description: POS stand identifier. Mutually exclusive with rvmId.
-          example: "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
         rvmId:
           type: string
           format: uuid
           nullable: true
           description: RVM machine identifier. Mutually exclusive with cstId.
-          example: "313ba123-cb88-44be-98e6-0b326b105a2a"
+          example: 313ba123-cb88-44be-98e6-0b326b105a2a
         posId:
           type: string
           nullable: true
           description: Optional POS terminal identifier.
-          example: "POS-001"
+          example: POS-001
         value:
           type: number
           nullable: true
           description: Total deposit value in PLN.
-          example: 10.0
+          example: 10
         totalAmount:
           type: number
           description: Total number of containers accepted in the transaction.
@@ -938,12 +924,12 @@ components:
           type: string
           format: date-time
           description: Transaction start time.
-          example: "2025-03-20T10:00:00Z"
+          example: '2025-03-20T10:00:00Z'
         transactionEndTime:
           type: string
           format: date-time
           description: Transaction end time.
-          example: "2025-03-20T10:05:00Z"
+          example: '2025-03-20T10:05:00Z'
         voucher:
           $ref: '#/components/schemas/VoucherInput'
         containers:
@@ -951,7 +937,6 @@ components:
           minItems: 1
           items:
             $ref: '#/components/schemas/ContainerItem'
-
     VoucherInput:
       type: object
       nullable: true
@@ -960,7 +945,7 @@ components:
         id:
           type: string
           description: Existing voucher identifier.
-          example: "VCH-001"
+          example: VCH-001
         redeemed:
           type: boolean
           description: Whether the voucher has already been redeemed.
@@ -976,7 +961,6 @@ components:
             - 99
           description: Voucher redemption type.
           example: 0
-
     ContainerItem:
       type: object
       required:
@@ -986,7 +970,7 @@ components:
         ean:
           type: string
           description: Container EAN code.
-          example: "20123123"
+          example: '20123123'
         count:
           type: integer
           minimum: 1
@@ -1002,7 +986,6 @@ components:
           nullable: true
           description: Rejection cause code.
           example: 3
-
     VoucherResponse:
       type: object
       required:
@@ -1013,7 +996,7 @@ components:
         id:
           type: string
           description: Identifier of the issued or updated voucher.
-          example: "VCH-20250320-0042"
+          example: VCH-20250320-0042
         printType:
           type: integer
           description: Voucher print type.
@@ -1022,13 +1005,12 @@ components:
           type: string
           format: date-time
           description: Voucher issue date and time.
-          example: "2025-03-20T10:05:01Z"
+          example: '2025-03-20T10:05:01Z'
         validUntil:
           type: string
           format: date-time
           description: Voucher expiration date.
-          example: "2025-04-20T23:59:59Z"
-
+          example: '2025-04-20T23:59:59Z'
     ErrorResponse:
       type: object
       required:
@@ -1037,7 +1019,7 @@ components:
         message:
           type: string
           description: Error description.
-          example: "Either cstId or rvmId must be provided"
+          example: Either cstId or rvmId must be provided
         errors:
           type: array
           description: DTO validation error details.
@@ -1160,7 +1142,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/RegisterMachine'
-
   examples:
     MachineUnknown:
       values:

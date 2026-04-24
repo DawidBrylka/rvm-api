@@ -4,7 +4,6 @@ x-stoplight:
 type: object
 required:
   - serialNumber
-  - bins
 properties:
   serialNumber:
     type: string
@@ -16,5 +15,6 @@ properties:
     description: "RVM Customer/provider given name. Visible on the customer's \r\n(Collection Point's) side in the DRS portal. "
   bins:
     type: array
+    description: ' <b> The array will soon be required for every request of this type - official date to be anounced. </b>'
     items:
       $ref: BinPost.yaml
