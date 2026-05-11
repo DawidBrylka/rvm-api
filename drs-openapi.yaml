@@ -132,7 +132,8 @@ paths:
         content:
           application/json:
             schema:
-              $ref: models/Transaction.yaml
+              oneOf:
+                - $ref: models/Transaction.yaml
       summary: Post single Transaction
       description: Post single Transaction
       responses:
@@ -299,15 +300,93 @@ paths:
     post:
       tags:
         - rvm
-      summary: Trigger an replacement action for RVM
-      description: Trigger an replacement action for RVM
+      summary: Trigger a bag replacement action for an RVM
+      description: |
+        Reports a bag replacement event for an RVM (Reverse Vending Machine) —
+        i.e. the moment when a bin inside the machine is emptied and its contents
+        are moved into one or more sealed bags.
+
+        ## Request shape — `oneOf`
+        The request body accepts **one of two payload variants**, distinguished by
+        the shape of the seal field:
+
+        - **`BagReplacement`** — classic, single-seal case. The bin contents go
+          into exactly **one bag** identified by a single `sealNumber`. DRS creates
+          **one bag entity** in the system.
+        - **`BagReplacementMultipleSeal`** — multi-seal case. The bin contents
+          were split across **1 to N bags**, each closed with its own seal
+          provided in the `sealNumbers` array. DRS will create **1 to N bag
+          entities** in the system.
+
+        Clients MUST send exactly one of the two variants. The two schemas are
+        mutually exclusive at the field level (`sealNumber` vs `sealNumbers`).
+
+        ## DRS processing
+        Regardless of the variant:
+        1. DRS validates the payload (machine identity, seal uniqueness,
+          consistency between `containerAmount` and `sum(containers[].count)`,
+          etc.).
+        2. For `BagReplacementMultipleSeal`, DRS splits the `containers` list
+          across the N seals using an **as-equal-as-possible split by item count
+          per EAN** — the equal part is `floor(count / N)` per bag, and the
+          indivisible remainder (`count % N`) is distributed **randomly**
+          across bags (independently for each EAN). `bagWeight` is split
+          proportionally to the item count assigned to each bag. See
+          `BagReplacementMultipleSeal` schema for the full algorithm.
+        3. DRS creates **1 to N bag entities** sharing common event metadata
+          (`binNo`, `rvmId`, `replacementDate`, `lockingPersonId`,
+          `relatedTransactionsIds`).
+
+        ## Choosing the variant
+        - Use `BagReplacement` whenever the bin is emptied into a single bag —
+          this is the default and most common case.
+        - Use `BagReplacementMultipleSeal` only when the bin contents physically
+          required more than one bag (e.g. weight/volume limit exceeded) and
+          each bag was sealed individually on-site.
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BagReplacement'
-      responses:
+              oneOf:
+                - $ref: '#/components/schemas/BagReplacement'
+                - $ref: '#/components/schemas/BagReplacementMultipleSeal'
+            examples:
+              singleSeal:
+                summary: Single-seal bag replacement (BagReplacement)
+                value:
+                  binNo: 1
+                  rvmId: '658f31ac-13dd-457e-8c8a-f79ab37e0000'
+                  sealNumber: '017824770475060'
+                  lockingPersonId: 'c3eaca0a-06f1-4609-b1aa-000000000000'
+                  replacementDate: '2026-05-11T11:00:00Z'
+                  bagWeight: 9.9
+                  containerAmount: 100
+                  relatedTransactionsIds:
+                    - '497f6eca-6276-4993-bfeb-53cbbbba6f08'
+                  containers:
+                    - ean: '20123123'
+                      count: 100
+              multipleSeals:
+                summary: Multi-seal bag replacement (BagReplacementMultipleSeal)
+                value:
+                  binNo: 1
+                  rvmId: '658f31ac-13dd-457e-8c8a-f79ab37e0000'
+                  sealNumbers:
+                    - '017824770475060'
+                    - '017824770475061'
+                    - '017824770475062'
+                  lockingPersonId: 'c3eaca0a-06f1-4609-b1aa-000000000000'
+                  replacementDate: '2026-05-11T11:00:00Z'
+                  bagWeight: 9.9
+                  containerAmount: 22
+                  relatedTransactionsIds:
+                    - '497f6eca-6276-4993-bfeb-53cbbbba6f08'
+                  containers:
+                    - ean: '20123123'
+                      count: 20
+                    - ean: '20123999'
+                      count: 2
         '200':
           description: Successful operation
         '400':
@@ -328,7 +407,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BagSeal'
+              oneOf:
+                - $ref: '#/components/schemas/BagSeal'
+                - $ref: '#/components/schemas/BagSealMultipleSeal'
       responses:
         '200':
           description: Successful operation
@@ -854,7 +935,7 @@ components:
           type: string
           description: Serial number of a machine
           x-stoplight:
-            id: 8pp4kxobuhvlh
+            id: mfbmr6iwgobd1
         connectedWith:
           type: uuid
           description: ID of machine that shares the same bin
@@ -1027,6 +1108,154 @@ components:
             type: object
             additionalProperties:
               type: string
+    BagReplacementMultipleSeal:
+      title: BagReplacementMultipleSeal
+      x-stoplight:
+        id: bi3v5daskbwnw
+      type: object
+      properties:
+        binNo:
+          type: integer
+          example: 1
+          description: |
+            Describes which bin is being emptied. **Will soon be required — official
+            date to be announced.**
+        rvmId:
+          type: string
+          format: uuid
+          description: |
+            Set during the registration of the machine in [POST - /machine](https://kaucja.pl).
+            Either sent in the registration request, or returned in the response — as `id`.
+        sealNumbers:
+          type: array
+          description: |
+            List of seal numbers applied to the bag(s) after replacement.
+            Accepts **1 to N** seals:
+            - **1 seal** — standard case: one bin emptied into one bag closed with one seal.
+            - **N seals** — the bin contents were split across multiple bags (e.g. due
+              to bag weight/volume limits), each closed with its own seal. The order
+              of seals is not business-significant — DRS treats the set of seals as
+              equivalent.
+            Each seal number must be unique within the request. DRS will create one
+            bag entity per seal and distribute `containers` across them (see model
+            description for the split algorithm).
+          items:
+            type: string
+            example: '017824770475060'
+          minItems: 1
+          uniqueItems: true
+          example:
+            - '017824770475060'
+            - '017824770475061'
+        lockingPersonId:
+          type: string
+          format: uuid
+        replacementDate:
+          type: string
+          format: date-time
+        bagWeight:
+          type: number
+          description: |
+            Total weight of the emptied bin contents in kilograms (kg). When
+            `sealNumbers` contains more than one seal, DRS splits this value
+            proportionally to the number of items assigned to each bag.
+        containerAmount:
+          type: integer
+          description: |
+            Total number of containers in the emptied bin. Must equal
+            `sum(containers[].count)`.
+        relatedTransactionsIds:
+          type: array
+          description: |
+            Optional but **highly preferable**. Enables the customer (Collection Point)
+            to preview all of the transactions that a closed bag consists of. Shared
+            across all bags produced from the same bin when multiple seals are used.
+          items:
+            type: string
+            format: uuid
+        containers:
+          type: array
+          description: |
+            List of accepted containers aggregated per EAN. Each record contains a
+            single EAN occurrence, e.g. `{ "ean": "123422", "count": 100 }`. When
+            `sealNumbers.length > 1`, DRS splits each `count` across the N bags
+            using the algorithm described in the model description.
+          items:
+            $ref: models/ContainerFull.yaml
+      required:
+        - rvmId
+        - sealNumbers
+        - lockingPersonId
+        - replacementDate
+        - bagWeight
+        - containerAmount
+        - containers
+      example:
+        binNo: 1
+        rvmId: '658f31ac-13dd-457e-8c8a-f79ab37...'
+        sealNumbers:
+          - '017824770475060'
+          - '017824770475061'
+        lockingPersonId: 'c3eaca0a-06f1-4609-b1...'
+        replacementDate: '2019-08-24T14:15:22Z'
+        bagWeight: 9.9
+        containerAmount: 22
+        relatedTransactionsIds:
+          - '497f6eca-6276-4993-bfeb-53cbbbba6f08'
+        containers:
+          - ean: '20123123'
+            count: 20
+          - ean: '20123999'
+            count: 2
+      description: |
+        Represents a bag replacement event in an RVM (Reverse Vending Machine) that
+        allows reporting **multiple seals** within a single bin-emptying operation.
+
+        ## Semantics
+        Unlike the standard `BagReplacement` (1 bag = 1 seal), this model lets the
+        client report a situation where the contents of a single bin were split into
+        **1 to N bags**, each closed with a separate seal from `sealNumbers`.
+
+        ## DRS processing
+        Upon accepting the request, DRS will:
+        1. Validate the payload (uniqueness of seals, consistency between
+          `containerAmount` and the sum of `count` in `containers`, existence of
+          `rvmId` and `lockingPersonId`).
+        2. Split the `containers` list into **N as-equal-as-possible parts** — one per
+          seal from `sealNumbers`. The split is performed **by item count** (per EAN)
+          and is independent of `bagWeight` (which is a single value for the whole event).
+        3. Create **1 to N "bag" entities** in the system — one per seal — sharing the
+          common event metadata (`binNo`, `rvmId`, `replacementDate`,
+          `lockingPersonId`, `relatedTransactionsIds`).
+        4. Independently expose each created bag to the **logistics operator**
+          (Anker / Remondis) as a separate record for pickup and further processing
+          in the `parser → DRS → event downstream` pipeline.
+
+        ## Container split algorithm (per EAN)
+        For each `{ ean, count }` record in `containers` and `N = sealNumbers.length`:
+
+        1. **Equal part**: each of the N bags receives `floor(count / N)` items of
+          the given EAN.
+        2. **Indivisible remainder**: `r = count % N` items are distributed **randomly**
+          across the N bags — each bag receives 0 or 1 additional item of the given
+          EAN, with exactly `r` bags receiving +1. The selection of those bags is
+          uniformly random (without replacement) and performed **independently for
+          each EAN**, so remainders from different EANs do not accumulate in the
+          same bags.
+        3. **`bagWeight`** is split proportionally to the number of items assigned to
+          each bag (`bagWeight * (items_in_bag / containerAmount)`), with analogous
+          rounding-remainder distribution (gram-level precision).
+
+        ## Business implications
+        - The logistics operator receives N separate bags for transport, each
+          identified by its unique seal.
+        - The item split is **non-deterministic** in the remainder part — the same
+          payload sent twice (hypothetically) could yield slightly different
+          per-bag distributions. The total item count per EAN and `containerAmount`
+          are always preserved (invariant: `sum_per_seal(count) == count` for each EAN).
+        - `relatedTransactionsIds` is shared across all bags produced from the same bin.
+
+      
   responses:
     '400':
       description: 'REQUIRED - One or more required fields has not been provided <br>ENUM_ERROR - Format of one or more fields is incorrect <br>INCONSISTENT - Value is inconsistent comparing to ether system elements <br>TOO_LONG - Exceeded maximum length <br>INCORRECT_FORMAT - Incorrect format <br>VALUE_TOO_HIGH - Exceeded maximum value <br>VALUE_TOO_LOW - Value is below minimum allowed <br>...  '
