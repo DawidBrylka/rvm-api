@@ -754,7 +754,7 @@ components:
         binId:
           type: string
           format: uuid
-          description: Bin identifier (UUID), if provided in the request
+          description: 'Bin identifier (UUID), if provided in the request'
         wasteType:
           type: array
           items:
@@ -778,6 +778,7 @@ components:
       required:
         - bagId
         - rvmId
+        - binNo
         - replacementDate
         - containers
       properties:
@@ -792,7 +793,7 @@ components:
         binNo:
           type: integer
           format: int32
-          description: Optional. Number of the bin in the collection stand from which the bag was pulled.
+          description: Numerator of the bin in the collection stand from which the bag was pulled.
         sealNumber:
           type: string
           example: '017824770475060'
@@ -817,7 +818,7 @@ components:
             format: uuid
         containers:
           type: array
-          description: Required. List of only accepted containers, one record should contain only one occurrence of EAN.
+          description: 'Required. List of only accepted containers, one record should contain only one occurrence of EAN.'
           items:
             $ref: models/ContainerFull.yaml
     BulkTransaction:
