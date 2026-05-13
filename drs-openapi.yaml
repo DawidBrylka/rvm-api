@@ -10,7 +10,7 @@ info:
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-  version: 1.0.11
+  version: 1.0.12
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
@@ -37,10 +37,25 @@ paths:
           $ref: '#/components/responses/200PostReturnId'
         '400':
           $ref: '#/components/responses/400ValidationFailed'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
     get:
       tags:
         - products
       summary: Get product data
+      operationId: fetchProducts
       parameters:
         - name: sendImages
           in: query
@@ -85,15 +100,26 @@ paths:
                       $ref: models/Product.yaml
         '400':
           description: Invalid input
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
         '422':
           description: Validation exception
-      x-stoplight:
-        id: i8big2em2kghv
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+    x-stoplight:
+      id: i8big2em2kghv
   '/product/{ean}':
     get:
       tags:
         - products
       summary: Get product data - single product
+      operationId: fetchProduct
       description: |
         Get data of single product.
       parameters:
@@ -119,14 +145,25 @@ paths:
                 $ref: models/Product.yaml
         '400':
           description: Invalid input
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
         '422':
           description: Duplicate ID. Please provide unique ID for Transaction Entity
-      x-stoplight:
-        id: 5o6n5p23xf20f
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+    x-stoplight:
+      id: 5o6n5p23xf20f
   /transaction:
     post:
       tags:
         - transaction
+      operationId: createTransaction
       requestBody:
         required: true
         content:
@@ -140,12 +177,24 @@ paths:
           $ref: '#/components/responses/200VoucherData'
         '400':
           $ref: '#/components/responses/400MachineUnknown'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
           $ref: '#/components/responses/409Conflict'
         '422':
           description: Validation exception
-      x-stoplight:
-        id: sbyw8qv8u7gj8
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+    x-stoplight:
+      id: sbyw8qv8u7gj8
   /transaction/bulk:
     post:
       internal: true
@@ -164,17 +213,30 @@ paths:
           description: Successful operation
         '400':
           $ref: '#/components/responses/400MachineUnknown'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
           $ref: '#/components/responses/409Conflict'
         '422':
           description: Validation exception
-      x-stoplight:
-        id: zpsfrh56cuuti
-      x-internal: true
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+    x-stoplight:
+      id: zpsfrh56cuuti
+    x-internal: true
   /bag-replacement:
     post:
       tags:
         - rvm
+      operationId: createBagReplacement
       summary: Trigger an replacement action for RVM
       description: Trigger an replacement action for RVM
       requestBody:
@@ -188,16 +250,29 @@ paths:
           description: Successful operation
         '400':
           description: Invalid input
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
           $ref: '#/components/responses/409Conflict'
         '422':
           description: Validation exception
-      x-stoplight:
-        id: 3r55dg8tllqbx
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+    x-stoplight:
+      id: 3r55dg8tllqbx
   /bag-seal:
     post:
       tags:
         - rvm
+      operationId: createBagSeal
       summary: Call performed when bag seal is performed
       requestBody:
         required: true
@@ -210,14 +285,27 @@ paths:
           description: Successful operation
         '400':
           description: Invalid input
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '422':
           description: Validation exception
-      x-stoplight:
-        id: lqz2mv777xppe
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+    x-stoplight:
+      id: lqz2mv777xppe
   /bag-fill-status:
     post:
       tags:
         - rvm
+      operationId: createRvmStatusEvent
       summary: Notify about bag fill level
       description: |
         This endpoint is used to notify DRS about the current fill level of a bag.
@@ -231,10 +319,26 @@ paths:
       responses:
         '200':
           description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BagFillStatusResponse'
         '400':
           description: Invalid input
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '422':
           description: Validation exception
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
   /machine:
     post:
       summary: Add/Machine Update By RVM Vendor
@@ -258,9 +362,23 @@ paths:
                       id: wrtzghy4ghwrg
                     format: uuid
                     description: 'Unique identifier of the machine in the DRS system (later reffered to as rvmId). If provided in the request body, it will not be provided in the reponse.'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
         '404':
           description: Unknown Machine
-      operationId: get-machine-id-update
+        '422':
+          $ref: '#/components/responses/422'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+      operationId: createRvmColStand
       x-stoplight:
         id: bu3ambgd8l19t
   '/machine/{id}':
@@ -273,9 +391,23 @@ paths:
       responses:
         '200':
           description: Machine is known and registered in Kaucja DRS
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
         '404':
           description: Unknown Machine
-      operationId: get-machine-id-registered
+        '422':
+          $ref: '#/components/responses/422'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+      operationId: getRvmColStand
       x-stoplight:
         id: l2akxxutrhklj
     delete:
@@ -289,9 +421,23 @@ paths:
       responses:
         '200':
           description: Operation Successful
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
         '404':
           description: Unknown Machine
-      operationId: get-machine-id-update
+        '422':
+          $ref: '#/components/responses/422'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+      operationId: deleteRvmColStand
       x-stoplight:
         id: bu3ambgd8l19t1
   /mobileapp/machine:
@@ -308,30 +454,68 @@ paths:
       responses:
         '200':
           description: Operation Successful
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
         '404':
           description: Unknown Machine
+        '422':
+          $ref: '#/components/responses/422'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
       operationId: post-machine
       x-stoplight:
         id: ltd4iqkgs22yd
-      x-internal: true
+    x-internal: true
   /voucher/buffer:
     get:
       summary: Get Buffer of Vouchers
       description: Get Buffer of Vouchers for RVM
+      operationId: getVoucherBuffered
       parameters:
         - $ref: '#/components/parameters/rvmId'
+        - name: limit
+          in: query
+          description: Optional. Maximum number of vouchers to return in the buffer.
+          required: false
+          schema:
+            type: integer
+            format: int32
       tags:
         - voucher
       responses:
         '200':
           $ref: '#/components/responses/200OkBufferReturned'
-      operationId: get-voucher-buffer
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
       x-stoplight:
         id: rsbvxnuugs8t7
   /voucher/redeem:
     post:
       summary: Voucher
       description: Post information about voucher reedem
+      operationId: redeemVoucher
       requestBody:
         $ref: '#/components/requestBodies/RedeemVoucher'
       tags:
@@ -347,9 +531,14 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+        '429':
+          $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
-      operationId: post-voucher-redeem
+        '503':
+          $ref: '#/components/responses/503'
       x-stoplight:
         id: xasro8ur97dkn
 security:
@@ -365,7 +554,7 @@ components:
       name: pageLength
       in: query
       description: |
-        Number of records to return. 
+        Number of records to return.
         Values that are above max will be trimmed to max <br>
         Min: 0 <br>
         Max: 50
@@ -431,10 +620,10 @@ components:
         - 99
       description: |
         Descriptor for Reedem Type where <br>
-          - 1 - Exchanged For Cash
-          - 2 - Discount on bill
-          - 3 - Charity
-          - 99 - Other
+        - 1 - Exchanged For Cash
+        - 2 - Discount on bill
+        - 3 - Charity
+        - 99 - Other
     Voucher:
       title: Voucher
       x-stoplight:
@@ -546,6 +735,42 @@ components:
         - fillLevelPercent
         - rvmBlocked
         - reportedAt
+    BagFillStatusResponse:
+      title: BagFillStatusResponse
+      type: object
+      description: |
+        Response returned by the /bag-fill-status endpoint.
+        Acknowledges that the fill-level event has been registered in DRS and
+        returns the generated event identifier alongside the echoed event data.
+      properties:
+        rvmId:
+          type: string
+          format: uuid
+          description: RVM identifier (UUID)
+        eventId:
+          type: string
+          format: uuid
+          description: Event identifier (UUID) assigned by DRS to this fill-status event
+        binId:
+          type: string
+          format: uuid
+          description: Bin identifier (UUID), if provided in the request
+        wasteType:
+          type: array
+          items:
+            $ref: models/enum/WasteTypeEnum.yaml
+        rvmBlocked:
+          type: boolean
+          description: Defines whether RVM was blocked from further usage
+        fillLevelPercent:
+          type: number
+          format: float
+          example: 0.8
+          description: 'Fill level in percent (e.g., 0.8 for 80%)'
+        reportedAt:
+          type: string
+          format: date-time
+          description: Event date
     BagReplacement:
       type: object
       x-stoplight:
@@ -564,6 +789,10 @@ components:
           type: string
           format: uuid
           description: "Set during the registration of the machine in\r\n[POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/bu3ambgd8l19t-add-machine-update-by-rvm-vendor).\r\n<br>Either sent in the registration request, or returned in the response - as **id**"
+        binNo:
+          type: integer
+          format: int32
+          description: Optional. Number of the bin in the collection stand from which the bag was pulled.
         sealNumber:
           type: string
           example: '017824770475060'
@@ -588,6 +817,7 @@ components:
             format: uuid
         containers:
           type: array
+          description: Required. List of only accepted containers, one record should contain only one occurrence of EAN.
           items:
             $ref: models/ContainerFull.yaml
     BulkTransaction:
@@ -644,6 +874,10 @@ components:
             model:
               type: string
               example: Tomra 9
+            manufacturer:
+              type: string
+              description: Optional. Manufacturer name of the RVM machine.
+              example: Tomra
             drsCpNo:
               description: 'Number of the Collection Point created by the client (the owner of the Collection Point) in the DRS system, example: 1100061-152.'
       x-examples:
@@ -656,6 +890,7 @@ components:
               litrage: 240
           id: string
           model: Tomra 9
+          manufacturer: Tomra
           drsCpNo: null
       type: object
     RegisterMachine:
@@ -707,8 +942,8 @@ components:
         - 1
       description: |
         Decscriptor for Voucher Type where
-          - 0 - Code128/EAN13 type - Barcode
-          - 1 - QR Code
+        - 0 - Code128/EAN13 type - Barcode
+        - 1 - QR Code
     VoucherBuffer:
       title: VoucherBuffer
       x-stoplight:
@@ -727,7 +962,7 @@ components:
           example: 30d
   responses:
     '400':
-      description: 'REQUIRED - One or more required fields has not been provided <br>ENUM_ERROR - Format of one or more fields is incorrect <br>INCONSISTENT - Value is inconsistent comparing to ether system elements <br>TOO_LONG - Exceeded maximum length <br>INCORRECT_FORMAT - Incorrect format <br>VALUE_TOO_HIGH - Exceeded maximum value <br>VALUE_TOO_LOW - Value is below minimum allowed <br>...  '
+      description: 'REQUIRED - One or more required fields has not been provided <br>ENUM_ERROR - Format of one or more fields is incorrect <br>INCONSISTENT - Value is inconsistent comparing to ether system elements <br>TOO_LONG - Exceeded maximum length <br>INCORRECT_FORMAT - Incorrect format <br>VALUE_TOO_HIGH - Exceeded maximum value <br>VALUE_TOO_LOW - Value is below minimum allowed <br>... '
       content:
         '*/*':
           schema:
@@ -750,8 +985,26 @@ components:
         '*/*':
           schema:
             $ref: '#/components/schemas/ApiException'
+    '422':
+      description: UNPROCESSABLE_ENTITY - Something wrong with requested body
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/ApiException'
+    '429':
+      description: TOO_MANY_REQUESTS - Too many requests
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/ApiException'
     '500':
       description: INTERNAL - Internal error has occurred
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/ApiException'
+    '503':
+      description: SERVICE_UNAVAILABLE - Service unavailable
       content:
         '*/*':
           schema:
@@ -780,7 +1033,7 @@ components:
     200TransactionProcessed:
       description: |
         Response returned by transaction.
-        Indicates whether coupon should be granted and for what amount. 
+        Indicates whether coupon should be granted and for what amount.
       content:
         application/json:
           schema:
@@ -788,7 +1041,7 @@ components:
     200BulkTransactionProcessed:
       description: |
         Response returned by transaction.
-        Indicates whether coupon should be granted and for what amount. 
+        Indicates whether coupon should be granted and for what amount.
       content:
         application/json:
           schema:
@@ -802,19 +1055,19 @@ components:
           examples:
             machineUnknown:
               $ref: '#/components/examples/MachineUnknown'
-    ConflictMessage:
-      value:
-        msg: Conflicting ID of the request.
-        errorCode: 5
-        path: <path of the request>
+            ConflictMessage:
+              value:
+                msg: Conflicting ID of the request.
+                errorCode: 5
+                path: <path of the request>
     200VoucherData:
-      description: Response of Voucer Data. If Voucher was supplied in Transaction Body - Response will be empty
+      description: |
+        Response of Voucher Data. Returned by the RVM voucher flow with the voucher
+        identifier and print metadata (print type, issuedAt, validUntil).
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: '#/components/schemas/VoucherData'
-              - $ref: null
+            $ref: '#/components/schemas/VoucherData'
     200OkBufferReturned:
       description: OK. Buffer returned
       content:
