@@ -4,32 +4,6 @@ stoplight-id: qlcl5lzd2yxfb
 
 # CHANGELOG
 
-## 11-05-2026
-
-### Added
-
-- **Bag fill status**
-  - [POST - /bag-fill-status](https://kaucja.stoplight.io/docs/rvm-api/bag-fill-status) now returns a `200` response body containing the DRS-assigned `eventId` (UUID) alongside the echoed event data (`rvmId`, `binId`, `wasteType`, `rvmBlocked`, `fillLevelPercent`, `reportedAt`). Previously the response was empty.
-
-- **Bag replacement**
-  - Added optional `binNo` (`integer`) to [POST - /bag-replacement](https://kaucja.stoplight.io/docs/rvm-api/3r55dg8tllqbx-trigger-an-replacement-action-for-rvm) — number of the bin in the collection stand from which the bag was pulled.
-
-- **Add / update machine**
-  - Added optional `manufacturer` (`string`) to [POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/bu3ambgd8l19t-machine-update) (example: `Tomra`).
-
-- **Voucher buffer**
-  - Added optional `limit` (`integer`) query parameter to [GET - /voucher/buffer](https://kaucja.stoplight.io/docs/rvm-api/rsbvxnuugs8t7-get-buffer-of-vouchers) — caps the number of vouchers returned in the buffer.
-
-- **Error responses**
-  - Standardised error responses across every endpoint. Callers should now be ready to handle these on any call:
-    - `401` – Unauthorized
-    - `403` – Forbidden
-    - `404` – Not found
-    - `422` – Unprocessable entity (something wrong with request body)
-    - `429` – Too many requests
-    - `500` – Internal error
-    - `503` – Service unavailable
-  - All error bodies conform to the existing `ApiException` schema.
 
 ## 24-04-2026
 
