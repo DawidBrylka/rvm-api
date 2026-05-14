@@ -10,7 +10,7 @@ info:
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-  version: 1.0.12
+  version: 1.0.11
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
@@ -37,25 +37,10 @@ paths:
           $ref: '#/components/responses/200PostReturnId'
         '400':
           $ref: '#/components/responses/400ValidationFailed'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '422':
-          $ref: '#/components/responses/422'
-        '429':
-          $ref: '#/components/responses/429'
-        '500':
-          $ref: '#/components/responses/500'
-        '503':
-          $ref: '#/components/responses/503'
     get:
       tags:
         - products
       summary: Get product data
-      operationId: fetchProducts
       parameters:
         - name: sendImages
           in: query
@@ -100,26 +85,15 @@ paths:
                       $ref: models/Product.yaml
         '400':
           description: Invalid input
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
         '422':
           description: Validation exception
-        '429':
-          $ref: '#/components/responses/429'
-        '500':
-          $ref: '#/components/responses/500'
-        '503':
-          $ref: '#/components/responses/503'
-    x-stoplight:
-      id: i8big2em2kghv
+      x-stoplight:
+        id: i8big2em2kghv
   '/product/{ean}':
     get:
       tags:
         - products
       summary: Get product data - single product
-      operationId: fetchProduct
       description: |
         Get data of single product.
       parameters:
@@ -145,25 +119,14 @@ paths:
                 $ref: models/Product.yaml
         '400':
           description: Invalid input
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
         '422':
           description: Duplicate ID. Please provide unique ID for Transaction Entity
-        '429':
-          $ref: '#/components/responses/429'
-        '500':
-          $ref: '#/components/responses/500'
-        '503':
-          $ref: '#/components/responses/503'
-    x-stoplight:
-      id: 5o6n5p23xf20f
+      x-stoplight:
+        id: 5o6n5p23xf20f
   /transaction:
     post:
       tags:
         - transaction
-      operationId: createTransaction
       requestBody:
         required: true
         content:
@@ -177,24 +140,147 @@ paths:
           $ref: '#/components/responses/200VoucherData'
         '400':
           $ref: '#/components/responses/400MachineUnknown'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
         '409':
           $ref: '#/components/responses/409Conflict'
         '422':
           description: Validation exception
-        '429':
-          $ref: '#/components/responses/429'
-        '500':
-          $ref: '#/components/responses/500'
-        '503':
-          $ref: '#/components/responses/503'
     x-stoplight:
       id: sbyw8qv8u7gj8
+  /transaction_copy:
+    post:
+      tags:
+        - transaction
+      summary: Register a return transaction
+      description: |
+        Accepts a packaging return transaction from a POS checkout or an RVM machine.
+
+        **Business logic:**
+        - Exactly one of the `cstId` or `rvmId` fields must be provided (XOR).
+        - `cstId` means POS stand type, `rvmId` means RVM stand type.
+        - The stand must exist in the database and be active.
+        - `transactionStartTime` must be less than or equal to `transactionEndTime`.
+        - `transactionEndTime` cannot be more than 5 minutes in the future.
+        - The `value` field, if provided, must be greater than or equal to the calculated deposit sum.
+        - If `value` is not provided, the system calculates it automatically.
+        - The calculated value must be greater than 0.
+        - The transaction `id` must be unique.
+
+        **Voucher logic:**
+        - If `voucher.id` is provided, `redeemed` and `redeemType` are required.
+        - If `voucher.id` is not provided, `redeemed` and `redeemType` must be empty.
+      operationId: postTransactionCopy
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionRequest'
+            examples:
+              rvm_new_voucher:
+                summary: RVM transaction with new voucher
+                value:
+                  id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                  rvmId: 313ba123-cb88-44be-98e6-0b326b105a2a
+                  totalAmount: 20
+                  transactionStartTime: '2025-03-20T10:00:00Z'
+                  transactionEndTime: '2025-03-20T10:05:00Z'
+                  containers:
+                    - ean: '20123123'
+                      count: 15
+                    - ean: '50999888'
+                      count: 5
+              pos_existing_voucher:
+                summary: POS transaction with existing voucher
+                value:
+                  id: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+                  cstId: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+                  posId: POS-001
+                  value: 10
+                  totalAmount: 20
+                  transactionStartTime: '2025-03-20T11:00:00Z'
+                  transactionEndTime: '2025-03-20T11:03:00Z'
+                  voucher:
+                    id: VCH-001
+                    redeemed: true
+                    redeemType: 0
+                  containers:
+                    - ean: '20123123'
+                      count: 15
+                    - ean: '50999888'
+                      count: 5
+      responses:
+        '200':
+          description: 'Transaction accepted, voucher issued'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoucherResponse'
+              examples:
+                success:
+                  summary: Issued voucher
+                  value:
+                    id: VCH-20250320-0042
+                    printType: 1
+                    issuedAt: '2025-03-20T10:05:01Z'
+                    validUntil: '2025-04-20T23:59:59Z'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                no_active_stand:
+                  summary: No active stand
+                  value:
+                    message: No active stand or collection point found for provided rvmId
+                xor_violation:
+                  summary: Both cstId and rvmId were provided
+                  value:
+                    message: cstId and rvmId are mutually exclusive - provide only one
+                missing_stand_id:
+                  summary: Neither cstId nor rvmId was provided
+                  value:
+                    message: Either cstId or rvmId must be provided
+                invalid_time_order:
+                  summary: StartTime later than EndTime
+                  value:
+                    message: transactionStartTime cannot be greater than transactionEndTime
+                future_end_time:
+                  summary: EndTime in the future
+                  value:
+                    message: transactionEndTime cannot be in the future
+                value_too_low:
+                  summary: Provided value lower than calculated deposit
+                  value:
+                    message: Value 1.00 < min deposit sum 5.00
+                zero_value:
+                  summary: No deposit-eligible EANs
+                  value:
+                    message: Voucher value must be a positive number. Check if containers are valid for deposit.
+                invalid_json:
+                  summary: Invalid or empty body
+                  value:
+                    message: Invalid or empty JSON body
+                dto_validation:
+                  summary: DTO field validation error
+                  value:
+                    message: Validation failed
+                    errors:
+                      - id: id must be a UUID
+        '502':
+          description: Communication error with voucher service
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                voucher_service_error:
+                  summary: Voucher service unavailable or returned an error
+                  value:
+                    message: 'Failed to communicate with Voucher Service: Voucher Service returned 503: Service Unavailable'
+      x-stoplight:
+        id: w4d3ap89vbhpf
   /transaction/bulk:
     post:
       internal: true
@@ -213,22 +299,10 @@ paths:
           description: Successful operation
         '400':
           $ref: '#/components/responses/400MachineUnknown'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
         '409':
           $ref: '#/components/responses/409Conflict'
         '422':
           description: Validation exception
-        '429':
-          $ref: '#/components/responses/429'
-        '500':
-          $ref: '#/components/responses/500'
-        '503':
-          $ref: '#/components/responses/503'
     x-stoplight:
       id: zpsfrh56cuuti
     x-internal: true
@@ -236,7 +310,6 @@ paths:
     post:
       tags:
         - rvm
-      operationId: createBagReplacement
       summary: Trigger an replacement action for RVM
       description: Trigger an replacement action for RVM
       requestBody:
@@ -250,29 +323,16 @@ paths:
           description: Successful operation
         '400':
           description: Invalid input
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
         '409':
           $ref: '#/components/responses/409Conflict'
         '422':
           description: Validation exception
-        '429':
-          $ref: '#/components/responses/429'
-        '500':
-          $ref: '#/components/responses/500'
-        '503':
-          $ref: '#/components/responses/503'
     x-stoplight:
       id: 3r55dg8tllqbx
   /bag-seal:
     post:
       tags:
         - rvm
-      operationId: createBagSeal
       summary: Call performed when bag seal is performed
       requestBody:
         required: true
@@ -285,27 +345,14 @@ paths:
           description: Successful operation
         '400':
           description: Invalid input
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
         '422':
           description: Validation exception
-        '429':
-          $ref: '#/components/responses/429'
-        '500':
-          $ref: '#/components/responses/500'
-        '503':
-          $ref: '#/components/responses/503'
     x-stoplight:
       id: lqz2mv777xppe
   /bag-fill-status:
     post:
       tags:
         - rvm
-      operationId: createRvmStatusEvent
       summary: Notify about bag fill level
       description: |
         This endpoint is used to notify DRS about the current fill level of a bag.
@@ -319,26 +366,10 @@ paths:
       responses:
         '200':
           description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BagFillStatusResponse'
         '400':
           description: Invalid input
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
         '422':
           description: Validation exception
-        '429':
-          $ref: '#/components/responses/429'
-        '500':
-          $ref: '#/components/responses/500'
-        '503':
-          $ref: '#/components/responses/503'
   /machine:
     post:
       summary: Add/Machine Update By RVM Vendor
@@ -362,23 +393,9 @@ paths:
                       id: wrtzghy4ghwrg
                     format: uuid
                     description: 'Unique identifier of the machine in the DRS system (later reffered to as rvmId). If provided in the request body, it will not be provided in the reponse.'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
         '404':
           description: Unknown Machine
-        '422':
-          $ref: '#/components/responses/422'
-        '429':
-          $ref: '#/components/responses/429'
-        '500':
-          $ref: '#/components/responses/500'
-        '503':
-          $ref: '#/components/responses/503'
-      operationId: createRvmColStand
+      operationId: get-machine-id-update
       x-stoplight:
         id: bu3ambgd8l19t
   '/machine/{id}':
@@ -391,23 +408,9 @@ paths:
       responses:
         '200':
           description: Machine is known and registered in Kaucja DRS
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
         '404':
           description: Unknown Machine
-        '422':
-          $ref: '#/components/responses/422'
-        '429':
-          $ref: '#/components/responses/429'
-        '500':
-          $ref: '#/components/responses/500'
-        '503':
-          $ref: '#/components/responses/503'
-      operationId: getRvmColStand
+      operationId: get-machine-id-registered
       x-stoplight:
         id: l2akxxutrhklj
     delete:
@@ -421,23 +424,9 @@ paths:
       responses:
         '200':
           description: Operation Successful
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
         '404':
           description: Unknown Machine
-        '422':
-          $ref: '#/components/responses/422'
-        '429':
-          $ref: '#/components/responses/429'
-        '500':
-          $ref: '#/components/responses/500'
-        '503':
-          $ref: '#/components/responses/503'
-      operationId: deleteRvmColStand
+      operationId: get-machine-id-update
       x-stoplight:
         id: bu3ambgd8l19t1
   /mobileapp/machine:
@@ -454,22 +443,8 @@ paths:
       responses:
         '200':
           description: Operation Successful
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
         '404':
           description: Unknown Machine
-        '422':
-          $ref: '#/components/responses/422'
-        '429':
-          $ref: '#/components/responses/429'
-        '500':
-          $ref: '#/components/responses/500'
-        '503':
-          $ref: '#/components/responses/503'
       operationId: post-machine
       x-stoplight:
         id: ltd4iqkgs22yd
@@ -478,44 +453,20 @@ paths:
     get:
       summary: Get Buffer of Vouchers
       description: Get Buffer of Vouchers for RVM
-      operationId: getVoucherBuffered
       parameters:
         - $ref: '#/components/parameters/rvmId'
-        - name: limit
-          in: query
-          description: Optional. Maximum number of vouchers to return in the buffer.
-          required: false
-          schema:
-            type: integer
-            format: int32
       tags:
         - voucher
       responses:
         '200':
           $ref: '#/components/responses/200OkBufferReturned'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '422':
-          $ref: '#/components/responses/422'
-        '429':
-          $ref: '#/components/responses/429'
-        '500':
-          $ref: '#/components/responses/500'
-        '503':
-          $ref: '#/components/responses/503'
+      operationId: get-voucher-buffer
       x-stoplight:
         id: rsbvxnuugs8t7
   /voucher/redeem:
     post:
       summary: Voucher
       description: Post information about voucher reedem
-      operationId: redeemVoucher
       requestBody:
         $ref: '#/components/requestBodies/RedeemVoucher'
       tags:
@@ -531,14 +482,9 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-        '422':
-          $ref: '#/components/responses/422'
-        '429':
-          $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
-        '503':
-          $ref: '#/components/responses/503'
+      operationId: post-voucher-redeem
       x-stoplight:
         id: xasro8ur97dkn
 security:
@@ -554,7 +500,7 @@ components:
       name: pageLength
       in: query
       description: |
-        Number of records to return.
+        Number of records to return. 
         Values that are above max will be trimmed to max <br>
         Min: 0 <br>
         Max: 50
@@ -620,10 +566,10 @@ components:
         - 99
       description: |
         Descriptor for Reedem Type where <br>
-        - 1 - Exchanged For Cash
-        - 2 - Discount on bill
-        - 3 - Charity
-        - 99 - Other
+          - 1 - Exchanged For Cash
+          - 2 - Discount on bill
+          - 3 - Charity
+          - 99 - Other
     Voucher:
       title: Voucher
       x-stoplight:
@@ -708,9 +654,9 @@ components:
         rvmId:
           type: string
           format: uuid
-        binId:
-          type: string
-          format: uuid
+        binNo:
+          type: number
+          example: 1
           description: |
             (Optional) ID of bin that is filled out
         wasteType:
@@ -735,50 +681,14 @@ components:
         - fillLevelPercent
         - rvmBlocked
         - reportedAt
-    BagFillStatusResponse:
-      title: BagFillStatusResponse
-      type: object
-      description: |
-        Response returned by the /bag-fill-status endpoint.
-        Acknowledges that the fill-level event has been registered in DRS and
-        returns the generated event identifier alongside the echoed event data.
-      properties:
-        rvmId:
-          type: string
-          format: uuid
-          description: RVM identifier (UUID)
-        eventId:
-          type: string
-          format: uuid
-          description: Event identifier (UUID) assigned by DRS to this fill-status event
-        binId:
-          type: string
-          format: uuid
-          description: 'Bin identifier (UUID), if provided in the request'
-        wasteType:
-          type: array
-          items:
-            $ref: models/enum/WasteTypeEnum.yaml
-        rvmBlocked:
-          type: boolean
-          description: Defines whether RVM was blocked from further usage
-        fillLevelPercent:
-          type: number
-          format: float
-          example: 0.8
-          description: 'Fill level in percent (e.g., 0.8 for 80%)'
-        reportedAt:
-          type: string
-          format: date-time
-          description: Event date
     BagReplacement:
       type: object
       x-stoplight:
         id: ty6l3ytww8zew
       required:
         - bagId
-        - rvmId
         - binNo
+        - rvmId
         - replacementDate
         - containers
       properties:
@@ -786,14 +696,14 @@ components:
           type: string
           format: uuid
           description: "Bag ID in UUID format. \r\nGiven by the RVM provider and visible to the client (Collection Point) in the DRS system."
+        binNo:
+          type: numeric
+          example: 1
+          description: Descriptior which bin is being emptied. <b>Will soon be required - official date to be anounced. </b>
         rvmId:
           type: string
           format: uuid
           description: "Set during the registration of the machine in\r\n[POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/bu3ambgd8l19t-add-machine-update-by-rvm-vendor).\r\n<br>Either sent in the registration request, or returned in the response - as **id**"
-        binNo:
-          type: integer
-          format: int32
-          description: Numerator of the bin in the collection stand from which the bag was pulled.
         sealNumber:
           type: string
           example: '017824770475060'
@@ -818,7 +728,6 @@ components:
             format: uuid
         containers:
           type: array
-          description: 'Required. List of only accepted containers, one record should contain only one occurrence of EAN.'
           items:
             $ref: models/ContainerFull.yaml
     BulkTransaction:
@@ -875,10 +784,6 @@ components:
             model:
               type: string
               example: Tomra 9
-            manufacturer:
-              type: string
-              description: Optional. Manufacturer name of the RVM machine.
-              example: Tomra
             drsCpNo:
               description: 'Number of the Collection Point created by the client (the owner of the Collection Point) in the DRS system, example: 1100061-152.'
       x-examples:
@@ -891,7 +796,6 @@ components:
               litrage: 240
           id: string
           model: Tomra 9
-          manufacturer: Tomra
           drsCpNo: null
       type: object
     RegisterMachine:
@@ -943,8 +847,35 @@ components:
         - 1
       description: |
         Decscriptor for Voucher Type where
-        - 0 - Code128/EAN13 type - Barcode
-        - 1 - QR Code
+          - 0 - Code128/EAN13 type - Barcode
+          - 1 - QR Code
+    MachineUpdateConnected:
+      title: MachineUpdateConnected
+      x-stoplight:
+        id: jl86dv966rdag
+      type: object
+      required:
+        - serialNumber
+        - bins
+      properties:
+        id:
+          type: string
+          description: "Unique machine identifier in the DRS. This value is required later when sending transactions and closing bags, where it's reffered to as **rvmId**. \r\n\r\nIf omitted in this request, DRS will generate the id and return it in the response."
+          format: uuid
+        serialNumber:
+          type: string
+          description: Serial number of a machine
+          x-stoplight:
+            id: 8pp4kxobuhvlh
+        connectedWith:
+          type: uuid
+          description: ID of machine that shares the same bin
+        name:
+          type: string
+          description: "RVM Customer/provider given name. Visible on the customer's \r\n(Collection Point's) side in the DRS portal. "
+        model:
+          type: string
+          example: Tomra 9
     VoucherBuffer:
       title: VoucherBuffer
       x-stoplight:
@@ -961,6 +892,153 @@ components:
           description: Parameter saying how long voucher will be valid after issuing it by RVM
           type: string
           example: 30d
+    TransactionRequest:
+      type: object
+      required:
+        - id
+        - totalAmount
+        - transactionStartTime
+        - transactionEndTime
+        - containers
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique transaction identifier.
+          example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        cstId:
+          type: string
+          format: uuid
+          nullable: true
+          description: POS stand identifier. Mutually exclusive with rvmId.
+          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        rvmId:
+          type: string
+          format: uuid
+          nullable: true
+          description: RVM machine identifier. Mutually exclusive with cstId.
+          example: 313ba123-cb88-44be-98e6-0b326b105a2a
+        posId:
+          type: string
+          nullable: true
+          description: Optional POS terminal identifier.
+          example: POS-001
+        value:
+          type: number
+          nullable: true
+          description: Total deposit value in PLN.
+          example: 10
+        totalAmount:
+          type: number
+          description: Total number of containers accepted in the transaction.
+          example: 20
+        transactionStartTime:
+          type: string
+          format: date-time
+          description: Transaction start time.
+          example: '2025-03-20T10:00:00Z'
+        transactionEndTime:
+          type: string
+          format: date-time
+          description: Transaction end time.
+          example: '2025-03-20T10:05:00Z'
+        voucher:
+          $ref: '#/components/schemas/VoucherInput'
+        containers:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/ContainerItem'
+    VoucherInput:
+      type: object
+      nullable: true
+      description: Voucher data for existing or new voucher handling.
+      properties:
+        id:
+          type: string
+          description: Existing voucher identifier.
+          example: VCH-001
+        redeemed:
+          type: boolean
+          description: Whether the voucher has already been redeemed.
+          example: true
+        redeemType:
+          type: integer
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 98
+            - 99
+          description: Voucher redemption type.
+          example: 0
+    ContainerItem:
+      type: object
+      required:
+        - ean
+        - count
+      properties:
+        ean:
+          type: string
+          description: Container EAN code.
+          example: '20123123'
+        count:
+          type: integer
+          minimum: 1
+          description: Number of containers with the given EAN.
+          example: 15
+        weight:
+          type: number
+          nullable: true
+          description: Container weight in grams.
+          example: 28.5
+        rejectionCauseCode:
+          type: integer
+          nullable: true
+          description: Rejection cause code.
+          example: 3
+    VoucherResponse:
+      type: object
+      required:
+        - id
+        - printType
+      description: Voucher data returned by the voucher service.
+      properties:
+        id:
+          type: string
+          description: Identifier of the issued or updated voucher.
+          example: VCH-20250320-0042
+        printType:
+          type: integer
+          description: Voucher print type.
+          example: 1
+        issuedAt:
+          type: string
+          format: date-time
+          description: Voucher issue date and time.
+          example: '2025-03-20T10:05:01Z'
+        validUntil:
+          type: string
+          format: date-time
+          description: Voucher expiration date.
+          example: '2025-04-20T23:59:59Z'
+    ErrorResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: Error description.
+          example: Either cstId or rvmId must be provided
+        errors:
+          type: array
+          description: DTO validation error details.
+          items:
+            type: object
+            additionalProperties:
+              type: string
   responses:
     '400':
       description: 'REQUIRED - One or more required fields has not been provided <br>ENUM_ERROR - Format of one or more fields is incorrect <br>INCONSISTENT - Value is inconsistent comparing to ether system elements <br>TOO_LONG - Exceeded maximum length <br>INCORRECT_FORMAT - Incorrect format <br>VALUE_TOO_HIGH - Exceeded maximum value <br>VALUE_TOO_LOW - Value is below minimum allowed <br>... '
@@ -986,26 +1064,8 @@ components:
         '*/*':
           schema:
             $ref: '#/components/schemas/ApiException'
-    '422':
-      description: UNPROCESSABLE_ENTITY - Something wrong with requested body
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/ApiException'
-    '429':
-      description: TOO_MANY_REQUESTS - Too many requests
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/ApiException'
     '500':
       description: INTERNAL - Internal error has occurred
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/ApiException'
-    '503':
-      description: SERVICE_UNAVAILABLE - Service unavailable
       content:
         '*/*':
           schema:
@@ -1034,7 +1094,7 @@ components:
     200TransactionProcessed:
       description: |
         Response returned by transaction.
-        Indicates whether coupon should be granted and for what amount.
+        Indicates whether coupon should be granted and for what amount. 
       content:
         application/json:
           schema:
@@ -1042,7 +1102,7 @@ components:
     200BulkTransactionProcessed:
       description: |
         Response returned by transaction.
-        Indicates whether coupon should be granted and for what amount.
+        Indicates whether coupon should be granted and for what amount. 
       content:
         application/json:
           schema:
@@ -1056,19 +1116,19 @@ components:
           examples:
             machineUnknown:
               $ref: '#/components/examples/MachineUnknown'
-            ConflictMessage:
-              value:
-                msg: Conflicting ID of the request.
-                errorCode: 5
-                path: <path of the request>
+    ConflictMessage:
+      value:
+        msg: Conflicting ID of the request.
+        errorCode: 5
+        path: <path of the request>
     200VoucherData:
-      description: |
-        Response of Voucher Data. Returned by the RVM voucher flow with the voucher
-        identifier and print metadata (print type, issuedAt, validUntil).
+      description: Response of Voucer Data. If Voucher was supplied in Transaction Body - Response will be empty
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/VoucherData'
+            oneOf:
+              - $ref: '#/components/schemas/VoucherData'
+              - $ref: null
     200OkBufferReturned:
       description: OK. Buffer returned
       content:
@@ -1086,7 +1146,9 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/MachineUpdate'
+            oneOf:
+              - $ref: '#/components/schemas/MachineUpdate'
+              - $ref: '#/components/schemas/MachineUpdateConnected'
     RegisterMachine:
       content:
         application/json:
