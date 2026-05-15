@@ -10,7 +10,7 @@ info:
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-  version: 1.0.11
+  version: 1.0.12
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
@@ -37,6 +37,20 @@ paths:
           $ref: '#/components/responses/200PostReturnId'
         '400':
           $ref: '#/components/responses/400ValidationFailed'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
     get:
       tags:
         - products
@@ -85,8 +99,20 @@ paths:
                       $ref: models/Product.yaml
         '400':
           description: Invalid input
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '422':
           description: Validation exception
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
       x-stoplight:
         id: i8big2em2kghv
   '/product/{ean}':
@@ -119,8 +145,20 @@ paths:
                 $ref: models/Product.yaml
         '400':
           description: Invalid input
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '422':
           description: Duplicate ID. Please provide unique ID for Transaction Entity
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
       x-stoplight:
         id: 5o6n5p23xf20f
   /transaction:
@@ -140,10 +178,22 @@ paths:
           $ref: '#/components/responses/200VoucherData'
         '400':
           $ref: '#/components/responses/400MachineUnknown'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
           $ref: '#/components/responses/409Conflict'
         '422':
           description: Validation exception
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
     x-stoplight:
       id: sbyw8qv8u7gj8
   /transaction_copy:
@@ -323,10 +373,22 @@ paths:
           description: Successful operation
         '400':
           description: Invalid input
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
           $ref: '#/components/responses/409Conflict'
         '422':
           description: Validation exception
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
     x-stoplight:
       id: 3r55dg8tllqbx
   /bag-seal:
@@ -345,8 +407,20 @@ paths:
           description: Successful operation
         '400':
           description: Invalid input
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '422':
           description: Validation exception
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
     x-stoplight:
       id: lqz2mv777xppe
   /bag-fill-status:
@@ -366,10 +440,26 @@ paths:
       responses:
         '200':
           description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BagFillStatusResponse'
         '400':
           description: Invalid input
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '422':
           description: Validation exception
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
   /machine:
     post:
       summary: Add/Machine Update By RVM Vendor
@@ -393,8 +483,22 @@ paths:
                       id: wrtzghy4ghwrg
                     format: uuid
                     description: 'Unique identifier of the machine in the DRS system (later reffered to as rvmId). If provided in the request body, it will not be provided in the reponse.'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
         '404':
           description: Unknown Machine
+        '422':
+          $ref: '#/components/responses/422'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
       operationId: get-machine-id-update
       x-stoplight:
         id: bu3ambgd8l19t
@@ -408,8 +512,22 @@ paths:
       responses:
         '200':
           description: Machine is known and registered in Kaucja DRS
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
         '404':
           description: Unknown Machine
+        '422':
+          $ref: '#/components/responses/422'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
       operationId: get-machine-id-registered
       x-stoplight:
         id: l2akxxutrhklj
@@ -424,8 +542,22 @@ paths:
       responses:
         '200':
           description: Operation Successful
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
         '404':
           description: Unknown Machine
+        '422':
+          $ref: '#/components/responses/422'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
       operationId: get-machine-id-update
       x-stoplight:
         id: bu3ambgd8l19t1
@@ -455,11 +587,34 @@ paths:
       description: Get Buffer of Vouchers for RVM
       parameters:
         - $ref: '#/components/parameters/rvmId'
+        - name: limit
+          in: query
+          description: Optional. Maximum number of vouchers to return in the buffer.
+          required: false
+          schema:
+            type: integer
+            format: int32
       tags:
         - voucher
       responses:
         '200':
           $ref: '#/components/responses/200OkBufferReturned'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
       operationId: get-voucher-buffer
       x-stoplight:
         id: rsbvxnuugs8t7
@@ -482,8 +637,14 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+        '429':
+          $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
       operationId: post-voucher-redeem
       x-stoplight:
         id: xasro8ur97dkn
@@ -681,6 +842,43 @@ components:
         - fillLevelPercent
         - rvmBlocked
         - reportedAt
+    BagFillStatusResponse:
+      title: BagFillStatusResponse
+      type: object
+      description: |
+        Response returned by the /bag-fill-status endpoint.
+        Acknowledges that the fill-level event has been registered in DRS and
+        returns the generated event identifier alongside the echoed event data.
+      properties:
+        rvmId:
+          type: string
+          format: uuid
+          description: Rvm identifier (UUID)
+        eventId:
+          type: string
+          format: uuid
+          description: Event identifier (UUID)
+        binId:
+          type: string
+          format: uuid
+          description: Bin identifier (UUID)
+        wasteType:
+          type: array
+          description: Waste type string codes
+          items:
+            $ref: models/enum/WasteTypeEnum.yaml
+        rvmBlocked:
+          type: boolean
+          description: Is rvm blocked
+        fillLevelPercent:
+          type: number
+          format: float
+          example: 0.8
+          description: Fill level percent
+        reportedAt:
+          type: string
+          format: date-time
+          description: Event date
     BagReplacement:
       type: object
       x-stoplight:
@@ -728,6 +926,7 @@ components:
             format: uuid
         containers:
           type: array
+          description: Required. List of only accepted containers, one record should contain only one occurrence of EAN.
           items:
             $ref: models/ContainerFull.yaml
     BulkTransaction:
@@ -784,6 +983,10 @@ components:
             model:
               type: string
               example: Tomra 9
+            manufacturer:
+              type: string
+              description: Optional. Manufacturer name of the RVM machine.
+              example: Tomra
             drsCpNo:
               description: 'Number of the Collection Point created by the client (the owner of the Collection Point) in the DRS system, example: 1100061-152.'
       x-examples:
@@ -796,6 +999,7 @@ components:
               litrage: 240
           id: string
           model: Tomra 9
+          manufacturer: Tomra
           drsCpNo: null
       type: object
     RegisterMachine:
@@ -1064,8 +1268,26 @@ components:
         '*/*':
           schema:
             $ref: '#/components/schemas/ApiException'
+    '422':
+      description: UNPROCESSABLE_ENTITY - Something wrong with requested body
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/ApiException'
+    '429':
+      description: TOO_MANY_REQUESTS - Too many requests
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/ApiException'
     '500':
       description: INTERNAL - Internal error has occurred
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/ApiException'
+    '503':
+      description: SERVICE_UNAVAILABLE - Service unavailable
       content:
         '*/*':
           schema:
