@@ -8,16 +8,16 @@ stoplight-id: qlcl5lzd2yxfb
 ### Added
 
 - **Bag fill status**
-  - [POST - /bag-fill-status](https://kaucja.stoplight.io/docs/rvm-api/bag-fill-status) now returns a `200` response body containing the DRS-assigned `eventId` (UUID) alongside the echoed event data (`rvmId`, `binId`, `wasteType`, `rvmBlocked`, `fillLevelPercent`, `reportedAt`). Previously the response was empty.
+  - [POST - /bag-fill-status](https://kaucja.stoplight.io/docs/rvm-api/branches/RVM-Model-Changes/bd2d38b8c5dc3-notify-about-bag-fill-level) now returns a `200` response body containing the DRS-assigned `eventId` (UUID) alongside the echoed event data (`rvmId`, `binId`, `wasteType`, `rvmBlocked`, `fillLevelPercent`, `reportedAt`). Previously the response was empty.
 
 - **Bag replacement**
   - Clarified `containers`: required, list of only accepted containers; each record should contain only one occurrence of a given EAN.
 
 - **Add / update machine**
-  - Added optional `manufacturer` (`string`) to [POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/bu3ambgd8l19t-machine-update) (example: `Tomra`).
+  - Added optional `manufacturer` (`string`) to [POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/branches/RVM-Model-Changes/bu3ambgd8l19t-add-machine-update-by-rvm-vendor) (example: `Tomra`).
 
 - **Voucher buffer**
-  - Added optional `limit` (`integer`) query parameter to [GET - /voucher/buffer](https://kaucja.stoplight.io/docs/rvm-api/rsbvxnuugs8t7-get-buffer-of-vouchers) — caps the number of vouchers returned in the buffer.
+  - Added optional `limit` (`integer`) query parameter to [GET - /voucher/buffer](https://kaucja.stoplight.io/docs/rvm-api/branches/RVM-Model-Changes/rsbvxnuugs8t7-get-buffer-of-vouchers) — caps the number of vouchers returned in the buffer.
 
 - **Error responses**
   - Standardised error responses across every endpoint. Callers should now be ready to handle these on any call:
@@ -37,19 +37,15 @@ stoplight-id: qlcl5lzd2yxfb
  **Add / update machine**  
   - In [POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/branches/RVM-Model-Changes/bu3ambgd8l19t-add-machine-update-by-rvm-vendor):  
     - Updated machine specification to require explicit bin configuration.  
-    - **Marked `bins` as a optional field.** 
-    - **Added optional `binNo`** to uniquely identify each bin within the machine.  
-    - **Marked `litrage` as an optional field** to ensure declared bin capacity reflects the physical setup of the RVM.  
     - Clarified that machine configuration data must represent the actual RVM configuration.
-    - The current description of fields within this endpoint reflects the production envioronemnt. The desired state is desribed in a [separate branch](https://kaucja.stoplight.io/docs/rvm-api/branches/RVM-Model-Changes/qlcl5lzd2yxfb-changelog).
+    - The current description of fields within this endpoint reflects the desired state.
 
 - **Bag replacement**  
   - Updated [POST - /bag-replacement](https://kaucja.stoplight.io/docs/rvm-api/branches/RVM-Model-Changes/3r55dg8tllqbx-trigger-an-replacement-action-for-rvm):  
-    - **Added optional `binNo`** to explicitly indicate which bin is being emptied during bag replacement.  
+    - **Added `binNo`** to explicitly indicate which bin is being emptied during bag replacement.  
     - Updated request model to support bin-level bag replacement handling.  
     - Improved validation to ensure consistency between machine bin configuration and bag replacement data.
-    - The current description of fields within this endpoint reflects the production envioronemnt. The desired state is desribed in a [separate branch](https://kaucja.stoplight.io/docs/rvm-api/branches/RVM-Model-Changes/qlcl5lzd2yxfb-changelog).
-
+    - The current description of fields within this endpoint reflects the desired state.
 
 ## 19-03-2026
 
