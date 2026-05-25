@@ -554,6 +554,7 @@ components:
         - bagId
         - rvmId
         - replacementDate
+        - containerAmount
         - containers
       properties:
         bagId:
