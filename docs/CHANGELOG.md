@@ -3,6 +3,26 @@ stoplight-id: qlcl5lzd2yxfb
 ---
 
 # CHANGELOG
+## 29-05-2026
+### Changed
+
+* **Bag replacement**
+
+  * Updated [POST - `/bag-replacement`] to support two request variants:
+
+    * `BagReplacement` for the standard single-seal case, where one bin is emptied into one bag identified by `sealNumber`.
+    * `BagReplacementMultipleSeal` for cases where one bin-emptying operation results in multiple bags, each identified by a separate seal in `sealNumbers`.
+  * Added support for the `sealNumbers` array, allowing the caller to report **1 to N seals** in a single bag replacement event.
+  * Clarified that, when multiple seals are provided, DRS creates one bag entity per seal while sharing the common event metadata: `binNo`, `rvmId`, `replacementDate`, `lockingPersonId`, and `relatedTransactionsIds`.
+  * Documented the container split logic for multi-seal replacements:
+
+    * container counts are split per EAN across all seals as equally as possible;
+    * the equal part is calculated as `floor(count / N)`;
+    * any indivisible remainder, `count % N`, is distributed randomly across the created bags;
+    * `bagWeight` is split proportionally to the number of items assigned to each bag.
+  * Added request examples for both single-seal and multi-seal bag replacement scenarios.
+
+
 ## 15-05-2026
 
 ### Added
