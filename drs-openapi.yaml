@@ -5,23 +5,23 @@ info:
   title: DRS API Representation
   contact:
     name: Dawid Brylka
-    url: 'https://www.kaucja.pl'
+    url: https://www.kaucja.pl
     email: dawid.brylka@kaucja.pl
   license:
     name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.12
 externalDocs:
   description: Find out more about Swagger
-  url: 'http://swagger.io'
+  url: http://swagger.io
 servers:
-  - url: 'https://drs-sandbox.kaucja.pl/api/rvm/'
+- url: https://drs-sandbox.kaucja.pl/api/rvm/
 paths:
   /product:
     post:
       operationId: productPost
       tags:
-        - product
+      - product
       summary: Add or update product
       description: |
         Endpoint responsible for adding, or updating new product by Introducers. <br>
@@ -53,32 +53,33 @@ paths:
           $ref: '#/components/responses/503'
     get:
       tags:
-        - products
+      - products
       summary: Get product data
+      operationId: fetchProducts
       parameters:
-        - name: sendImages
-          in: query
-          description: Shall we send images to RVM
-          required: false
-          schema:
-            type: boolean
-            default: false
-        - name: updatedAfter
-          in: query
-          description: Display items updated After
-          required: false
-          schema:
-            type: string
-            format: date-time
-        - name: createdAfter
-          in: query
-          description: Display items created After
-          required: false
-          schema:
-            type: string
-            format: date-time
-        - $ref: '#/components/parameters/Startindex'
-        - $ref: '#/components/parameters/Pagelength'
+      - name: sendImages
+        in: query
+        description: Shall we send images to RVM
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: updatedAfter
+        in: query
+        description: Display items updated After
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: createdAfter
+        in: query
+        description: Display items created After
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - $ref: '#/components/parameters/Startindex'
+      - $ref: '#/components/parameters/Pagelength'
       responses:
         '200':
           description: Successful operation
@@ -103,10 +104,10 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
         '422':
           description: Validation exception
+        '404':
+          $ref: '#/components/responses/404'
         '429':
           $ref: '#/components/responses/429'
         '500':
@@ -115,27 +116,30 @@ paths:
           $ref: '#/components/responses/503'
       x-stoplight:
         id: i8big2em2kghv
-  '/product/{ean}':
+    x-stoplight:
+      id: i8big2em2kghv
+  /product/{ean}:
     get:
       tags:
-        - products
+      - products
       summary: Get product data - single product
+      operationId: fetchProduct
       description: |
         Get data of single product.
       parameters:
-        - name: sendImages
-          in: query
-          description: Shall we send images to RVM
-          required: false
-          schema:
-            type: boolean
-            default: false
-        - name: ean
-          in: path
-          description: Ean that should be synced
-          required: true
-          schema:
-            type: string
+      - name: sendImages
+        in: query
+        description: Shall we send images to RVM
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: ean
+        in: path
+        description: Ean that should be synced
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Successful operation
@@ -149,10 +153,10 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
         '422':
           description: Duplicate ID. Please provide unique ID for Transaction Entity
+        '404':
+          $ref: '#/components/responses/404'
         '429':
           $ref: '#/components/responses/429'
         '500':
@@ -161,10 +165,13 @@ paths:
           $ref: '#/components/responses/503'
       x-stoplight:
         id: 5o6n5p23xf20f
+    x-stoplight:
+      id: 5o6n5p23xf20f
   /transaction:
     post:
       tags:
-        - transaction
+      - transaction
+      operationId: createTransaction
       requestBody:
         required: true
         content:
@@ -194,30 +201,19 @@ paths:
           $ref: '#/components/responses/500'
         '503':
           $ref: '#/components/responses/503'
-    x-stoplight:
-      id: sbyw8qv8u7gj8
+      x-stoplight:
+        id: sbyw8qv8u7gj8
   /transaction_copy:
     post:
       tags:
-        - transaction
+      - transaction
       summary: Register a return transaction
       description: |
         Accepts a packaging return transaction from a POS checkout or an RVM machine.
-
         **Business logic:**
-        - Exactly one of the `cstId` or `rvmId` fields must be provided (XOR).
-        - `cstId` means POS stand type, `rvmId` means RVM stand type.
-        - The stand must exist in the database and be active.
-        - `transactionStartTime` must be less than or equal to `transactionEndTime`.
-        - `transactionEndTime` cannot be more than 5 minutes in the future.
-        - The `value` field, if provided, must be greater than or equal to the calculated deposit sum.
-        - If `value` is not provided, the system calculates it automatically.
-        - The calculated value must be greater than 0.
-        - The transaction `id` must be unique.
-
+        - Exactly one of the `cstId` or `rvmId` fields must be provided (XOR). - `cstId` means POS stand type, `rvmId` means RVM stand type. - The stand must exist in the database and be active. - `transactionStartTime` must be less than or equal to `transactionEndTime`. - `transactionEndTime` cannot be more than 5 minutes in the future. - The `value` field, if provided, must be greater than or equal to the calculated deposit sum. - If `value` is not provided, the system calculates it automatically. - The calculated value must be greater than 0. - The transaction `id` must be unique.
         **Voucher logic:**
-        - If `voucher.id` is provided, `redeemed` and `redeemType` are required.
-        - If `voucher.id` is not provided, `redeemed` and `redeemType` must be empty.
+        - If `voucher.id` is provided, `redeemed` and `redeemType` are required. - If `voucher.id` is not provided, `redeemed` and `redeemType` must be empty.
       operationId: postTransactionCopy
       requestBody:
         required: true
@@ -235,10 +231,10 @@ paths:
                   transactionStartTime: '2025-03-20T10:00:00Z'
                   transactionEndTime: '2025-03-20T10:05:00Z'
                   containers:
-                    - ean: '20123123'
-                      count: 15
-                    - ean: '50999888'
-                      count: 5
+                  - ean: '20123123'
+                    count: 15
+                  - ean: '50999888'
+                    count: 5
               pos_existing_voucher:
                 summary: POS transaction with existing voucher
                 value:
@@ -254,13 +250,13 @@ paths:
                     redeemed: true
                     redeemType: 0
                   containers:
-                    - ean: '20123123'
-                      count: 15
-                    - ean: '50999888'
-                      count: 5
+                  - ean: '20123123'
+                    count: 15
+                  - ean: '50999888'
+                    count: 5
       responses:
         '200':
-          description: 'Transaction accepted, voucher issued'
+          description: Transaction accepted, voucher issued
           content:
             application/json:
               schema:
@@ -317,7 +313,7 @@ paths:
                   value:
                     message: Validation failed
                     errors:
-                      - id: id must be a UUID
+                    - id: id must be a UUID
         '502':
           description: Communication error with voucher service
           content:
@@ -329,13 +325,29 @@ paths:
                   summary: Voucher service unavailable or returned an error
                   value:
                     message: 'Failed to communicate with Voucher Service: Voucher Service returned 503: Service Unavailable'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
       x-stoplight:
         id: w4d3ap89vbhpf
+    x-stoplight:
+      id: sbyw8qv8u7gj8
   /transaction/bulk:
     post:
       internal: true
       tags:
-        - transaction
+      - transaction
       requestBody:
         required: true
         content:
@@ -349,25 +361,98 @@ paths:
           description: Successful operation
         '400':
           $ref: '#/components/responses/400MachineUnknown'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
           $ref: '#/components/responses/409Conflict'
         '422':
           description: Validation exception
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+      x-stoplight:
+        id: zpsfrh56cuuti
+      x-internal: true
     x-stoplight:
       id: zpsfrh56cuuti
     x-internal: true
   /bag-replacement:
     post:
       tags:
-        - rvm
-      summary: Trigger an replacement action for RVM
-      description: Trigger an replacement action for RVM
+      - rvm
+      summary: Trigger a bag replacement action for an RVM
+      description: |
+        Reports a bag replacement event for an RVM (Reverse Vending Machine), i.e. the moment when a bin inside the machine is emptied and its contents are moved into one or more sealed bags.
+
+        ## Request shape — `oneOf`
+        The request body accepts **one of two payload variants**, distinguished by the shape of the seal field:
+
+        - **`BagReplacement`** — classic, single-seal case. The bin contents go into exactly **one bag** identified by a single `sealNumber`. DRS creates **one bag entity** in the system.
+        - **`BagReplacementMultipleSeal`** — multi-seal case. The bin contents were split across **1 to N bags**, each closed with its own seal provided in the `sealNumbers` array. DRS will create **1 to N bag entities** in the system.
+
+        Clients MUST send exactly one of the two variants. The two schemas are mutually exclusive at the field level (`sealNumber` vs `sealNumbers`).
+
+        ## DRS processing
+        Regardless of the variant:
+        1. DRS validates the payload (machine identity, seal uniqueness, consistency between `containerAmount` and `sum(containers[].count)`, etc.).
+        2. For `BagReplacementMultipleSeal`, DRS splits the `containers` list across the N seals using an **as-equal-as-possible split by item count per EAN** — the equal part is `floor(count / N)` per bag, and the indivisible remainder (`count % N`) is distributed **randomly** across bags (independently for each EAN). `bagWeight` is split proportionally to the item count assigned to each bag. See `BagReplacementMultipleSeal` schema for the full algorithm.
+        3. DRS creates **1 to N bag entities** sharing common event metadata (`binNo`, `rvmId`, `replacementDate`, `lockingPersonId`, `relatedTransactionsIds`).
+
+        ## Choosing the variant
+        - Use `BagReplacement` whenever the bin is emptied into a single bag — this is the default and most common case.
+        - Use `BagReplacementMultipleSeal` only when the bin contents physically required more than one bag (e.g. weight/volume limit exceeded) and each bag was sealed individually on-site.
+      operationId: createBagReplacement
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BagReplacement'
+              oneOf:
+              - $ref: '#/components/schemas/BagReplacement'
+              - $ref: '#/components/schemas/BagReplacementMultipleSeal'
+            examples:
+              singleSeal:
+                summary: Single-seal bag replacement (BagReplacement)
+                value:
+                  binNo: 1
+                  rvmId: 658f31ac-13dd-457e-8c8a-f79ab37e0000
+                  sealNumber: 017824770475060
+                  lockingPersonId: c3eaca0a-06f1-4609-b1aa-000000000000
+                  replacementDate: '2026-05-11T11:00:00Z'
+                  bagWeight: 9.9
+                  containerAmount: 100
+                  relatedTransactionsIds:
+                  - 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                  containers:
+                  - ean: '20123123'
+                    count: 100
+              multipleSeals:
+                summary: Multi-seal bag replacement (BagReplacementMultipleSeal)
+                value:
+                  binNo: 1
+                  rvmId: 658f31ac-13dd-457e-8c8a-f79ab37e0000
+                  sealNumbers:
+                  - 017824770475060
+                  - 017824770475061
+                  - 017824770475062
+                  lockingPersonId: c3eaca0a-06f1-4609-b1aa-000000000000
+                  replacementDate: '2026-05-11T11:00:00Z'
+                  bagWeight: 9.9
+                  containerAmount: 22
+                  relatedTransactionsIds:
+                  - 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                  containers:
+                  - ean: '20123123'
+                    count: 20
+                  - ean: '20123999'
+                    count: 2
       responses:
         '200':
           description: Successful operation
@@ -389,19 +474,41 @@ paths:
           $ref: '#/components/responses/500'
         '503':
           $ref: '#/components/responses/503'
+      x-stoplight:
+        id: 3r55dg8tllqbx
     x-stoplight:
       id: 3r55dg8tllqbx
   /bag-seal:
     post:
       tags:
-        - rvm
+      - rvm
+      operationId: createBagSeal
       summary: Call performed when bag seal is performed
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BagSeal'
+              oneOf:
+              - $ref: '#/components/schemas/BagSeal'
+              - $ref: '#/components/schemas/BagSealMultipleSeal'
+            examples:
+              singleSeal:
+                summary: Single-seal bag seal (BagSeal)
+                value:
+                  lockingPersonId: c3eaca0a-06f1-4609-b1aa-000000000000
+                  sealNumber: 017824770475060
+                  bagId: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                  sealTime: '2026-05-11T11:00:00Z'
+              multipleSeals:
+                summary: Multi-seal bag seal (BagSealMultipleSeal)
+                value:
+                  lockingPersonId: c3eaca0a-06f1-4609-b1aa-000000000000
+                  sealNumbers:
+                  - 017824770475060
+                  - 017824770475061
+                  bagId: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                  sealTime: '2026-05-11T11:00:00Z'
       responses:
         '200':
           description: Successful operation
@@ -414,19 +521,24 @@ paths:
         '404':
           $ref: '#/components/responses/404'
         '422':
-          description: Validation exception
+          $ref: '#/components/responses/422'
         '429':
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
         '503':
           $ref: '#/components/responses/503'
+      x-stoplight:
+        id: lqz2mv777xppe
+      description: Reports that one or more seal numbers have been applied to an existing bag. Use the single-seal variant
+        for `sealNumber` and the multi-seal variant for `sealNumbers`. The two variants are mutually exclusive.
     x-stoplight:
       id: lqz2mv777xppe
   /bag-fill-status:
     post:
       tags:
-        - rvm
+      - rvm
+      operationId: createRvmStatusEvent
       summary: Notify about bag fill level
       description: |
         This endpoint is used to notify DRS about the current fill level of a bag.
@@ -460,13 +572,15 @@ paths:
           $ref: '#/components/responses/500'
         '503':
           $ref: '#/components/responses/503'
+      x-stoplight:
+        id: bd2d38b8c5dc3
   /machine:
     post:
       summary: Add/Machine Update By RVM Vendor
       description: |
         Endpoint used by RVM providers to notify DRS whether something changed to the RVM.
       tags:
-        - machine
+      - machine
       requestBody:
         $ref: '#/components/requestBodies/MachineUpdate'
       responses:
@@ -482,7 +596,8 @@ paths:
                     x-stoplight:
                       id: wrtzghy4ghwrg
                     format: uuid
-                    description: 'Unique identifier of the machine in the DRS system (later reffered to as rvmId). If provided in the request body, it will not be provided in the reponse.'
+                    description: Unique identifier of the machine in the DRS system (later reffered to as rvmId). If provided
+                      in the request body, it will not be provided in the reponse.
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -499,16 +614,16 @@ paths:
           $ref: '#/components/responses/500'
         '503':
           $ref: '#/components/responses/503'
-      operationId: get-machine-id-update
+      operationId: createRvmColStand
       x-stoplight:
         id: bu3ambgd8l19t
-  '/machine/{id}':
+  /machine/{id}:
     parameters:
-      - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/id'
     head:
       summary: Query For Machine in DRS system
       tags:
-        - machine
+      - machine
       responses:
         '200':
           description: Machine is known and registered in Kaucja DRS
@@ -528,7 +643,7 @@ paths:
           $ref: '#/components/responses/500'
         '503':
           $ref: '#/components/responses/503'
-      operationId: get-machine-id-registered
+      operationId: getRvmColStand
       x-stoplight:
         id: l2akxxutrhklj
     delete:
@@ -538,7 +653,7 @@ paths:
 
         The **{id}** is the same UUID that was assigned to the machine during registration via [POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/bu3ambgd8l19t-add-machine-update-by-rvm-vendor)
       tags:
-        - machine
+      - machine
       responses:
         '200':
           description: Operation Successful
@@ -558,7 +673,7 @@ paths:
           $ref: '#/components/responses/500'
         '503':
           $ref: '#/components/responses/503'
-      operationId: get-machine-id-update
+      operationId: deleteRvmColStand
       x-stoplight:
         id: bu3ambgd8l19t1
   /mobileapp/machine:
@@ -569,33 +684,49 @@ paths:
         Endpoint used to Register new RVM in DRS system for given Collection Point.
         <br>Internal. Only Used from Mobile app.
       tags:
-        - machine
+      - machine
       requestBody:
         $ref: '#/components/requestBodies/RegisterMachine'
       responses:
         '200':
           description: Operation Successful
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
         '404':
           description: Unknown Machine
+        '422':
+          $ref: '#/components/responses/422'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
       operationId: post-machine
       x-stoplight:
         id: ltd4iqkgs22yd
+      x-internal: true
     x-internal: true
   /voucher/buffer:
     get:
       summary: Get Buffer of Vouchers
       description: Get Buffer of Vouchers for RVM
+      operationId: getVoucherBuffered
       parameters:
-        - $ref: '#/components/parameters/rvmId'
-        - name: limit
-          in: query
-          description: Optional. Maximum number of vouchers to return in the buffer.
-          required: false
-          schema:
-            type: integer
-            format: int32
+      - $ref: '#/components/parameters/rvmId'
+      - name: limit
+        in: query
+        description: Optional. Maximum number of vouchers to return in the buffer.
+        required: false
+        schema:
+          type: integer
+          format: int32
       tags:
-        - voucher
+      - voucher
       responses:
         '200':
           $ref: '#/components/responses/200OkBufferReturned'
@@ -615,17 +746,17 @@ paths:
           $ref: '#/components/responses/500'
         '503':
           $ref: '#/components/responses/503'
-      operationId: get-voucher-buffer
       x-stoplight:
         id: rsbvxnuugs8t7
   /voucher/redeem:
     post:
       summary: Voucher
       description: Post information about voucher reedem
+      operationId: redeemVoucher
       requestBody:
         $ref: '#/components/requestBodies/RedeemVoucher'
       tags:
-        - voucher
+      - voucher
       responses:
         '200':
           description: Successful operation
@@ -645,14 +776,13 @@ paths:
           $ref: '#/components/responses/500'
         '503':
           $ref: '#/components/responses/503'
-      operationId: post-voucher-redeem
       x-stoplight:
         id: xasro8ur97dkn
 security:
-  - bearerAuth: []
+- bearerAuth: []
 components:
   securitySchemes:
-    bearerAuth: # arbitrary name for the security scheme
+    bearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
@@ -660,11 +790,8 @@ components:
     Pagelength:
       name: pageLength
       in: query
-      description: |
-        Number of records to return. 
-        Values that are above max will be trimmed to max <br>
-        Min: 0 <br>
-        Max: 50
+      description: "Number of records to return. \nNumber of records to return.\nValues that are above max will be trimmed\
+        \ to max <br>\nMin: 0 <br>\nMax: 50\n"
       min: 0
       max: 50
       schema:
@@ -721,25 +848,29 @@ components:
         id: zl59bi4je1cpy
       type: number
       enum:
-        - 1
-        - 2
-        - 3
-        - 99
+      - 1
+      - 2
+      - 3
+      - 99
       description: |
         Descriptor for Reedem Type where <br>
           - 1 - Exchanged For Cash
           - 2 - Discount on bill
           - 3 - Charity
           - 99 - Other
+        - 1 - Exchanged For Cash
+        - 2 - Discount on bill
+        - 3 - Charity
+        - 99 - Other
     Voucher:
       title: Voucher
       x-stoplight:
         id: xycd2rl0p4qwm
       type: object
       required:
-        - id
-        - redeemType
-        - redeemDate
+      - id
+      - redeemType
+      - redeemDate
       properties:
         id:
           type: string
@@ -772,7 +903,8 @@ components:
           type: integer
           format: int32
           example: 2
-          description: Index of the 1st-level list element the error applies to (e.g. the 14th element of the `transaction` list)
+          description: Index of the 1st-level list element the error applies to (e.g. the 14th element of the `transaction`
+            list)
         idRow2:
           type: integer
           format: int32
@@ -781,10 +913,11 @@ components:
         errorMsgLabel:
           type: string
           example: api.err.msg.trs.product.bad.status
-          description: 'Label in the multilingual file with the corresponding error message. If there are variables to be substituted, they are contained in tags {{0}}, {{1}}, {{2}}, etc.'
+          description: Label in the multilingual file with the corresponding error message. If there are variables to be substituted,
+            they are contained in tags {{0}}, {{1}}, {{2}}, etc.
         errorMsgArgs:
           type: array
-          description: 'List of values to be substituted into the above-mentioned tags {{0}}, {{1}}, {{2}}, etc.'
+          description: List of values to be substituted into the above-mentioned tags {{0}}, {{1}}, {{2}}, etc.
           items:
             type: string
             example: INACTIVE
@@ -792,15 +925,16 @@ components:
     BagSeal:
       type: object
       required:
-        - sealNumber
-        - bagId
-        - sealTime
+      - sealNumber
+      - bagId
+      - sealTime
       properties:
         lockingPersonId:
           type: string
           format: uuid
         sealNumber:
           type: string
+          example: 017824770475060
         bagId:
           type: string
           format: uuid
@@ -818,6 +952,9 @@ components:
         binNo:
           type: number
           example: 1
+        binId:
+          type: string
+          format: uuid
           description: |
             (Optional) ID of bin that is filled out
         wasteType:
@@ -832,16 +969,16 @@ components:
           type: number
           format: float
           example: 0.8
-          description: 'Fill level in percent (e.g., 0.8 for 80%)'
+          description: Fill level in percent (e.g., 0.8 for 80%)
         reportedAt:
           type: string
           format: date-time
       required:
-        - rvmId
-        - wasteType
-        - fillLevelPercent
-        - rvmBlocked
-        - reportedAt
+      - rvmId
+      - wasteType
+      - fillLevelPercent
+      - rvmBlocked
+      - reportedAt
     BagFillStatusResponse:
       title: BagFillStatusResponse
       type: object
@@ -853,28 +990,27 @@ components:
         rvmId:
           type: string
           format: uuid
-          description: Rvm identifier (UUID)
+          description: RVM identifier (UUID)
         eventId:
           type: string
           format: uuid
-          description: Event identifier (UUID)
+          description: Event identifier (UUID) assigned by DRS to this fill-status event
         binId:
           type: string
           format: uuid
-          description: Bin identifier (UUID)
+          description: Bin identifier (UUID), if provided in the request
         wasteType:
           type: array
-          description: Waste type string codes
           items:
             $ref: models/enum/WasteTypeEnum.yaml
         rvmBlocked:
           type: boolean
-          description: Is rvm blocked
+          description: Defines whether RVM was blocked from further usage
         fillLevelPercent:
           type: number
           format: float
           example: 0.8
-          description: Fill level percent
+          description: Fill level in percent (e.g., 0.8 for 80%)
         reportedAt:
           type: string
           format: date-time
@@ -884,29 +1020,31 @@ components:
       x-stoplight:
         id: ty6l3ytww8zew
       required:
-        - bagId
-        - binNo
-        - rvmId
-        - replacementDate
-        - containers
+      - bagId
+      - rvmId
+      - replacementDate
+      - containers
       properties:
         bagId:
           type: string
           format: uuid
-          description: "Bag ID in UUID format. \r\nGiven by the RVM provider and visible to the client (Collection Point) in the DRS system."
+          description: Bag ID in UUID format. Given by the RVM provider and visible to the client (Collection Point) in the
+            DRS system.
         binNo:
-          type: numeric
+          type: integer
+          format: int32
           example: 1
-          description: Descriptior which bin is being emptied. <b>Will soon be required - official date to be anounced. </b>
+          description: Optional. Number of the bin in the collection stand from which the bag was pulled.
         rvmId:
           type: string
           format: uuid
-          description: "Set during the registration of the machine in\r\n[POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/bu3ambgd8l19t-add-machine-update-by-rvm-vendor).\r\n<br>Either sent in the registration request, or returned in the response - as **id**"
+          description: Set during the registration of the machine in POST /machine. Either sent in the registration request,
+            or returned in the response as `id`.
         sealNumber:
           type: string
-          example: '017824770475060'
-          description: |
-            Optional. If RVM is able to seal bag on it's own it should send us seal number on this particular call. If sent in a request, is subject to checksum verification on Kaucja's side.
+          example: 017824770475060
+          description: Optional. If the RVM is able to seal the bag on its own, it should send the seal number in this call.
+            If sent in the request, it is subject to checksum verification on Kaucja.pl side.
         lockingPersonId:
           type: string
           format: uuid
@@ -920,13 +1058,15 @@ components:
           type: integer
         relatedTransactionsIds:
           type: array
-          description: "Optional but **highly preferable**. Enables the customer (Colelction Point)\r\nto preview all of the transactions that a closed bag consists of."
+          description: Optional but highly preferable. Enables the customer (Collection Point) to preview all of the transactions
+            that a closed bag consists of.
           items:
             type: string
             format: uuid
         containers:
           type: array
-          description: Required. List of only accepted containers, one record should contain only one occurrence of EAN.
+          description: Required. List of only accepted containers; each record should contain only one occurrence of a given
+            EAN.
           items:
             $ref: models/ContainerFull.yaml
     BulkTransaction:
@@ -941,12 +1081,12 @@ components:
       type: array
       items:
         allOf:
-          - properties:
-              transactionId:
-                type: string
-                format: uuid
-                description: Unique ID of the transaction
-          - $ref: '#/components/schemas/TransactionConfirmation'
+        - properties:
+            transactionId:
+              type: string
+              format: uuid
+              description: Unique ID of the transaction
+        - $ref: '#/components/schemas/TransactionConfirmation'
     TransactionConfirmation:
       title: Transaction Confirmation
       x-stoplight:
@@ -972,31 +1112,34 @@ components:
       x-stoplight:
         id: zk239eslozgw8
       allOf:
-        - $ref: models/PostMachine.yaml
-        - required:
-            - drsCpNo
-          properties:
-            id:
-              type: string
-              description: "Unique machine identifier in the DRS. This value is required later when sending transactions and closing bags, where it's reffered to as **rvmId**. \r\n\r\nIf omitted in this request, DRS will generate the id and return it in the response."
-              format: uuid
-            model:
-              type: string
-              example: Tomra 9
-            manufacturer:
-              type: string
-              description: Optional. Manufacturer name of the RVM machine.
-              example: Tomra
-            drsCpNo:
-              description: 'Number of the Collection Point created by the client (the owner of the Collection Point) in the DRS system, example: 1100061-152.'
+      - $ref: models/PostMachine.yaml
+      - required:
+        - drsCpNo
+        properties:
+          id:
+            type: string
+            description: "Unique machine identifier in the DRS. This value is required later when sending transactions and\
+              \ closing bags, where it's reffered to as **rvmId**. \r\n\r\nIf omitted in this request, DRS will generate the\
+              \ id and return it in the response."
+            format: uuid
+          model:
+            type: string
+            example: Tomra 9
+          manufacturer:
+            type: string
+            description: Optional. Manufacturer name of the RVM machine.
+            example: Tomra
+          drsCpNo:
+            description: 'Number of the Collection Point created by the client (the owner of the Collection Point) in the
+              DRS system, example: 1100061-152.'
       x-examples:
         Example 1:
           serialNumber: 148d7a56-176d-413b-9eb5-c62f6f5bb67a
           name: string
           bins:
-            - wasteType:
-                - 1
-              litrage: 240
+          - wasteType:
+            - 1
+            litrage: 240
           id: string
           model: Tomra 9
           manufacturer: Tomra
@@ -1008,21 +1151,21 @@ components:
         id: pavk7ohndqzt1
       type: object
       required:
-        - rvmModel
+      - rvmModel
       allOf:
-        - $ref: models/PostMachine.yaml
-        - properties:
-            id:
-              type: string
-              format: uuid
-              description: ID of machine
-            rvmModel:
-              type: string
-              format: uuid
-              description: Model of RVM that is used.
-            authorizationCode:
-              type: string
-              description: Authorization code required to register machine
+      - $ref: models/PostMachine.yaml
+      - properties:
+          id:
+            type: string
+            format: uuid
+            description: ID of machine
+          rvmModel:
+            type: string
+            format: uuid
+            description: Model of RVM that is used.
+          authorizationCode:
+            type: string
+            description: Authorization code required to register machine
     VoucherData:
       title: VoucherData
       x-stoplight:
@@ -1047,8 +1190,8 @@ components:
         id: wjgw9ypmmrjlh
       type: integer
       enum:
-        - 0
-        - 1
+      - 0
+      - 1
       description: |
         Decscriptor for Voucher Type where
           - 0 - Code128/EAN13 type - Barcode
@@ -1059,24 +1202,27 @@ components:
         id: jl86dv966rdag
       type: object
       required:
-        - serialNumber
-        - bins
+      - serialNumber
+      - bins
       properties:
         id:
           type: string
-          description: "Unique machine identifier in the DRS. This value is required later when sending transactions and closing bags, where it's reffered to as **rvmId**. \r\n\r\nIf omitted in this request, DRS will generate the id and return it in the response."
+          description: "Unique machine identifier in the DRS. This value is required later when sending transactions and closing\
+            \ bags, where it's reffered to as **rvmId**. \r\n\r\nIf omitted in this request, DRS will generate the id and\
+            \ return it in the response."
           format: uuid
         serialNumber:
           type: string
           description: Serial number of a machine
           x-stoplight:
-            id: 8pp4kxobuhvlh
+            id: mfbmr6iwgobd1
         connectedWith:
           type: uuid
           description: ID of machine that shares the same bin
         name:
           type: string
-          description: "RVM Customer/provider given name. Visible on the customer's \r\n(Collection Point's) side in the DRS portal. "
+          description: "RVM Customer/provider given name. Visible on the customer's \r\n(Collection Point's) side in the DRS\
+            \ portal. "
         model:
           type: string
           example: Tomra 9
@@ -1099,11 +1245,11 @@ components:
     TransactionRequest:
       type: object
       required:
-        - id
-        - totalAmount
-        - transactionStartTime
-        - transactionEndTime
-        - containers
+      - id
+      - totalAmount
+      - transactionStartTime
+      - transactionEndTime
+      - containers
       properties:
         id:
           type: string
@@ -1169,19 +1315,19 @@ components:
         redeemType:
           type: integer
           enum:
-            - 0
-            - 1
-            - 2
-            - 3
-            - 98
-            - 99
+          - 0
+          - 1
+          - 2
+          - 3
+          - 98
+          - 99
           description: Voucher redemption type.
           example: 0
     ContainerItem:
       type: object
       required:
-        - ean
-        - count
+      - ean
+      - count
       properties:
         ean:
           type: string
@@ -1205,8 +1351,8 @@ components:
     VoucherResponse:
       type: object
       required:
-        - id
-        - printType
+      - id
+      - printType
       description: Voucher data returned by the voucher service.
       properties:
         id:
@@ -1230,7 +1376,7 @@ components:
     ErrorResponse:
       type: object
       required:
-        - message
+      - message
       properties:
         message:
           type: string
@@ -1243,9 +1389,188 @@ components:
             type: object
             additionalProperties:
               type: string
+    BagReplacementMultipleSeal:
+      title: BagReplacementMultipleSeal
+      x-stoplight:
+        id: bi3v5daskbwnw
+      type: object
+      properties:
+        binNo:
+          type: integer
+          example: 1
+          description: |
+            Describes which bin is being emptied. **Will soon be required — official
+            date to be announced.**
+        rvmId:
+          type: string
+          format: uuid
+          description: |
+            Set during the registration of the machine in [POST - /machine](https://kaucja.pl).
+            Either sent in the registration request, or returned in the response — as `id`.
+        sealNumbers:
+          type: array
+          description: |
+            List of seal numbers applied to the bag(s) after replacement.
+            Accepts **1 to N** seals:
+            - **1 seal** — standard case: one bin emptied into one bag closed with one seal.
+            - **N seals** — the bin contents were split across multiple bags (e.g. due
+              to bag weight/volume limits), each closed with its own seal. The order
+              of seals is not business-significant — DRS treats the set of seals as
+              equivalent.
+            Each seal number must be unique within the request. DRS will create one
+            bag entity per seal and distribute `containers` across them (see model
+            description for the split algorithm).
+          items:
+            type: string
+            example: 017824770475060
+          minItems: 1
+          uniqueItems: true
+          example:
+          - 017824770475060
+          - 017824770475061
+        lockingPersonId:
+          type: string
+          format: uuid
+        replacementDate:
+          type: string
+          format: date-time
+        bagWeight:
+          type: number
+          description: |
+            Total weight of the emptied bin contents in kilograms (kg). When
+            `sealNumbers` contains more than one seal, DRS splits this value
+            proportionally to the number of items assigned to each bag.
+        containerAmount:
+          type: integer
+          description: |
+            Total number of containers in the emptied bin. Must equal
+            `sum(containers[].count)`.
+        relatedTransactionsIds:
+          type: array
+          description: |
+            Optional but **highly preferable**. Enables the customer (Collection Point)
+            to preview all of the transactions that a closed bag consists of. Shared
+            across all bags produced from the same bin when multiple seals are used.
+          items:
+            type: string
+            format: uuid
+        containers:
+          type: array
+          description: |
+            List of accepted containers aggregated per EAN. Each record contains a
+            single EAN occurrence, e.g. `{ "ean": "123422", "count": 100 }`. When
+            `sealNumbers.length > 1`, DRS splits each `count` across the N bags
+            using the algorithm described in the model description.
+          items:
+            $ref: models/ContainerFull.yaml
+      required:
+      - rvmId
+      - sealNumbers
+      - lockingPersonId
+      - replacementDate
+      - bagWeight
+      - containerAmount
+      - containers
+      example:
+        binNo: 1
+        rvmId: 658f31ac-13dd-457e-8c8a-f79ab37...
+        sealNumbers:
+        - 017824770475060
+        - 017824770475061
+        lockingPersonId: c3eaca0a-06f1-4609-b1...
+        replacementDate: '2019-08-24T14:15:22Z'
+        bagWeight: 9.9
+        containerAmount: 22
+        relatedTransactionsIds:
+        - 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        containers:
+        - ean: '20123123'
+          count: 20
+        - ean: '20123999'
+          count: 2
+      description: |
+        Represents a bag replacement event in an RVM (Reverse Vending Machine) that
+        allows reporting **multiple seals** within a single bin-emptying operation.
+
+        ## Semantics
+        Unlike the standard `BagReplacement` (1 bag = 1 seal), this model lets the
+        client report a situation where the contents of a single bin were split into
+        **1 to N bags**, each closed with a separate seal from `sealNumbers`.
+
+        ## DRS processing
+        Upon accepting the request, DRS will:
+        1. Validate the payload (uniqueness of seals, consistency between
+          `containerAmount` and the sum of `count` in `containers`, existence of
+          `rvmId` and `lockingPersonId`).
+        2. Split the `containers` list into **N as-equal-as-possible parts** — one per
+          seal from `sealNumbers`. The split is performed **by item count** (per EAN)
+          and is independent of `bagWeight` (which is a single value for the whole event).
+        3. Create **1 to N "bag" entities** in the system — one per seal — sharing the
+          common event metadata (`binNo`, `rvmId`, `replacementDate`,
+          `lockingPersonId`, `relatedTransactionsIds`).
+        4. Independently expose each created bag to the **logistics operator**
+          (Anker / Remondis) as a separate record for pickup and further processing
+          in the `parser → DRS → event downstream` pipeline.
+
+        ## Container split algorithm (per EAN)
+        For each `{ ean, count }` record in `containers` and `N = sealNumbers.length`:
+
+        1. **Equal part**: each of the N bags receives `floor(count / N)` items of
+          the given EAN.
+        2. **Indivisible remainder**: `r = count % N` items are distributed **randomly**
+          across the N bags — each bag receives 0 or 1 additional item of the given
+          EAN, with exactly `r` bags receiving +1. The selection of those bags is
+          uniformly random (without replacement) and performed **independently for
+          each EAN**, so remainders from different EANs do not accumulate in the
+          same bags.
+        3. **`bagWeight`** is split proportionally to the number of items assigned to
+          each bag (`bagWeight * (items_in_bag / containerAmount)`), with analogous
+          rounding-remainder distribution (gram-level precision).
+
+        ## Business implications
+        - The logistics operator receives N separate bags for transport, each
+          identified by its unique seal.
+        - The item split is **non-deterministic** in the remainder part — the same
+          payload sent twice (hypothetically) could yield slightly different
+          per-bag distributions. The total item count per EAN and `containerAmount`
+          are always preserved (invariant: `sum_per_seal(count) == count` for each EAN).
+        - `relatedTransactionsIds` is shared across all bags produced from the same bin.
+    BagSealMultipleSeal:
+      title: BagSealMultipleSeal
+      type: object
+      description: Multi-seal variant of the bag seal event. Use when more than one physical seal number must be attached
+        to the same bag sealing event. `sealNumbers` replaces `sealNumber` and must contain unique values.
+      required:
+      - sealNumbers
+      - bagId
+      - sealTime
+      properties:
+        lockingPersonId:
+          type: string
+          format: uuid
+        sealNumbers:
+          type: array
+          description: List of seal numbers applied to the bag. Each seal number must be unique within the request.
+          items:
+            type: string
+            example: 017824770475060
+          minItems: 1
+          uniqueItems: true
+          example:
+          - 017824770475060
+          - 017824770475061
+        bagId:
+          type: string
+          format: uuid
+        sealTime:
+          type: string
+          format: date-time
   responses:
     '400':
-      description: 'REQUIRED - One or more required fields has not been provided <br>ENUM_ERROR - Format of one or more fields is incorrect <br>INCONSISTENT - Value is inconsistent comparing to ether system elements <br>TOO_LONG - Exceeded maximum length <br>INCORRECT_FORMAT - Incorrect format <br>VALUE_TOO_HIGH - Exceeded maximum value <br>VALUE_TOO_LOW - Value is below minimum allowed <br>... '
+      description: 'REQUIRED - One or more required fields has not been provided <br>ENUM_ERROR - Format of one or more fields
+        is incorrect <br>INCONSISTENT - Value is inconsistent comparing to either system elements <br>TOO_LONG - Exceeded
+        maximum length <br>INCORRECT_FORMAT - Incorrect format <br>VALUE_TOO_HIGH - Exceeded maximum value <br>VALUE_TOO_LOW
+        - Value is below minimum allowed <br>... '
       content:
         '*/*':
           schema:
@@ -1269,7 +1594,7 @@ components:
           schema:
             $ref: '#/components/schemas/ApiException'
     '422':
-      description: UNPROCESSABLE_ENTITY - Something wrong with requested body
+      description: UNPROCESSABLE_ENTITY - Something wrong with request body
       content:
         '*/*':
           schema:
@@ -1314,17 +1639,15 @@ components:
             $ref: models/ErrorMessage.yaml
           examples: null
     200TransactionProcessed:
-      description: |
-        Response returned by transaction.
-        Indicates whether coupon should be granted and for what amount. 
+      description: "Response returned by transaction.\nIndicates whether coupon should be granted and for what amount. \n\
+        Indicates whether coupon should be granted and for what amount.\n"
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/TransactionConfirmation'
     200BulkTransactionProcessed:
-      description: |
-        Response returned by transaction.
-        Indicates whether coupon should be granted and for what amount. 
+      description: "Response returned by transaction.\nIndicates whether coupon should be granted and for what amount. \n\
+        Indicates whether coupon should be granted and for what amount.\n"
       content:
         application/json:
           schema:
@@ -1344,13 +1667,14 @@ components:
         errorCode: 5
         path: <path of the request>
     200VoucherData:
-      description: Response of Voucer Data. If Voucher was supplied in Transaction Body - Response will be empty
+      description: Response of Voucher Data. Returned by the RVM voucher flow with the voucher identifier and print metadata
+        (print type, issuedAt, validUntil). If voucher data was supplied in the transaction body, the response may be empty.
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: '#/components/schemas/VoucherData'
-              - $ref: null
+            allOf:
+            - $ref: '#/components/schemas/VoucherData'
+            nullable: true
     200OkBufferReturned:
       description: OK. Buffer returned
       content:
@@ -1369,8 +1693,8 @@ components:
         application/json:
           schema:
             oneOf:
-              - $ref: '#/components/schemas/MachineUpdate'
-              - $ref: '#/components/schemas/MachineUpdateConnected'
+            - $ref: '#/components/schemas/MachineUpdate'
+            - $ref: '#/components/schemas/MachineUpdateConnected'
     RegisterMachine:
       content:
         application/json:
@@ -1381,4 +1705,3 @@ components:
       values:
         msg: Machine doesn't belong to given DRS operator.
         errorCode: 8
-        path: <path of the request>
