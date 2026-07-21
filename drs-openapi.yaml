@@ -651,7 +651,7 @@ paths:
       description: |
         Endpoint used by RVM providers to notify DRS that machine was Deleted.
 
-        The **{id}** is the same UUID that was assigned to the machine during registration via [POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/bu3ambgd8l19t-add-machine-update-by-rvm-vendor)
+        The **{id}** is the same UUID that was assigned to the machine during registration via [POST - /machine](https://kaucja.stoplight.io/docs/rvm-api/branches/RVM-Model-Changes/sbyw8qv8u7gj8-post-single-transaction)
       tags:
       - machine
       responses:
